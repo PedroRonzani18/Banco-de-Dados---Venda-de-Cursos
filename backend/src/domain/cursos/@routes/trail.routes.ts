@@ -1,11 +1,11 @@
 import { FastifyInstance } from 'fastify';
 import { verifyJWT } from '@/domain/users/middlewares/verify-jwt';
-import { createController } from '../trail/usecases/createTrail/createTrailController';
-import { listTrailsController } from '../trail/usecases/listTrails/listTrailsController';
-import { findTrailByNameController } from '../trail/usecases/findTrailByName/findTrailByNameController';
-import { findTrailByIdController } from '../trail/usecases/findTrailById/findTrailByIdController';
-import { deleteTrailController } from '../trail/usecases/deleteTrail/deleteTrailController';
-import { updateTrailController } from '../trail/usecases/updateTrail/updateTrailController';
+import { createController } from '../alternativa/usecases/createTrail/createTrailController';
+import { listTrailsController } from '../alternativa/usecases/listTrails/listTrailsController';
+import { findTrailByNameController } from '../alternativa/usecases/findTrailByName/findTrailByNameController';
+import { findTrailByIdController } from '../alternativa/usecases/findTrailById/findTrailByIdController';
+import { deleteTrailController } from '../alternativa/usecases/deleteTrail/deleteTrailController';
+import { updateTrailController } from '../alternativa/usecases/updateTrail/updateTrailController';
 import { verifyUserRole } from '@/domain/users/middlewares/verify-user-role';
 
 export async function trailRoutes(app: FastifyInstance) {

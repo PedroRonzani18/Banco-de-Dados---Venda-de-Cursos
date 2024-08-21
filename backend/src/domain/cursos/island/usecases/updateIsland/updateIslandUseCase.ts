@@ -2,7 +2,7 @@ import { Either, left, right } from "@/core/types/either"
 import { ResourceAlreadyExistsError } from "@/core/errors/resource-already-exists-error"
 import { IslandsRepository } from "../../repositories/islandInterfaceRepository"
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
-import { Island } from "@/domain/trilhas/@entities/island"
+import { Island } from "@/domain/cursos/@entities/island"
 
 interface UpdateIslandUseCaseRequest {
     id: string

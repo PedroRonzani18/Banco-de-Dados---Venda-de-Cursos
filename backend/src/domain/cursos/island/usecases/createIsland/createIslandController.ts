@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 import { IslandsPrismaRepository } from '../../repositories/islandPrismaRepository';
 import { CreateIslandUseCase } from './createIslandUseCase';
-import { TrailsPrismaRepository } from '@/domain/trilhas/trail/repositories/trailPrismaRepository';
+import { TrailsPrismaRepository } from '@/domain/cursos/alternativa/repositories/alternativaOracleRepository';
 
 export const createIslandBodySchema = z.object({
 	name: z.string(),

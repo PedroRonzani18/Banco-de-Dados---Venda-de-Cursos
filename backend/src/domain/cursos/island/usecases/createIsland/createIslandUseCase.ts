@@ -3,9 +3,9 @@ import { ResourceAlreadyExistsError } from "@/core/errors/resource-already-exist
 import { Island } from "../../../@entities/island"
 import { IslandsRepository } from "../../repositories/islandInterfaceRepository"
 import { FindIslandByNameUseCase } from "../findIslandByName/findIslandByNameUseCase"
-import { Level } from "@/domain/trilhas/@entities/level"
-import { FindTrailByIdUseCase } from "@/domain/trilhas/trail/usecases/findTrailById/findTrailByIdUseCase"
-import { TrailsRepository } from "@/domain/trilhas/trail/repositories/trailInterfaceRepository"
+import { Level } from "@/domain/cursos/@entities/level"
+import { FindTrailByIdUseCase } from "@/domain/cursos/alternativa/usecases/findTrailById/findTrailByIdUseCase"
+import { TrailsRepository } from "@/domain/cursos/alternativa/repositories/alternativaInterfaceRepository"
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 
 interface CreateIslandUseCaseRequest {

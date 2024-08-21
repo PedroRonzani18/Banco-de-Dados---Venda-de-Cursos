@@ -1,6 +1,6 @@
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 import { Either, left, right } from "@/core/types/either"
-import { Island } from "@/domain/trilhas/@entities/island"
+import { Island } from "@/domain/cursos/@entities/island"
 import { IslandsRepository } from "../../repositories/islandInterfaceRepository"
 
 interface DeleteIslandUseCaseRequest {
