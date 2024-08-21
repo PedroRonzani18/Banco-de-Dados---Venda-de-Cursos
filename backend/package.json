@@ -1,0 +1,37 @@
+{
+  "name": "@codelife/backend",
+  "version": "0.0.0",
+  "private": true,
+  "description": "backend para @codelife",
+  "main": "./dist/core/index.js",
+  "module": "./dist/core/index.mjs",
+  "types": "./dist/core/index.d.ts",
+  "scripts": {
+    "build": "tsup src --out-dir dist",
+    "start": "node build/core/index.js",
+    "dev": "tsx watch src/core/index.ts",
+    "docker:start": "docker compose up -d",
+    "docker:stop": "docker compose stop",
+    "prisma:migrate:dev": "npx prisma migrate dev"
+  },
+  "keywords": [],
+  "author": "PedroRonzani18",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.10.3",
+    "npm-run-all": "^4.1.5",
+    "prisma": "^5.1.0",
+    "ts-node": "^10.9.1",
+    "tsup": "^7.1.0",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^9.1.0",
+    "@prisma/client": "^5.1.0",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.21.0",
+    "random": "^4.1.0",
+    "zod": "^3.21.4"
+  }
+}
