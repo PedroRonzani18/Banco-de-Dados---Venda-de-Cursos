@@ -1,6 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
-import { createIslandBodySchema } from '@/domain/cursos/island/usecases/createIsland/createIslandController';
 import { AlternativasOracleRepository } from '../../repositories/alternativaOracleRepository';
 import { CreateAlternativaUseCase } from './createAlternativaUseCase';
 
@@ -11,7 +10,7 @@ export const createAlternativaBodySchema = z.object({
 	descricao: z.string(),
 });
 
-export async function createController(request: FastifyRequest, reply: FastifyReply) {
+export async function createAlternativaController(request: FastifyRequest, reply: FastifyReply) {
 
 	const { certa, descricao, numAtividade, idAtividade } = createAlternativaBodySchema.parse(request.body);
 

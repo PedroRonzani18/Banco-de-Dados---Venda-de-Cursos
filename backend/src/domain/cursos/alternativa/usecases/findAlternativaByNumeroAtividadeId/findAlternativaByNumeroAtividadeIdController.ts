@@ -8,7 +8,7 @@ export const createAlternativaBodySchema = z.object({
 	numAtividade: z.number(),
 });
 
-export async function findAlternativaByIdController(request: FastifyRequest, reply: FastifyReply) {
+export async function findAlternativaByNumeroAtividadeIdController(request: FastifyRequest, reply: FastifyReply) {
 
     const { idAtividade, numAtividade } = createAlternativaBodySchema.parse(request.params);
 
