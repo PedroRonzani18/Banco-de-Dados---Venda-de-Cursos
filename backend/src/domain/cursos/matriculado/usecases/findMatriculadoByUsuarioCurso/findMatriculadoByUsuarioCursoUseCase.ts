@@ -4,8 +4,8 @@ import { Matriculado } from "@/domain/cursos/@entities/matriculado"
 import { MatriculadosRepository } from "../../repositories/matriculadoInterfaceRepository"
 
 interface FindMatriculadoByUsuarioCursoUseCaseRequest {
-    usuarioId: string
-    cursoId: string
+    usuarioId: number
+    cursoId: number
 }
 
 type FindMatriculadoByUsuarioCursoUseCaseResponse = Either<

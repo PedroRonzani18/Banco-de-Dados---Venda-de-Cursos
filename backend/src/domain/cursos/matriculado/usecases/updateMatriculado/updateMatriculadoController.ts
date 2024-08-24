@@ -4,12 +4,12 @@ import { MatriculadosOracleRepository } from '../../repositories/matriculadoOrac
 import { UpdateMatriculadoUseCase } from './updateMatriculadoUseCase';
 
 export const updateMatriculadoParamsSchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export const updateMatriculadoBodySchema = z.object({
-	usuarioId: z.string().optional(),
-	cursoId: z.string().optional(),
+	usuarioId: z.number().optional(),
+	cursoId: z.number().optional(),
 	dataMatricula: z.string().optional(),
 });
 

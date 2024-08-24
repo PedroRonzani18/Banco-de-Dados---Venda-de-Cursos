@@ -5,19 +5,19 @@ export class MatriculadosOracleRepository implements MatriculadosRepository {
     create(data: MatriculadoProps): Promise<Matriculado> {
         throw new Error("Method not implemented.");
     }
-    findByUsuarioCurso(cursoId: string, usuarioId: string): Promise<Matriculado | null> {
+    findByUsuarioCurso(cursoId: number, usuarioId: number): Promise<Matriculado | null> {
         throw new Error("Method not implemented.");
     }
-    findById(id: string): Promise<Matriculado | null> {
+    findById(id: number): Promise<Matriculado | null> {
         throw new Error("Method not implemented.");
     }
     list(): Promise<Matriculado[]> {
         throw new Error("Method not implemented.");
     }
-    delete(id: string): Promise<Matriculado | null> {
+    delete(id: number): Promise<Matriculado | null> {
         throw new Error("Method not implemented.");
     }
-    update(id: string, data: UpdateMatriculadoProps): Promise<Matriculado | null> {
+    update(id: number, data: UpdateMatriculadoProps): Promise<Matriculado | null> {
         throw new Error("Method not implemented.");
     }
 }

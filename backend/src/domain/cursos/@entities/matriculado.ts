@@ -1,16 +1,15 @@
 import { Entity } from "@/core/entities/entity";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
-import { Alternativa } from "./alternativa";
 
 export type UpdateMatriculadoProps = {
-    usuarioId?: string
-    cursoId?: string
+    usuarioId?: number
+    cursoId?: number
     dataMatricula?: string
 };
 
 export type MatriculadoProps = {
-    usuarioId: string
-    cursoId: string
+    usuarioId: number
+    cursoId: number
     dataMatricula: Date
 };
 
@@ -20,9 +19,9 @@ export class Matriculado extends Entity<MatriculadoProps> {
         super(props, id)
     }
 
-    get usuarioId() { return this.usuarioId }
-    get cursoId() { return this.cursoId }
-    get dataMatricula() { return this.dataMatricula }
+    get usuarioId() { return this.props.usuarioId }
+    get cursoId() { return this.props.cursoId }
+    get dataMatricula() { return this.props.dataMatricula }
 
     toJSON() {
         return {

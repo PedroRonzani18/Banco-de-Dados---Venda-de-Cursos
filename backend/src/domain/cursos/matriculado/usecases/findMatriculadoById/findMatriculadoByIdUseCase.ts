@@ -4,7 +4,7 @@ import { Matriculado } from "@/domain/cursos/@entities/matriculado"
 import { MatriculadosRepository } from "../../repositories/matriculadoInterfaceRepository"
 
 interface FindMatriculadoByIdUseCaseRequest {
-    id: string
+    id: number
 }
 
 type FindMatriculadoByIdUseCaseResponse = Either<

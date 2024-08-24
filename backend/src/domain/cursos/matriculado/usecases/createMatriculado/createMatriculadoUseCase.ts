@@ -5,8 +5,8 @@ import { MatriculadosRepository } from "../../repositories/matriculadoInterfaceR
 import { FindMatriculadoByUsuarioCursoUseCase } from "../findMatriculadoByUsuarioCurso/findMatriculadoByUsuarioCursoUseCase"
 
 interface CreateMatriculadoUseCaseRequest {
-    usuarioId: string
-    cursoId: string
+    usuarioId: number
+    cursoId: number
     dataMatricula: Date
 }
 

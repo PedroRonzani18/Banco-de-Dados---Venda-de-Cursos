@@ -4,7 +4,7 @@ import { DeleteMatriculadoUseCase } from './deleteMatriculadoUseCase';
 import { z } from 'zod';
 
 export const createMatriculadoBodySchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export async function deleteMatriculadoController(request: FastifyRequest, reply: FastifyReply) {

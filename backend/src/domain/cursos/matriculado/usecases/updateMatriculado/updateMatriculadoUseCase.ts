@@ -5,7 +5,7 @@ import { MatriculadosRepository } from "../../repositories/matriculadoInterfaceR
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 
 interface UpdateMatriculadoUseCaseRequest {
-    id: string
+    id: number
     data: UpdateMatriculadoProps
 }
 

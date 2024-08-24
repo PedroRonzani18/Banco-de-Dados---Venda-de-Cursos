@@ -4,8 +4,8 @@ import { MatriculadosOracleRepository } from '../../repositories/matriculadoOrac
 import { CreateMatriculadoUseCase } from './createMatriculadoUseCase';
 
 export const createMatriculadoBodySchema = z.object({
-	usuarioId: z.string(),
-	cursoId: z.string(),
+	usuarioId: z.number(),
+	cursoId: z.number(),
 	dataMatricula: z.date(),
 });
 

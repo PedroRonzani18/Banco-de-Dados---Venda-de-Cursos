@@ -4,8 +4,8 @@ import { z } from 'zod';
 import { FindMatriculadoByUsuarioCursoUseCase } from './findMatriculadoByUsuarioCursoUseCase';
 
 export const createMatriculadoBodySchema = z.object({
-	cursoId: z.string(),
-	usuarioId: z.string(),
+	cursoId: z.number(),
+	usuarioId: z.number(),
 });
 
 export async function findMatriculadoByTituloController(request: FastifyRequest, reply: FastifyReply) {
