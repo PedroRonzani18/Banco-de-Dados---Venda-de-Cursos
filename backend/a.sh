@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Set the original and after variables
-original="Atividade"
-after="Professor"
+original="Matriculado"
+after="AtividadeFeita"
 
 # Recursive function to rename files and folders
 rename_files_and_folders() {
