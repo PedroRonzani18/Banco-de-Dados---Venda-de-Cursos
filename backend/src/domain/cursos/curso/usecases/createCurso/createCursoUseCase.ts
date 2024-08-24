@@ -11,7 +11,6 @@ interface CreateCursoUseCaseRequest {
     nome: string
     descricao: string
     cargaHora: number
-    dataCadastro: Date
     preco: number
 }
 
@@ -24,7 +23,7 @@ export class CreateCursoUseCase {
 
     constructor(private cursosRepository: CursosRepository, private usersRepository: UsersRepository) { }
 
-    async execute({ donoId, cargaHora, dataCadastro, descricao, nome, preco }: CreateCursoUseCaseRequest): Promise<CreateCursoUseCaseResponse> {
+    async execute({ donoId, cargaHora, descricao, nome, preco }: CreateCursoUseCaseRequest): Promise<CreateCursoUseCaseResponse> {
 
         const findCursoByNomeUseCase = new FindCursoByNomeUseCase(this.cursosRepository)
 
@@ -36,7 +35,7 @@ export class CreateCursoUseCase {
         if (dono.isLeft())
             return left({ error: new ResourceAlreadyExistsError(`User ${donoId}`) })
 
-        const curso = await this.cursosRepository.create({ cargaHora, dataCadastro, descricao, nome, preco, topicos: [], dono: dono.value.user })
+        const curso = await this.cursosRepository.create({ cargaHora, dataCadastro: null, descricao, nome, preco, topicos: [], dono: dono.value.user })
 
         return right({ curso })
     }

@@ -9,19 +9,18 @@ export const createCursoBodySchema = z.object({
 	nome: z.string(),
 	descricao: z.string(),
 	cargaHora: z.number(),
-	dataCadastro: z.date(),
 	preco: z.number(),
 });
 
 export async function createCursoController(request: FastifyRequest, reply: FastifyReply) {
 
-	const { donoId, cargaHora, dataCadastro, descricao, nome, preco } = createCursoBodySchema.parse(request.body);
+	const { donoId, cargaHora, descricao, nome, preco } = createCursoBodySchema.parse(request.body);
 
 	const cursosRepository = new CursosOracleRepository()
 	const usersRepository = new UsersOracleRepository()
 	const createCursoUseCase = new CreateCursoUseCase(cursosRepository, usersRepository)
 
-	const curso = await createCursoUseCase.execute({ donoId, cargaHora, dataCadastro, descricao, nome, preco });
+	const curso = await createCursoUseCase.execute({ donoId, cargaHora, descricao, nome, preco });
 
 	if (curso.isLeft())
 		return reply
