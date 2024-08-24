@@ -4,7 +4,7 @@ import { DeleteCertificadoUseCase } from './deleteCertificadoUseCase';
 import { z } from 'zod';
 
 export const createCertificadoBodySchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export async function deleteCertificadoController(request: FastifyRequest, reply: FastifyReply) {

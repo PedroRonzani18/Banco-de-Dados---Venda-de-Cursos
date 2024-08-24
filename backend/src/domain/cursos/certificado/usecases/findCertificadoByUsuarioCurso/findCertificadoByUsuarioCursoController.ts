@@ -4,8 +4,8 @@ import { z } from 'zod';
 import { FindCertificadoByUsuarioCursoUseCase } from './findCertificadoByUsuarioCursoUseCase';
 
 export const createCertificadoBodySchema = z.object({
-	cursoId: z.string(),
-	usuarioId: z.string(),
+	cursoId: z.number(),
+	usuarioId: z.number(),
 });
 
 export async function findCertificadoByTituloController(request: FastifyRequest, reply: FastifyReply) {

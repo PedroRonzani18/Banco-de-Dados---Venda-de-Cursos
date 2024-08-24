@@ -5,9 +5,9 @@ import { CertificadosRepository } from "../../repositories/certificadoInterfaceR
 import { FindCertificadoByUsuarioCursoUseCase } from "../findCertificadoByUsuarioCurso/findCertificadoByUsuarioCursoUseCase"
 
 interface CreateCertificadoUseCaseRequest {
-    usuarioId: string
-    cursoId: string
-    data: Date
+    usuarioId: number
+    cursoId: number
+    dataCertificado: Date
 }
 
 type CreateCertificadoUseCaseResponse = Either<
@@ -19,7 +19,7 @@ export class CreateCertificadoUseCase {
 
     constructor(private certificadosRepository: CertificadosRepository) { }
 
-    async execute({ cursoId, usuarioId, data }: CreateCertificadoUseCaseRequest): Promise<CreateCertificadoUseCaseResponse> {
+    async execute({ cursoId, usuarioId, dataCertificado }: CreateCertificadoUseCaseRequest): Promise<CreateCertificadoUseCaseResponse> {
 
         const findCertificadoByUsuarioCursoUseCase = new FindCertificadoByUsuarioCursoUseCase(this.certificadosRepository)
 
@@ -28,7 +28,7 @@ export class CreateCertificadoUseCase {
         if (possibleCertificado.isRight())
             return left({ error: new ResourceAlreadyExistsError(`Usuario ${usuarioId} certificado no curso ${cursoId}`) })
 
-        const certificado = await this.certificadosRepository.create({cursoId, data ,usuarioId})
+        const certificado = await this.certificadosRepository.create({cursoId, dataCertificado ,usuarioId})
 
         return right({ certificado })
     }

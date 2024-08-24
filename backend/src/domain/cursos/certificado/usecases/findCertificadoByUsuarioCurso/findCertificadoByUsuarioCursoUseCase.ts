@@ -4,8 +4,8 @@ import { Certificado } from "@/domain/cursos/@entities/certificado"
 import { CertificadosRepository } from "../../repositories/certificadoInterfaceRepository"
 
 interface FindCertificadoByUsuarioCursoUseCaseRequest {
-    usuarioId: string
-    cursoId: string
+    usuarioId: number
+    cursoId: number
 }
 
 type FindCertificadoByUsuarioCursoUseCaseResponse = Either<

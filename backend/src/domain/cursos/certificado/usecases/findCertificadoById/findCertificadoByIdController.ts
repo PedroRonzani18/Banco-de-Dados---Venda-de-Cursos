@@ -4,7 +4,7 @@ import { FindCertificadoByIdUseCase } from './findCertificadoByIdUseCase';
 import { z } from 'zod';
 
 export const createCertificadoBodySchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export async function findCertificadoByIdController(request: FastifyRequest, reply: FastifyReply) {

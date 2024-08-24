@@ -2,9 +2,9 @@ import { Certificado, CertificadoProps, UpdateCertificadoProps } from "../../@en
 
 export interface CertificadosRepository {
     create(data: CertificadoProps): Promise<Certificado>
-    findByUsuarioCurso(cursoId: string, usuarioId: string): Promise<Certificado | null>
-    findById(name: string): Promise<Certificado | null>
+    findByUsuarioCurso(cursoId: number, usuarioId: number): Promise<Certificado | null>
+    findById(id: number): Promise<Certificado | null>
     list(): Promise<Certificado[]>
-    delete(id: string): Promise<Certificado | null>
-    update(id: string, data: UpdateCertificadoProps): Promise<Certificado | null>
+    delete(id: number): Promise<Certificado | null>
+    update(id: number, data: UpdateCertificadoProps): Promise<Certificado | null>
 }

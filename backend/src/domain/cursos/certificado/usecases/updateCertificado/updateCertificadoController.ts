@@ -4,12 +4,12 @@ import { CertificadosOracleRepository } from '../../repositories/certificadoOrac
 import { UpdateCertificadoUseCase } from './updateCertificadoUseCase';
 
 export const updateCertificadoParamsSchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export const updateCertificadoBodySchema = z.object({
-	usuarioId: z.string().optional(),
-	cursoId: z.string().optional(),
+	usuarioId: z.number().optional(),
+	cursoId: z.number().optional(),
 	data: z.date().optional(),
 });
 

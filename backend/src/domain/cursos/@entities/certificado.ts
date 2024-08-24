@@ -2,15 +2,15 @@ import { Entity } from "@/core/entities/entity";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 
 export type UpdateCertificadoProps = {
-    usuarioId?: string
-    cursoId?: string
-    data?: Date
+    usuarioId?: number
+    cursoId?: number
+    dataCertificado?: Date
 };
 
 export type CertificadoProps = {
-    usuarioId: string
-    cursoId: string
-    data: Date
+    usuarioId: number
+    cursoId: number
+    dataCertificado: Date
 };
 
 export class Certificado extends Entity<CertificadoProps> {
@@ -19,9 +19,9 @@ export class Certificado extends Entity<CertificadoProps> {
         super(props, id)
     }
 
-    get usuarioId() { return this.usuarioId }
-    get cursoId() { return this.cursoId }
-    get data() { return this.data }
+    get usuarioId() { return this.props.usuarioId }
+    get cursoId() { return this.props.cursoId }
+    get dataCertificado() { return this.props.dataCertificado }
 
     toJSON() {
         return {

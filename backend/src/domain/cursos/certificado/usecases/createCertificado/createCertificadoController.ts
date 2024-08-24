@@ -4,19 +4,19 @@ import { CertificadosOracleRepository } from '../../repositories/certificadoOrac
 import { CreateCertificadoUseCase } from './createCertificadoUseCase';
 
 export const createCertificadoBodySchema = z.object({
-	usuarioId: z.string(),
-	cursoId: z.string(),
-	data: z.date(),
+	usuarioId: z.number(),
+	cursoId: z.number(),
+	dataCertificado: z.date(),
 });
 
 export async function createCertificadoController(request: FastifyRequest, reply: FastifyReply) {
 
-	const { cursoId, data, usuarioId } = createCertificadoBodySchema.parse(request.body);
+	const { cursoId, dataCertificado, usuarioId } = createCertificadoBodySchema.parse(request.body);
 
 	const certificadosRepository = new CertificadosOracleRepository()
 	const createCertificadoUseCase = new CreateCertificadoUseCase(certificadosRepository)
 
-	const certificado = await createCertificadoUseCase.execute({ cursoId, data, usuarioId });
+	const certificado = await createCertificadoUseCase.execute({ cursoId, dataCertificado, usuarioId });
 
 	if (certificado.isLeft())
 		return reply

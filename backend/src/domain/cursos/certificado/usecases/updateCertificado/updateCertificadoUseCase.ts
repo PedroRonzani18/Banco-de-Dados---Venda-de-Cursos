@@ -5,7 +5,7 @@ import { CertificadosRepository } from "../../repositories/certificadoInterfaceR
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 
 interface UpdateCertificadoUseCaseRequest {
-    id: string
+    id: number
     data: UpdateCertificadoProps
 }
 
