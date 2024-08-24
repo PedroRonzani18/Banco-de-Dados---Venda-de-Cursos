@@ -29,7 +29,7 @@ export class CreateTopicoUseCase {
         if (possibleTopico.isRight())
             return left({ error: new ResourceAlreadyExistsError(`Topico ${titulo} no Cursp ${idCurso}`) })
 
-        const topico = await this.topicosRepository.create(idCurso, { descricao, index, professores: [], temas: [], titulo, })
+        const topico = await this.topicosRepository.create(idCurso, { descricao, index, professores: [], temas: [], titulo, aulas: [] })
 
         return right({ topico })
     }

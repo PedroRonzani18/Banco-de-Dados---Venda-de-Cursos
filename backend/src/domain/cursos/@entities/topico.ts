@@ -3,6 +3,7 @@ import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { Alternativa } from "./alternativa";
 import { Professor } from "./professor";
 import { Tema } from "./tema";
+import { Aula } from "./aula";
 
 export type UpdateTopicoProps = {
     index?: number
@@ -14,6 +15,8 @@ export type TopicoProps = {
     index: number
     titulo: string
     descricao: string
+
+    aulas: Aula[]
     professores: Professor[]
     temas: Tema[]
 };
@@ -27,6 +30,7 @@ export class Topico extends Entity<TopicoProps> {
     get index() { return this.index }
     get titulo() { return this.titulo }
     get descricao() { return this.descricao }
+    get aulas() { return this.aulas }
     get professores() { return this.professores }
     get temas() { return this.temas }
 
