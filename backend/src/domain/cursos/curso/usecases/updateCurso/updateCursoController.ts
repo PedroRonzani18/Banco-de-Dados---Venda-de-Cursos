@@ -13,6 +13,7 @@ export const updateCursoBodySchema = z.object({
 	descricao: z.string().optional(),
 	nome: z.string().optional(),
 	preco: z.number().optional(),
+	donoId: z.string().optional(),
 });
 
 export async function updateCursoController(request: FastifyRequest, reply: FastifyReply) {

@@ -1,6 +1,7 @@
 import { Entity } from "@/core/entities/entity";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { Topico } from "./topico";
+import { User } from "@/domain/users/@entities/user";
 
 export type UpdateCursoProps = {
     nome?: string
@@ -8,6 +9,7 @@ export type UpdateCursoProps = {
     cargaHora?: number
     dataCadastro?: Date
     preco?: number
+    donoId?: string
 };
 
 export type CursoProps = {
@@ -17,6 +19,7 @@ export type CursoProps = {
     dataCadastro: Date
     preco: number
     topicos: Topico[]
+    dono: User
 };
 
 export class Curso extends Entity<CursoProps> {
