@@ -1,32 +1,31 @@
 import { Either, left, right } from "@/core/types/either"
 import { ResourceAlreadyExistsError } from "@/core/errors/resource-already-exists-error"
-import { Atividade } from "../../../@entities/alternativa"
+import { Atividade } from "../../../@entities/atividade"
 import { AtividadesRepository } from "../../repositories/atividadeInterfaceRepository"
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 
 interface UpdateAtividadeUseCaseRequest {
     id: string
-    certa?: boolean
-    descricao?: string
-    numAtividade?: number
+    enunciado: string
+    titulo: string
 }
 
 type UpdateAtividadeUseCaseResponse = Either<
     { error: ResourceAlreadyExistsError },
-    { alternativa: Atividade }
+    { atividade: Atividade }
 >
 
 export class UpdateAtividadeUseCase {
 
-    constructor(private alternativasRepository: AtividadesRepository) { }
+    constructor(private atividadesRepository: AtividadesRepository) { }
 
-    async execute({ certa, descricao, numAtividade, id }: UpdateAtividadeUseCaseRequest): Promise<UpdateAtividadeUseCaseResponse> {
+    async execute({ id, ...data }: UpdateAtividadeUseCaseRequest): Promise<UpdateAtividadeUseCaseResponse> {
 
-        const alternativa = await this.alternativasRepository.update(id, { certa, descricao, numAtividade })
+        const atividade = await this.atividadesRepository.update(id, data)
 
-        if (!alternativa)
+        if (!atividade)
             return left({ error: new ResourceNotFoundError(`Atividade ${id}`) })
 
-        return right({ alternativa })
+        return right({ atividade })
     }
 }

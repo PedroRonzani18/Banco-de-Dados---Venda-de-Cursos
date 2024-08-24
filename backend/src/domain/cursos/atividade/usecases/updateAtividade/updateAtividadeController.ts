@@ -8,27 +8,26 @@ export const updateAtividadeParamsSchema = z.object({
 });
 
 export const updateAtividadeBodySchema = z.object({
-	certa: z.boolean().optional(),
-	descricao: z.string().optional(),
-	numAtividade: z.number().optional(),
+	enunciado: z.string().optional(),
+	titulo: z.string().optional(),
 });
 
 export async function updateAtividadeController(request: FastifyRequest, reply: FastifyReply) {
 
-	const { certa, descricao, numAtividade } = updateAtividadeBodySchema.parse(request.body);
+	const { enunciado, titulo } = updateAtividadeBodySchema.parse(request.body);
 	const { id } = updateAtividadeParamsSchema.parse(request.params);
 
-	const alternativasRepository = new AtividadesOracleRepository()
-	const updateAtividadeUseCase = new UpdateAtividadeUseCase(alternativasRepository)
+	const atividadesRepository = new AtividadesOracleRepository()
+	const updateAtividadeUseCase = new UpdateAtividadeUseCase(atividadesRepository)
 
-	const alternativa = await updateAtividadeUseCase.execute({ id, certa, descricao, numAtividade, });
+	const atividade = await updateAtividadeUseCase.execute({ id, enunciado, titulo });
 
-	if (alternativa.isLeft())
+	if (atividade.isLeft())
 		return reply
 			.status(400)
-			.send(alternativa.value.error)
+			.send(atividade.value.error)
 
 	return reply
 		.status(201)
-		.send(alternativa.value.alternativa);
+		.send(atividade.value.atividade);
 }

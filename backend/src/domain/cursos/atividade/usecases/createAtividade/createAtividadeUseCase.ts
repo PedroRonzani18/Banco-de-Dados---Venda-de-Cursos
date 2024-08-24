@@ -23,7 +23,7 @@ export class CreateAtividadeUseCase {
 
         const findAtividadeByTituloUseCase = new FindAtividadeByTituloUseCase(this.atividadesRepository)
 
-        const possibleAtividade = await findAtividadeByTituloUseCase.execute({ titulo })
+        const possibleAtividade = await findAtividadeByTituloUseCase.execute({ titulo, idAula })
 
         if (possibleAtividade.isRight())
             return left({ error: new ResourceAlreadyExistsError(`Atividade ${enunciado} na Aula ${idAula}`) })
