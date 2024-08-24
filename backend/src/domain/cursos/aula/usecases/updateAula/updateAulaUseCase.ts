@@ -5,7 +5,7 @@ import { AulasRepository } from "../../repositories/aulaInterfaceRepository"
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 
 interface UpdateAulaUseCaseRequest {
-    id: string
+    id: number
     enunciado: string
     titulo: string
 }

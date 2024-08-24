@@ -4,7 +4,7 @@ import { Atividade } from "./atividade";
 
 export type UpdateAulaProps = {
     index?: number
-    idTopico?: string
+    idTopico?: number
     titulo?: string
     descricao?: string
     urlVideo?: string
@@ -13,7 +13,7 @@ export type UpdateAulaProps = {
 
 export type AulaProps = {
     index: number
-    idTopico: string
+    idTopico: number
     titulo: string
     descricao: string
     urlVideo?: string
@@ -28,13 +28,13 @@ export class Aula extends Entity<AulaProps> {
         super(props, id)
     }
 
-    get index() { return this.data.index }
-    get idTopico() { return this.data.idTopico }
-    get titulo() { return this.data.titulo }
-    get descricao() { return this.data.descricao }
-    get urlVideo() { return this.data.urlVideo }
-    get duracaoEstimada() { return this.data.duracaoEstimada }
-    get atividades() { return this.data.atividades }
+    get index() { return this.props.index }
+    get idTopico() { return this.props.idTopico }
+    get titulo() { return this.props.titulo }
+    get descricao() { return this.props.descricao }
+    get urlVideo() { return this.props.urlVideo }
+    get duracaoEstimada() { return this.props.duracaoEstimada }
+    get atividades() { return this.props.atividades }
 
     toJSON() {
         return {

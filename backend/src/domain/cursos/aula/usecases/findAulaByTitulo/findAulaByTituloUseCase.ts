@@ -5,7 +5,7 @@ import { AulasRepository } from "../../repositories/aulaInterfaceRepository"
 
 interface FindAulaByTituloUseCaseRequest {
     titulo: string
-    idTopico: string
+    idTopico: number
 }
 
 type FindAulaByTituloUseCaseResponse = Either<

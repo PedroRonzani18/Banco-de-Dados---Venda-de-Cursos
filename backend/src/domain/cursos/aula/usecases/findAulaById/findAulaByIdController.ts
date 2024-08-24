@@ -4,7 +4,7 @@ import { FindAulaByIdUseCase } from './findAulaByIdUseCase';
 import { z } from 'zod';
 
 export const createAulaBodySchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export async function findAulaByIdController(request: FastifyRequest, reply: FastifyReply) {

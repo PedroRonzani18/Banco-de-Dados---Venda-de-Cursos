@@ -4,7 +4,7 @@ import { Aula } from "@/domain/cursos/@entities/aula"
 import { AulasRepository } from "../../repositories/aulaInterfaceRepository"
 
 interface FindAulaByIdUseCaseRequest {
-    id: string
+    id: number
 }
 
 type FindAulaByIdUseCaseResponse = Either<

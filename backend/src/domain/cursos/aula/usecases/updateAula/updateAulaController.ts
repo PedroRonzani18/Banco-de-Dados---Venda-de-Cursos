@@ -4,7 +4,7 @@ import { AulasOracleRepository } from '../../repositories/aulaOracleRepository';
 import { UpdateAulaUseCase } from './updateAulaUseCase';
 
 export const updateAulaParamsSchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export const updateAulaBodySchema = z.object({

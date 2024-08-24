@@ -4,7 +4,7 @@ import { AulasOracleRepository } from '../../repositories/aulaOracleRepository';
 import { CreateAulaUseCase } from './createAulaUseCase';
 
 export const createAulaBodySchema = z.object({
-	idTopico: z.string(),
+	idTopico: z.number(),
 	titulo: z.string(),
 	descricao: z.string(),
 	urlVideo: z.string().optional(),

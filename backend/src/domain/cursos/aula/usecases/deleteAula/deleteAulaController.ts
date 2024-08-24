@@ -4,7 +4,7 @@ import { DeleteAulaUseCase } from './deleteAulaUseCase';
 import { z } from 'zod';
 
 export const createAulaBodySchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export async function deleteAulaController(request: FastifyRequest, reply: FastifyReply) {

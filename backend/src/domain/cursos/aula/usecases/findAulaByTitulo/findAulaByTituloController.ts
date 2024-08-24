@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { FindAulaByTituloUseCase } from './findAulaByTituloUseCase';
 
 export const createAulaBodySchema = z.object({
-	idTopico: z.string(),
+	idTopico: z.number(),
 	titulo: z.string(),
 });
 

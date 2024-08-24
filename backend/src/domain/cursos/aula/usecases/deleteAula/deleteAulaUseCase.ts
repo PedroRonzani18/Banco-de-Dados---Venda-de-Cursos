@@ -4,7 +4,7 @@ import { Aula } from "@/domain/cursos/@entities/aula"
 import { AulasRepository } from "../../repositories/aulaInterfaceRepository"
 
 interface DeleteAulaUseCaseRequest {
-    id: string
+    id: number
 }
 
 type DeleteAulaUseCaseResponse = Either<

@@ -5,7 +5,7 @@ import { AulasRepository } from "../../repositories/aulaInterfaceRepository"
 import { FindAulaByTituloUseCase } from "../findAulaByTitulo/findAulaByTituloUseCase"
 
 interface CreateAulaUseCaseRequest {
-    idTopico: string
+    idTopico: number
     titulo: string
     descricao: string
     urlVideo?: string
