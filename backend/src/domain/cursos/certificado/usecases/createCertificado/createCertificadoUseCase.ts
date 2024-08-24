@@ -3,6 +3,7 @@ import { ResourceAlreadyExistsError } from "@/core/errors/resource-already-exist
 import { Certificado } from "../../../@entities/certificado"
 import { CertificadosRepository } from "../../repositories/certificadoInterfaceRepository"
 import { FindCertificadoByUsuarioCursoUseCase } from "../findCertificadoByUsuarioCurso/findCertificadoByUsuarioCursoUseCase"
+import { randomUUID } from 'node:crypto'
 
 interface CreateCertificadoUseCaseRequest {
     usuarioId: number
@@ -28,7 +29,7 @@ export class CreateCertificadoUseCase {
         if (possibleCertificado.isRight())
             return left({ error: new ResourceAlreadyExistsError(`Usuario ${usuarioId} certificado no curso ${cursoId}`) })
 
-        const certificado = await this.certificadosRepository.create({cursoId, dataCertificado ,usuarioId})
+        const certificado = await this.certificadosRepository.create({ cursoId, dataCertificado, usuarioId, certificado: randomUUID() })
 
         return right({ certificado })
     }

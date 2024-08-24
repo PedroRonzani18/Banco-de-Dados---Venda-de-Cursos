@@ -8,6 +8,7 @@ export type UpdateCertificadoProps = {
 };
 
 export type CertificadoProps = {
+    certificado: string
     usuarioId: number
     cursoId: number
     dataCertificado: Date
@@ -19,6 +20,7 @@ export class Certificado extends Entity<CertificadoProps> {
         super(props, id)
     }
 
+    get certificado() { return this.props.certificado }
     get usuarioId() { return this.props.usuarioId }
     get cursoId() { return this.props.cursoId }
     get dataCertificado() { return this.props.dataCertificado }
