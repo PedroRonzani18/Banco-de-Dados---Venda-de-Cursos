@@ -4,7 +4,7 @@ import { AlternativasOracleRepository } from '../../repositories/alternativaOrac
 import { CreateAlternativaUseCase } from './createAlternativaUseCase';
 
 export const createAlternativaBodySchema = z.object({
-	idAtividade: z.string(),
+	idAtividade: z.number(),
 	numAtividade: z.number(),
 	certa: z.boolean(),
 	descricao: z.string(),

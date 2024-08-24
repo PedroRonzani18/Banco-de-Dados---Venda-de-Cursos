@@ -4,7 +4,7 @@ import { FindAlternativaByIdUseCase } from './findAlternativaByIdUseCase';
 import { z } from 'zod';
 
 export const createAlternativaBodySchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export async function findAlternativaByIdController(request: FastifyRequest, reply: FastifyReply) {

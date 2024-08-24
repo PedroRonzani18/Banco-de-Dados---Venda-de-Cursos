@@ -5,7 +5,7 @@ import { AlternativasRepository } from "../../repositories/alternativaInterfaceR
 import { FindAlternativaByNumeroAtividadeIdUseCaseUseCase } from "../findAlternativaByNumeroAtividadeId/findAlternativaByNumeroAtividadeIdUseCase"
 
 interface CreateAlternativaUseCaseRequest {
-    idAtividade: string
+    idAtividade: number
     numAtividade: number
     certa: boolean
     descricao: string
@@ -30,7 +30,7 @@ export class CreateAlternativaUseCase {
             return left({ error: new ResourceAlreadyExistsError(`Alternativa's ${name} alternativa`) })
         }
 
-        const alternativa = await this.alternativasRepository.create(idAtividade, { certa, descricao, numAtividade })
+        const alternativa = await this.alternativasRepository.create(idAtividade, { certa, descricao, numAtividade, idAtividade })
 
         return right({ alternativa })
     }

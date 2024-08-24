@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { FindAlternativaByNumeroAtividadeIdUseCaseUseCase } from './findAlternativaByNumeroAtividadeIdUseCase';
 
 export const createAlternativaBodySchema = z.object({
-	idAtividade: z.string(),
+	idAtividade: z.number(),
 	numAtividade: z.number(),
 });
 

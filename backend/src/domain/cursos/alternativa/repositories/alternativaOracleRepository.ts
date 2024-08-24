@@ -2,22 +2,22 @@ import { AlternativaProps, Alternativa, UpdateAlternativaProps } from "../../@en
 import { AlternativasRepository } from "./alternativaInterfaceRepository";
 
 export class AlternativasOracleRepository implements AlternativasRepository {
-    create(id: string, data: AlternativaProps): Promise<Alternativa> {
+    create(id: number, data: AlternativaProps): Promise<Alternativa> {
         throw new Error("Method not implemented.");
     }
-    findByNumeroAtividadeId(numeroAtividade: number, idAtividade: string): Promise<Alternativa | null> {
+    findByNumeroAtividadeId(numeroAtividade: number, idAtividade: number): Promise<Alternativa | null> {
         throw new Error("Method not implemented.");
     }
-    findById(id: string): Promise<Alternativa | null> {
+    findById(id: number): Promise<Alternativa | null> {
         throw new Error("Method not implemented.");
     }
     list(): Promise<Alternativa[]> {
         throw new Error("Method not implemented.");
     }
-    delete(id: string): Promise<Alternativa | null> {
+    delete(id: number): Promise<Alternativa | null> {
         throw new Error("Method not implemented.");
     }
-    update(id: string, data: UpdateAlternativaProps): Promise<Alternativa | null> {
+    update(id: number, data: UpdateAlternativaProps): Promise<Alternativa | null> {
         throw new Error("Method not implemented.");
     }
 }

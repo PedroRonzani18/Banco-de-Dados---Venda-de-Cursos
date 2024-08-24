@@ -4,7 +4,7 @@ import { DeleteAlternativaUseCase } from './deleteAlternativaUseCase';
 import { z } from 'zod';
 
 export const createAlternativaBodySchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export async function deleteAlternativaController(request: FastifyRequest, reply: FastifyReply) {

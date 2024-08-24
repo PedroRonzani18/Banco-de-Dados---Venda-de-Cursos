@@ -4,7 +4,7 @@ import { Alternativa } from "@/domain/cursos/@entities/alternativa"
 import { AlternativasRepository } from "../../repositories/alternativaInterfaceRepository"
 
 interface FindAlternativaByNumeroAtividadeIdUseCaseUseCaseRequest {
-    idAtividade: string
+    idAtividade: number
     numAtividade: number
 }
 

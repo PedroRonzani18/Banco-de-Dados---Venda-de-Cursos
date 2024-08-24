@@ -4,7 +4,7 @@ import { AlternativasOracleRepository } from '../../repositories/alternativaOrac
 import { UpdateAlternativaUseCase } from './updateAlternativaUseCase';
 
 export const updateAlternativaParamsSchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export const updateAlternativaBodySchema = z.object({

@@ -5,7 +5,7 @@ import { AlternativasRepository } from "../../repositories/alternativaInterfaceR
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 
 interface UpdateAlternativaUseCaseRequest {
-    id: string
+    id: number
     certa?: boolean
     descricao?: string
     numAtividade?: number
