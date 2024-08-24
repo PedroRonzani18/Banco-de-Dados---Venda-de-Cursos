@@ -5,8 +5,8 @@ import { AtividadeFeitasRepository } from "../../repositories/atividadeFeitaInte
 import { FindAtividadeFeitaByUsuarioAtividadeUseCase } from "../findAtividadeFeitaByUsuarioAtividade/findAtividadeFeitaByUsuarioAtividadeUseCase"
 
 interface CreateAtividadeFeitaUseCaseRequest {
-    usuarioId: string
-    atividadeId: string
+    usuarioId: number
+    atividadeId: number
     dataFinzalizacao: Date
 }
 

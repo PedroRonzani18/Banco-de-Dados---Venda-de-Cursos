@@ -4,12 +4,12 @@ import { AtividadeFeitasOracleRepository } from '../../repositories/atividadeFei
 import { UpdateAtividadeFeitaUseCase } from './updateAtividadeFeitaUseCase';
 
 export const updateAtividadeFeitaParamsSchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export const updateAtividadeFeitaBodySchema = z.object({
-	usuarioId: z.string().optional(),
-	cursoId: z.string().optional(),
+	usuarioId: z.number().optional(),
+	cursoId: z.number().optional(),
 	dataMatricula: z.string().optional(),
 });
 

@@ -4,8 +4,8 @@ import { AtividadeFeita } from "@/domain/cursos/@entities/atividadeFeita"
 import { AtividadeFeitasRepository } from "../../repositories/atividadeFeitaInterfaceRepository"
 
 interface FindAtividadeFeitaByUsuarioAtividadeUseCaseRequest {
-    usuarioId: string
-    atividadeId: string
+    usuarioId: number
+    atividadeId: number
 }
 
 type FindAtividadeFeitaByUsuarioAtividadeUseCaseResponse = Either<

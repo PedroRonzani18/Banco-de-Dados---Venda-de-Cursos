@@ -2,14 +2,14 @@ import { Entity } from "@/core/entities/entity";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 
 export type UpdateAtividadeFeitaProps = {
-    usuarioId?: string
-    atividadeId?: string
+    usuarioId?: number
+    atividadeId?: number
     dataFinzalizacao?: string
 };
 
 export type AtividadeFeitaProps = {
-    usuarioId: string
-    atividadeId: string
+    usuarioId: number
+    atividadeId: number
     dataFinzalizacao: Date
 };
 
@@ -19,9 +19,9 @@ export class AtividadeFeita extends Entity<AtividadeFeitaProps> {
         super(props, id)
     }
 
-    get usuarioId() { return this.usuarioId }
-    get atividadeId() { return this.atividadeId }
-    get dataFinzalizacao() { return this.dataFinzalizacao }
+    get usuarioId() { return this.props.usuarioId }
+    get atividadeId() { return this.props.atividadeId }
+    get dataFinzalizacao() { return this.props.dataFinzalizacao }
 
     toJSON() {
         return {

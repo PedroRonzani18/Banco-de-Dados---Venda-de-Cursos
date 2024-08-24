@@ -2,9 +2,9 @@ import { AtividadeFeita, AtividadeFeitaProps, UpdateAtividadeFeitaProps } from "
 
 export interface AtividadeFeitasRepository {
     create(data: AtividadeFeitaProps): Promise<AtividadeFeita>
-    findByUsuarioAtividade(cursoId: string, usuarioId: string): Promise<AtividadeFeita | null>
-    findById(name: string): Promise<AtividadeFeita | null>
+    findByUsuarioAtividade(cursoId: number, usuarioId: number): Promise<AtividadeFeita | null>
+    findById(id: number): Promise<AtividadeFeita | null>
     list(): Promise<AtividadeFeita[]>
-    delete(id: string): Promise<AtividadeFeita | null>
-    update(id: string, data: UpdateAtividadeFeitaProps): Promise<AtividadeFeita | null>
+    delete(id: number): Promise<AtividadeFeita | null>
+    update(id: number, data: UpdateAtividadeFeitaProps): Promise<AtividadeFeita | null>
 }

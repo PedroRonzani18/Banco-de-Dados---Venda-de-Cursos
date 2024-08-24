@@ -4,8 +4,8 @@ import { AtividadeFeitasOracleRepository } from '../../repositories/atividadeFei
 import { CreateAtividadeFeitaUseCase } from './createAtividadeFeitaUseCase';
 
 export const createAtividadeFeitaBodySchema = z.object({
-	usuarioId: z.string(),
-	atividadeId: z.string(),
+	usuarioId: z.number(),
+	atividadeId: z.number(),
 	dataFinzalizacao: z.date(),
 });
 

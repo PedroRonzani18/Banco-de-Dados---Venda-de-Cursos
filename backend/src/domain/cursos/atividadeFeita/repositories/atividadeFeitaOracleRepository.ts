@@ -5,19 +5,19 @@ export class AtividadeFeitasOracleRepository implements AtividadeFeitasRepositor
     create(data: AtividadeFeitaProps): Promise<AtividadeFeita> {
         throw new Error("Method not implemented.");
     }
-    findByUsuarioAtividade(cursoId: string, usuarioId: string): Promise<AtividadeFeita | null> {
+    findByUsuarioAtividade(cursoId: number, usuarioId: number): Promise<AtividadeFeita | null> {
         throw new Error("Method not implemented.");
     }
-    findById(id: string): Promise<AtividadeFeita | null> {
+    findById(id: number): Promise<AtividadeFeita | null> {
         throw new Error("Method not implemented.");
     }
     list(): Promise<AtividadeFeita[]> {
         throw new Error("Method not implemented.");
     }
-    delete(id: string): Promise<AtividadeFeita | null> {
+    delete(id: number): Promise<AtividadeFeita | null> {
         throw new Error("Method not implemented.");
     }
-    update(id: string, data: UpdateAtividadeFeitaProps): Promise<AtividadeFeita | null> {
+    update(id: number, data: UpdateAtividadeFeitaProps): Promise<AtividadeFeita | null> {
         throw new Error("Method not implemented.");
     }
 }
