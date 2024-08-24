@@ -7,7 +7,7 @@ import { UsersRepository } from "@/domain/users/user/repositories/userInterfaceR
 import { FindUserByIdUseCase } from "@/domain/users/user/usecases/findUserById/findUserByIdUseCase"
 
 interface CreateCursoUseCaseRequest {
-    donoId: string
+    usuarioId: number
     nome: string
     descricao: string
     cargaHora: number
@@ -23,7 +23,7 @@ export class CreateCursoUseCase {
 
     constructor(private cursosRepository: CursosRepository, private usersRepository: UsersRepository) { }
 
-    async execute({ donoId, cargaHora, descricao, nome, preco }: CreateCursoUseCaseRequest): Promise<CreateCursoUseCaseResponse> {
+    async execute({ usuarioId, cargaHora, descricao, nome, preco }: CreateCursoUseCaseRequest): Promise<CreateCursoUseCaseResponse> {
 
         const findCursoByNomeUseCase = new FindCursoByNomeUseCase(this.cursosRepository)
 
@@ -31,11 +31,11 @@ export class CreateCursoUseCase {
         if (possibleCurso.isRight())
             return left({ error: new ResourceAlreadyExistsError(`Curso ${nome}`) })
 
-        const dono = await (new FindUserByIdUseCase(this.usersRepository)).execute({ id: donoId })
+        const dono = await (new FindUserByIdUseCase(this.usersRepository)).execute({ id: usuarioId })
         if (dono.isLeft())
-            return left({ error: new ResourceAlreadyExistsError(`User ${donoId}`) })
+            return left({ error: new ResourceAlreadyExistsError(`User ${usuarioId}`) })
 
-        const curso = await this.cursosRepository.create({ cargaHora, dataCadastro: null, descricao, nome, preco, topicos: [], dono: dono.value.user })
+        const curso = await this.cursosRepository.create({ cargaHora, dataCadastro: null, descricao, nome, preco, topicos: [], usuarioId })
 
         return right({ curso })
     }

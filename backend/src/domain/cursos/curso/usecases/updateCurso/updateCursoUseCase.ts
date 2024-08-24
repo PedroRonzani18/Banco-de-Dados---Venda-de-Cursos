@@ -5,7 +5,7 @@ import { CursosRepository } from "../../repositories/cursoInterfaceRepository"
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 
 interface UpdateCursoUseCaseRequest {
-    id: string
+    id: number
     data: UpdateCursoProps
 }
 

@@ -3,8 +3,8 @@ import { Curso, CursoProps, UpdateCursoProps } from "../../@entities/curso"
 export interface CursosRepository {
     create(data: CursoProps): Promise<Curso>
     findByNome(titulo: string): Promise<Curso | null>
-    findById(name: string): Promise<Curso | null>
+    findById(id: number): Promise<Curso | null>
     list(): Promise<Curso[]>
-    delete(id: string): Promise<Curso | null>
-    update(id: string, data: UpdateCursoProps): Promise<Curso | null>
+    delete(id: number): Promise<Curso | null>
+    update(id: number, data: UpdateCursoProps): Promise<Curso | null>
 }

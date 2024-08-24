@@ -1,7 +1,6 @@
 import { Entity } from "@/core/entities/entity";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { Topico } from "./topico";
-import { User } from "@/domain/users/@entities/user";
 
 export type UpdateCursoProps = {
     nome?: string
@@ -9,7 +8,7 @@ export type UpdateCursoProps = {
     cargaHora?: number
     dataCadastro?: Date
     preco?: number
-    donoId?: string
+    usuarioId?: string
 };
 
 export type CursoProps = {
@@ -18,8 +17,8 @@ export type CursoProps = {
     cargaHora: number
     dataCadastro: Date
     preco: number
+    usuarioId: number
     topicos: Topico[]
-    dono: User
 };
 
 export class Curso extends Entity<CursoProps> {
@@ -28,9 +27,13 @@ export class Curso extends Entity<CursoProps> {
         super(props, id)
     }
 
-    get enunciado() { return this.enunciado }
-    get titulo() { return this.titulo }
-    get alternativas() { return this.alternativas }
+    get nome() { return this.props.nome }
+    get descricao() { return this.props.descricao }
+    get cargaHora() { return this.props.cargaHora }
+    get dataCadastro() { return this.props.dataCadastro }
+    get preco() { return this.props.preco }
+    get topicos() { return this.props.topicos }
+    get usuarioId() { return this.props.usuarioId }
 
     toJSON() {
         return {

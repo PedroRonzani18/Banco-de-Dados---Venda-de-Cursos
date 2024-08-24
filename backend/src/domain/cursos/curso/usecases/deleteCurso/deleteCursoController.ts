@@ -4,7 +4,7 @@ import { DeleteCursoUseCase } from './deleteCursoUseCase';
 import { z } from 'zod';
 
 export const createCursoBodySchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export async function deleteCursoController(request: FastifyRequest, reply: FastifyReply) {

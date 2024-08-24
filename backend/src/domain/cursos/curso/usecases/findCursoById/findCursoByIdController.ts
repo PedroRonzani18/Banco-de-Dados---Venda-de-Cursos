@@ -4,7 +4,7 @@ import { FindCursoByIdUseCase } from './findCursoByIdUseCase';
 import { z } from 'zod';
 
 export const createCursoBodySchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export async function findCursoByIdController(request: FastifyRequest, reply: FastifyReply) {

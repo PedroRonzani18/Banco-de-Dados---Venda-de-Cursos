@@ -4,7 +4,7 @@ import { Curso } from "@/domain/cursos/@entities/curso"
 import { CursosRepository } from "../../repositories/cursoInterfaceRepository"
 
 interface FindCursoByIdUseCaseRequest {
-    id: string
+    id: number
 }
 
 type FindCursoByIdUseCaseResponse = Either<

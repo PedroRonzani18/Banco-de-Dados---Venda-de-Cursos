@@ -8,16 +8,16 @@ export class CursosOracleRepository implements CursosRepository {
     findByNome(titulo: string): Promise<Curso | null> {
         throw new Error("Method not implemented.");
     }
-    findById(id: string): Promise<Curso | null> {
+    findById(id: number): Promise<Curso | null> {
         throw new Error("Method not implemented.");
     }
     list(): Promise<Curso[]> {
         throw new Error("Method not implemented.");
     }
-    delete(id: string): Promise<Curso | null> {
+    delete(id: number): Promise<Curso | null> {
         throw new Error("Method not implemented.");
     }
-    update(id: string, data: UpdateCursoProps): Promise<Curso | null> {
+    update(id: number, data: UpdateCursoProps): Promise<Curso | null> {
         throw new Error("Method not implemented.");
     }
 }
