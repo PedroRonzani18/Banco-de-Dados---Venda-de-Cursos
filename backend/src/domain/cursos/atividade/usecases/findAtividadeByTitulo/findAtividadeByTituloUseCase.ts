@@ -5,7 +5,7 @@ import { AtividadesRepository } from "../../repositories/atividadeInterfaceRepos
 
 interface FindAtividadeByTituloUseCaseRequest {
     titulo: string
-    idAula: string
+    idAula: number
 }
 
 type FindAtividadeByTituloUseCaseResponse = Either<

@@ -5,7 +5,7 @@ import { AtividadesRepository } from "../../repositories/atividadeInterfaceRepos
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 
 interface UpdateAtividadeUseCaseRequest {
-    id: string
+    id: number
     enunciado: string
     titulo: string
 }

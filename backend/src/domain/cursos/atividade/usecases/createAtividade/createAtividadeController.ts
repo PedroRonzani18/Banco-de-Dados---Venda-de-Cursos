@@ -4,7 +4,7 @@ import { AtividadesOracleRepository } from '../../repositories/atividadeOracleRe
 import { CreateAtividadeUseCase } from './createAtividadeUseCase';
 
 export const createAtividadeBodySchema = z.object({
-	idAula: z.string(),
+	idAula: z.number(),
 	enunciado: z.string(),
 	titulo: z.string(),
 });

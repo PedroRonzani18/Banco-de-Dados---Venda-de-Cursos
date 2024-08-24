@@ -4,7 +4,7 @@ import { FindAtividadeByIdUseCase } from './findAtividadeByIdUseCase';
 import { z } from 'zod';
 
 export const createAtividadeBodySchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export async function findAtividadeByIdController(request: FastifyRequest, reply: FastifyReply) {

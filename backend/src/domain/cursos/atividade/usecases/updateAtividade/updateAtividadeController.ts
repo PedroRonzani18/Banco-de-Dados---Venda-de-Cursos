@@ -4,7 +4,7 @@ import { AtividadesOracleRepository } from '../../repositories/atividadeOracleRe
 import { UpdateAtividadeUseCase } from './updateAtividadeUseCase';
 
 export const updateAtividadeParamsSchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export const updateAtividadeBodySchema = z.object({

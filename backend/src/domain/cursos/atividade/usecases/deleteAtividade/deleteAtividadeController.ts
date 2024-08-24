@@ -4,7 +4,7 @@ import { DeleteAtividadeUseCase } from './deleteAtividadeUseCase';
 import { z } from 'zod';
 
 export const createAtividadeBodySchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export async function deleteAtividadeController(request: FastifyRequest, reply: FastifyReply) {

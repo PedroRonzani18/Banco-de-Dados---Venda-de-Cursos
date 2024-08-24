@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { FindAtividadeByTituloUseCase } from './findAtividadeByTituloUseCase';
 
 export const createAtividadeBodySchema = z.object({
-	idAula: z.string(),
+	idAula: z.number(),
 	titulo: z.string(),
 });
 

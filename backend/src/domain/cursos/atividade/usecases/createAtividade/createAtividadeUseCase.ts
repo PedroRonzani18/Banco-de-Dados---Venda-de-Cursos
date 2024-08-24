@@ -5,7 +5,7 @@ import { AtividadesRepository } from "../../repositories/atividadeInterfaceRepos
 import { FindAtividadeByTituloUseCase } from "../findAtividadeByTitulo/findAtividadeByTituloUseCase"
 
 interface CreateAtividadeUseCaseRequest {
-    idAula: string
+    idAula: number
     enunciado: string
     titulo: string
 }
@@ -28,7 +28,7 @@ export class CreateAtividadeUseCase {
         if (possibleAtividade.isRight())
             return left({ error: new ResourceAlreadyExistsError(`Atividade ${enunciado} na Aula ${idAula}`) })
 
-        const atividade = await this.atividadesRepository.create(idAula, { enunciado, titulo, alternativas: [] })
+        const atividade = await this.atividadesRepository.create(idAula, { enunciado, titulo, alternativas: [], idAula })
 
         return right({ atividade })
     }

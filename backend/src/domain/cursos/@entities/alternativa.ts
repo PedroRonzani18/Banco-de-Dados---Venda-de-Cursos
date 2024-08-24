@@ -21,10 +21,10 @@ export class Alternativa extends Entity<AlternativaProps> {
         super(props, id)
     }
 
-    get idAtividade() { return this.idAtividade }
-    get numAtividade() { return this.numAtividade }
-    get certa() { return this.certa }
-    get descricao() { return this.descricao }
+    get idAtividade() { return this.props.idAtividade }
+    get numAtividade() { return this.props.numAtividade }
+    get certa() { return this.props.certa }
+    get descricao() { return this.props.descricao }
 
     toJSON() {
         return {
