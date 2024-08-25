@@ -11,6 +11,8 @@ import { professorRoutes } from '@/domain/cursos/@routes/professor.routes';
 import { temaRoutes } from '@/domain/cursos/@routes/tema.routes';
 import { topicoRoutes } from '@/domain/cursos/@routes/topico.routes';
 import { aulaRoutes } from '@/domain/cursos/@routes/aula.routes';
+import { topicoTemaRoutes } from '@/domain/cursos/@routes/topicoTema.routes';
+import { topicoProfessorRoutes } from '@/domain/cursos/@routes/topicoProfessor.routes';
 
 export const app = fastify()
 
@@ -28,3 +30,5 @@ app.register(matriculadoRoutes, { prefix: 'matriculado' })
 app.register(professorRoutes, { prefix: 'professor' })
 app.register(temaRoutes, { prefix: 'tema' })
 app.register(topicoRoutes, { prefix: 'topico' })
+app.register(topicoTemaRoutes, { prefix: 'topico-tema' })
+app.register(topicoProfessorRoutes, { prefix: 'topico-professor' })
