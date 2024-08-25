@@ -15,7 +15,7 @@ export class Tema extends Entity<TemaProps> {
         super(props, id)
     }
 
-    get nome() { return this.nome }
+    get nome() { return this.props.nome }
 
     toJSON() {
         return {

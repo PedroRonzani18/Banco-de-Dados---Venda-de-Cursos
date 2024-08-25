@@ -15,7 +15,7 @@ export class Professor extends Entity<ProfessorProps> {
         super(props, id)
     }
 
-    get nome() { return this.nome }
+    get nome() { return this.props.nome }
 
     toJSON() {
         return {
