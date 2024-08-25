@@ -28,4 +28,11 @@ export class User extends Entity<UserProps> {
     get email() { return this.email }
     get senha() { return this.senha }
     get login() { return this.login }
+
+    toJSON() {
+        return {
+            ...super.toJSON(),
+            ...this.data
+        };
+    }
 }
