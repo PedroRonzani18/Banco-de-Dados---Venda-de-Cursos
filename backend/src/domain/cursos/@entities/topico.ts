@@ -29,12 +29,12 @@ export class Topico extends Entity<TopicoProps> {
     }
 
     get cursoId() { return this.props.cursoId }
-    get index() { return this.index }
-    get titulo() { return this.titulo }
-    get descricao() { return this.descricao }
-    get aulas() { return this.aulas }
-    get professores() { return this.professores }
-    get temas() { return this.temas }
+    get index() { return this.props.index }
+    get titulo() { return this.props.titulo }
+    get descricao() { return this.props.descricao }
+    get aulas() { return this.props.aulas }
+    get professores() { return this.props.professores }
+    get temas() { return this.props.temas }
 
     toJSON() {
         return {
