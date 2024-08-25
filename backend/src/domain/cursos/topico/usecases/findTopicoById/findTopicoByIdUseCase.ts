@@ -4,7 +4,7 @@ import { Topico } from "@/domain/cursos/@entities/topico"
 import { TopicosRepository } from "../../repositories/topicoInterfaceRepository"
 
 interface FindTopicoByIdUseCaseRequest {
-    id: string
+    id: number
 }
 
 type FindTopicoByIdUseCaseResponse = Either<

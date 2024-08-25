@@ -1,10 +1,10 @@
 import { Topico, TopicoProps, UpdateTopicoProps } from "../../@entities/topico"
 
 export interface TopicosRepository {
-    create(idCurso: string, data: TopicoProps): Promise<Topico>
-    findByTituloIdCurso(titulo: string, idAula: string): Promise<Topico | null>
-    findById(name: string): Promise<Topico | null>
+    create(idCurso: number, data: TopicoProps): Promise<Topico>
+    findByTituloIdCurso(titulo: string, idAula: number): Promise<Topico | null>
+    findById(id: number): Promise<Topico | null>
     list(): Promise<Topico[]>
-    delete(id: string): Promise<Topico | null>
-    update(id: string, data: UpdateTopicoProps): Promise<Topico | null>
+    delete(id: number): Promise<Topico | null>
+    update(id: number, data: UpdateTopicoProps): Promise<Topico | null>
 }

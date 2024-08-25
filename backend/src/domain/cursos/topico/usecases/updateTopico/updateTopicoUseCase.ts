@@ -5,7 +5,7 @@ import { TopicosRepository } from "../../repositories/topicoInterfaceRepository"
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 
 interface UpdateTopicoUseCaseRequest {
-    id: string
+    id: number
     enunciado: string
     titulo: string
 }

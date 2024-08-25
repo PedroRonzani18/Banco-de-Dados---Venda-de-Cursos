@@ -4,7 +4,7 @@ import { TopicosOracleRepository } from '../../repositories/topicoOracleReposito
 import { UpdateTopicoUseCase } from './updateTopicoUseCase';
 
 export const updateTopicoParamsSchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export const updateTopicoBodySchema = z.object({

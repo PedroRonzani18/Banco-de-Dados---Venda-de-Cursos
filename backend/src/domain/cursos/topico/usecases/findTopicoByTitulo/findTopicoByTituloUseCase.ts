@@ -5,7 +5,7 @@ import { TopicosRepository } from "../../repositories/topicoInterfaceRepository"
 
 interface FindTopicoByTituloUseCaseRequest {
     titulo: string
-    idCurso: string
+    cursoId: number
 }
 
 type FindTopicoByTituloUseCaseResponse = Either<
@@ -17,9 +17,9 @@ export class FindTopicoByTituloUseCase {
 
     constructor(private topicosRepository: TopicosRepository) { }
 
-    async execute({ titulo, idCurso }: FindTopicoByTituloUseCaseRequest): Promise<FindTopicoByTituloUseCaseResponse> {
+    async execute({ titulo, cursoId }: FindTopicoByTituloUseCaseRequest): Promise<FindTopicoByTituloUseCaseResponse> {
 
-        const topico = await this.topicosRepository.findByTituloIdCurso(titulo, idCurso)
+        const topico = await this.topicosRepository.findByTituloIdCurso(titulo, cursoId)
         if (!topico)
             return left({ error: new ResourceNotFoundError("Topico") })
 

@@ -5,7 +5,7 @@ import { TopicosRepository } from "../../repositories/topicoInterfaceRepository"
 import { FindTopicoByTituloUseCase } from "../findTopicoByTitulo/findTopicoByTituloUseCase"
 
 interface CreateTopicoUseCaseRequest {
-    idCurso: string
+    cursoId: number
     index: number
     titulo: string
     descricao: string
@@ -20,16 +20,16 @@ export class CreateTopicoUseCase {
 
     constructor(private topicosRepository: TopicosRepository) { }
 
-    async execute({ descricao, idCurso, index, titulo }: CreateTopicoUseCaseRequest): Promise<CreateTopicoUseCaseResponse> {
+    async execute({ descricao, cursoId, index, titulo }: CreateTopicoUseCaseRequest): Promise<CreateTopicoUseCaseResponse> {
 
         const findTopicoByTituloUseCase = new FindTopicoByTituloUseCase(this.topicosRepository)
 
-        const possibleTopico = await findTopicoByTituloUseCase.execute({ titulo, idCurso })
+        const possibleTopico = await findTopicoByTituloUseCase.execute({ titulo, cursoId })
 
         if (possibleTopico.isRight())
-            return left({ error: new ResourceAlreadyExistsError(`Topico ${titulo} no Cursp ${idCurso}`) })
+            return left({ error: new ResourceAlreadyExistsError(`Topico ${titulo} no Cursp ${cursoId}`) })
 
-        const topico = await this.topicosRepository.create(idCurso, { descricao, index, professores: [], temas: [], titulo, aulas: [] })
+        const topico = await this.topicosRepository.create(cursoId, { descricao, index, professores: [], temas: [], titulo, aulas: [], cursoId })
 
         return right({ topico })
     }

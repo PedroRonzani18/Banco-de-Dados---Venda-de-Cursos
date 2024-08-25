@@ -4,7 +4,7 @@ import { FindTopicoByIdUseCase } from './findTopicoByIdUseCase';
 import { z } from 'zod';
 
 export const createTopicoBodySchema = z.object({
-	id: z.string(),
+	id: z.number(),
 });
 
 export async function findTopicoByIdController(request: FastifyRequest, reply: FastifyReply) {
