@@ -16,10 +16,6 @@ export type TopicoProps = {
     index: number
     titulo: string
     descricao: string
-
-    aulas: Aula[]
-    professores: Professor[]
-    temas: Tema[]
 };
 
 export class Topico extends Entity<TopicoProps> {
@@ -32,9 +28,6 @@ export class Topico extends Entity<TopicoProps> {
     get index() { return this.props.index }
     get titulo() { return this.props.titulo }
     get descricao() { return this.props.descricao }
-    get aulas() { return this.props.aulas }
-    get professores() { return this.props.professores }
-    get temas() { return this.props.temas }
 
     toJSON() {
         return {
