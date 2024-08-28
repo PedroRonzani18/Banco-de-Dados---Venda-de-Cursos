@@ -12,7 +12,8 @@
     "dev": "tsx watch src/core/index.ts",
     "docker:start": "docker compose up -d",
     "docker:stop": "docker compose stop",
-    "prisma:migrate:dev": "npx prisma migrate dev"
+    "prisma:migrate:dev": "npx prisma migrate dev",
+    "oracle": "tsx src/core/db/oracle.ts"
   },
   "keywords": [],
   "author": "PedroRonzani18",
@@ -29,8 +30,10 @@
   "dependencies": {
     "@fastify/cookie": "^9.1.0",
     "@prisma/client": "^5.1.0",
+    "@types/oracledb": "^6.5.1",
     "dotenv": "^16.3.1",
     "fastify": "^4.21.0",
+    "oracledb": "^6.6.0",
     "random": "^4.1.0",
     "zod": "^3.21.4"
   }
