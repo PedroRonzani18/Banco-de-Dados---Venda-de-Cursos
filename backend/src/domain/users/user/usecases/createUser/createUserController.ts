@@ -20,14 +20,10 @@ export async function createController(request: FastifyRequest, reply: FastifyRe
 
 	const user = await createUserUseCase.execute({ email, login, nome, senha, telefone });
 
-	console.dir({user}, {depth: null})
-
 	if (user.isLeft())
 		return reply
 			.status(400)
 			.send(user.value.error)
-
-	console.log("i9ahusdhijsad")
 
 	return reply
 		.status(201)

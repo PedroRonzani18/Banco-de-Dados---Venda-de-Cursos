@@ -17,6 +17,8 @@ document.addEventListener("DOMContentLoaded", function() {
         // Mostrar a sobreposição de carregamento
         document.getElementById('loading-overlay').style.display = 'flex';
 
+        console.log("Antes")
+
         const response = await fetch('http://localhost:3000/user/login', {
             method: 'POST',
             headers: {
@@ -27,42 +29,16 @@ document.addEventListener("DOMContentLoaded", function() {
             })
         });
 
-        if(response.ok) {
-            const data = await response.json();
-            if(data.success) {
-                window.location.href = 'mainS.html';
-            } else {
-                alert('Login ou senha incorretos.');
-            }
+        console.log("Depois")
+
+        if (!(response.status >= 200 && response.status < 300)) {
+            const { code, message, status } = await response.json();
+            alert('Login ou senha incorretos.');
+            console.error(`Erro ${status} (${code}): ${message}`);
+        } else {
+            window.location.href = 'mainS.html';
         }
 
-        // // Realizar a chamada ao backend
-        // fetch('http://localhost:3000/login', {  // <--- Integração com o backend aqui
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ login: login, password: password })
-        // })
-        // .then(response => response.json())
-        // .then(data => {
-        //     // Esconder a sobreposição de carregamento
-        //     document.getElementById('loading-overlay').style.display = 'none';
-
-        //     if (data.success) {
-        //         // Redirecionar para a página principal
-        //         window.location.href = 'mainS.html';
-        //     } else {
-        //         alert('Login ou senha incorretos.');
-        //     }
-        // })
-        // .catch(error => {
-        //     // Esconder a sobreposição de carregamento
-        //     document.getElementById('loading-overlay').style.display = 'none';
-
-        //     console.error('Erro ao fazer login:', error);
-        //     alert('Erro ao se conectar com o servidor.');
-        // });
     }
 
     // Vincula a função login ao botão
