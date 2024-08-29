@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('loading-overlay').style.display = 'none';
 
     // Função de login
-    function login() {
+    async function login() {
         // Obter os valores dos campos
         const login = document.getElementById('login').value;
         const password = document.getElementById('password').value;
@@ -17,33 +17,52 @@ document.addEventListener("DOMContentLoaded", function() {
         // Mostrar a sobreposição de carregamento
         document.getElementById('loading-overlay').style.display = 'flex';
 
-        // Realizar a chamada ao backend
-        fetch('http://localhost:3000/login', {  // <--- Integração com o backend aqui
+        const response = await fetch('http://localhost:3000/user/login', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ login: login, password: password })
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Esconder a sobreposição de carregamento
-            document.getElementById('loading-overlay').style.display = 'none';
+            body: JSON.stringify({ 
+                login, password
+            })
+        });
 
-            if (data.success) {
-                // Redirecionar para a página principal
+        if(response.ok) {
+            const data = await response.json();
+            if(data.success) {
                 window.location.href = 'mainS.html';
             } else {
                 alert('Login ou senha incorretos.');
             }
-        })
-        .catch(error => {
-            // Esconder a sobreposição de carregamento
-            document.getElementById('loading-overlay').style.display = 'none';
+        }
 
-            console.error('Erro ao fazer login:', error);
-            alert('Erro ao se conectar com o servidor.');
-        });
+        // // Realizar a chamada ao backend
+        // fetch('http://localhost:3000/login', {  // <--- Integração com o backend aqui
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ login: login, password: password })
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     // Esconder a sobreposição de carregamento
+        //     document.getElementById('loading-overlay').style.display = 'none';
+
+        //     if (data.success) {
+        //         // Redirecionar para a página principal
+        //         window.location.href = 'mainS.html';
+        //     } else {
+        //         alert('Login ou senha incorretos.');
+        //     }
+        // })
+        // .catch(error => {
+        //     // Esconder a sobreposição de carregamento
+        //     document.getElementById('loading-overlay').style.display = 'none';
+
+        //     console.error('Erro ao fazer login:', error);
+        //     alert('Erro ao se conectar com o servidor.');
+        // });
     }
 
     // Vincula a função login ao botão
