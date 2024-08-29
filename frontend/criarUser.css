@@ -1,0 +1,71 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #4A90E2, #9013FE);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.create-account-container {
+    background-color: #000000;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+    width: 350px;
+    text-align: center;
+    color: #fff;
+}
+
+.create-account-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.create-account-container input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #333;
+    color: #ddd;
+    box-sizing: border-box;
+}
+
+.create-account-container input::placeholder {
+    color: #888;
+}
+
+.create-account-container button {
+    width: 100%;
+    padding: 14px;
+    background-color: #9013FE;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.create-account-container button:hover {
+    background-color: #7a0fcf;
+}
+
+.create-account-container p {
+    margin-top: 15px;
+    color: #ddd;
+}
+
+.create-account-container p a {
+    color: #4A90E2;
+    text-decoration: none;
+}
+
+.create-account-container p a:hover {
+    text-decoration: underline;
+}

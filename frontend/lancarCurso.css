@@ -1,0 +1,132 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #4A90E2, #9013FE);
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+    padding: 20px;
+    background-color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.course-form {
+    width: 80%;
+    max-width: 800px;
+    margin-top: 20px;
+    background-color: #000000;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    font-size: 16px;
+    color: #000;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #9013FE;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #7a0fcf;
+}
+
+h3 {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.topic {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #333;
+    border-radius: 8px;
+}
+
+.topic h4 {
+    margin-top: 0;
+}
+
+.topic input[type="text"],
+.topic textarea {
+    margin-bottom: 10px;
+}
+
+.topic {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #333;
+    border-radius: 8px;
+    position: relative; /* Permitir posicionamento absoluto para o botão de remover */
+}
+
+.topic h4 {
+    margin-top: 0;
+}
+
+.topic input[type="text"],
+.topic textarea {
+    margin-bottom: 10px;
+}
+
+.topic button.remove-topic {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff4c4c;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    width: 20px;  /* Ajuste no tamanho */
+    height: 20px; /* Ajuste no tamanho */
+    text-align: center;
+    line-height: 18px; /* Ajuste para centralizar o "x" */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px; /* Tamanho do texto "x" */
+    padding: 0; /* Remover padding extra */
+}
+
+.topic button.remove-topic:hover {
+    background-color: #ff1c1c;
+}

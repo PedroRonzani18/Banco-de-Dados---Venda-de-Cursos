@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduMaster - Uso do Curso</title>
+    <link rel="stylesheet" href="cursoUsuario.css">
+</head>
+<body>
+
+<header>
+    <h1>Uso do Curso</h1>
+</header>
+
+<div class="course-content">
+    <div class="current-lesson">
+        <h2>Tópico Atual: <span id="lessonTopic">Nome do Tópico</span></h2>
+        <h3>Próxima Aula: <span id="lessonTitle">Título da Aula</span></h3>
+        <p><strong>Descrição:</strong> <span id="lessonDescription">Descrição da próxima aula...</span></p>
+        <div class="video-container">
+            <iframe id="lessonVideo" width="100%" height="315" src="https://www.youtube.com/embed/example" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button onclick="goToActivity()">Ir para Atividade</button>
+        <button onclick="goToNextLesson()">Ir para Próxima Aula</button>
+    </div>
+    
+    <div class="lesson-progress">
+        <h3>Progresso das Aulas</h3>
+        <ul id="lessonList">
+            <!-- Lista de aulas será gerada dinamicamente aqui -->
+        </ul>
+    </div>
+</div>
+
+<script src="cursoUsuario.js"></script>
+
+</body>
+</html>

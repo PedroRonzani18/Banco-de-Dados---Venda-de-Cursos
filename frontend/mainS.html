@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduMaster - Cursos Disponíveis</title>
+    <link rel="stylesheet" href="mainS.css">
+</head>
+<body>
+
+<header>
+    <h1>Cursos Disponíveis</h1>
+    <div class="user-profile">
+        <button onclick="goToProfile()">Minha Página</button>
+    </div>
+</header>
+
+<div class="search-filter-container">
+    <input type="text" id="search" placeholder="Pesquisar cursos..." oninput="searchCourses()">
+    <div class="filter">
+        <input type="text" id="filterInput" placeholder="Filtrar por tema..." oninput="filterThemes()">
+        <div id="themeDropdown" class="dropdown-content"></div>
+    </div>
+</div>
+
+<div class="courses-grid" id="coursesGrid">
+    <!-- Os cursos serão renderizados aqui dinamicamente -->
+</div>
+
+<script src="mainS.js"></script>
+
+</body>
+</html>

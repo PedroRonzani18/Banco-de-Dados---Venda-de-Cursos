@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduMaster - Lançar Curso</title>
+    <link rel="stylesheet" href="lancarCurso.css">
+</head>
+<body>
+
+<header>
+    <h1>Lançar Novo Curso</h1>
+</header>
+
+<div class="course-form">
+    <form id="courseForm">
+        <div class="form-group">
+            <label for="courseName">Nome do Curso:</label>
+            <input type="text" id="courseName" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="courseDescription">Descrição Geral:</label>
+            <textarea id="courseDescription" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="courseImage">URL da Foto de Capa:</label>
+            <input type="text" id="courseImage" required>
+        </div>
+
+        <div class="form-group">
+            <label for="coursePrice">Preço:</label>
+            <input type="number" id="coursePrice" required>
+        </div>
+
+        <div class="form-group">
+            <label for="courseHours">Carga Horária:</label>
+            <input type="text" id="courseHours" required>
+        </div>
+
+        <div class="form-group">
+            <label for="courseTeachers">Professor(es):</label>
+            <input type="text" id="courseTeachers" required>
+        </div>
+
+        <h3>Tópicos do Curso</h3>
+        <div id="topicsContainer">
+            <!-- Tópicos e aulas serão adicionados dinamicamente aqui -->
+        </div>
+
+        <button type="button" onclick="addTopic()">Adicionar Tópico</button>
+        <button type="submit">Lançar Curso</button>
+    </form>
+</div>
+
+<script src="lancarCurso.js"></script>
+
+</body>
+</html>

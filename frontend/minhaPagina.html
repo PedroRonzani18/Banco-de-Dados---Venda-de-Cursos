@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduMaster - Minha Página</title>
+    <link rel="stylesheet" href="minhaPagina.css">
+</head>
+<body>
+
+<header>
+    <h1>Minha Página</h1>
+</header>
+
+<div class="user-info">
+    <h2>Bem-vindo, <span id="userName">[Nome do Usuário]</span></h2>
+</div>
+
+<div class="action-buttons">
+    <button onclick="lancarCurso()">Lançar Curso</button>
+    <button onclick="verCertificados()">Meus Certificados</button>
+</div>
+
+<h3>Meus Cursos</h3>
+<div class="courses-grid" id="userCoursesGrid">
+    <!-- Os cursos do usuário serão renderizados aqui dinamicamente -->
+</div>
+
+<script src="minhaPagina.js"></script>
+
+</body>
+</html>
