@@ -2,7 +2,7 @@ import { Either, left, right } from "@/core/types/either"
 import { ResourceAlreadyExistsError } from "@/core/errors/resource-already-exists-error"
 import { User } from "../../../@entities/user"
 import { UsersRepository } from "../../repositories/userInterfaceRepository"
-import { FindUserByNameUseCase } from "../findUserByName/findUserByNameUseCase"
+import { FindUserByNameUseCase } from "../findUserByLogin/findUserByLoginUseCase"
 
 interface CreateUserUseCaseRequest {
     email: string

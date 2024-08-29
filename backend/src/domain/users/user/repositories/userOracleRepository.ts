@@ -57,9 +57,9 @@ export class UsersOracleRepository implements UsersRepository {
         return users
     }
 
-    async findByName(name: string): Promise<User | null> {
+    async findByLogin(login: string): Promise<User | null> {
 
-        const result = await oracleConnection.execute(`SELECT * FROM ECLBDIT215.USUARIO WHERE NOME = '${name}'`)
+        const result = await oracleConnection.execute(`SELECT * FROM ECLBDIT215.USUARIO WHERE LOGIN = '${login}'`)
 
         const map : Map<string, any> = new Map()
 

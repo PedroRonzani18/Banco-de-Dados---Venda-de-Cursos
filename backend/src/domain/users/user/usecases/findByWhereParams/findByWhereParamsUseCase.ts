@@ -3,23 +3,23 @@ import { Either, left, right } from "@/core/types/either"
 import { UsersRepository } from "../../repositories/userInterfaceRepository"
 import { User } from "@/domain/users/@entities/user"
 
-interface FindUserByNameUseCaseRequest {
+interface FindUserByWhereParamsUseCaseRequest {
     params: {
         key: string
         value: string
     }[]
 }
 
-type FindUserByNameUseCaseResponse = Either<
+type FindUserByWhereParamsUseCaseResponse = Either<
     { error: ResourceNotFoundError },
     { users: User[] }
 >
 
-export class FindUserByNameUseCase {
+export class FindUserByWhereParamsUseCase {
 
     constructor(private usersRepository: UsersRepository) { }
 
-    async execute({ params }: FindUserByNameUseCaseRequest): Promise<FindUserByNameUseCaseResponse> {
+    async execute({ params }: FindUserByWhereParamsUseCaseRequest): Promise<FindUserByWhereParamsUseCaseResponse> {
 
         const mapParams = new Map<string, string>(params.map(param => [param.key, param.value]));
 

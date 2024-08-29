@@ -3,22 +3,22 @@ import { Either, left, right } from "@/core/types/either"
 import { UsersRepository } from "../../repositories/userInterfaceRepository"
 import { User } from "@/domain/users/@entities/user"
 
-interface FindUserByNameUseCaseRequest {
-    name: string
+interface FindUserByloginUseCaseRequest {
+    login: string
 }
 
-type FindUserByNameUseCaseResponse = Either<
+type FindUserByloginUseCaseResponse = Either<
     { error: ResourceNotFoundError },
     { user: User }
 >
 
-export class FindUserByNameUseCase {
+export class FindUserByLoginUseCase {
 
     constructor(private usersRepository: UsersRepository) { }
 
-    async execute({ name }: FindUserByNameUseCaseRequest): Promise<FindUserByNameUseCaseResponse> {
+    async execute({ login }: FindUserByloginUseCaseRequest): Promise<FindUserByloginUseCaseResponse> {
 
-        const user = await this.usersRepository.findByName(name)
+        const user = await this.usersRepository.findByLogin(login)
 
         if (!user)
             return left({error: new ResourceNotFoundError("User")})

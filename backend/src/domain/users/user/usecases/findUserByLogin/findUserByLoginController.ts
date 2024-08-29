@@ -1,20 +1,20 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { UsersOracleRepository } from '../../repositories/userOracleRepository';
-import { FindUserByNameUseCase } from './findUserByNameUseCase';
+import { FindUserByLoginUseCase } from './findUserByLoginUseCase';
 import { z } from 'zod';
 
 export const createUserBodySchema = z.object({
-	name: z.string(),
+	login: z.string(),
 });
 
-export async function findUserByNameController(request: FastifyRequest, reply: FastifyReply) {
+export async function findUserByloginController(request: FastifyRequest, reply: FastifyReply) {
 
-    const { name } = createUserBodySchema.parse(request.params);
+    const { login } = createUserBodySchema.parse(request.params);
 
 	const usersRepository = new UsersOracleRepository()
-    const findUserByNameUseCase = new FindUserByNameUseCase(usersRepository)
+    const findUserByloginUseCase = new FindUserByLoginUseCase(usersRepository)
 
-	const user = await findUserByNameUseCase.execute({ name });
+	const user = await findUserByloginUseCase.execute({ login });
 
 	if (user.isLeft())
 		return reply
