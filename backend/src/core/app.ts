@@ -1,5 +1,6 @@
 import fastify from 'fastify'
 import fastifyCookie from '@fastify/cookie';
+import fastifyCors from '@fastify/cors';
 import { userRoutes } from '@/domain/users/@routes/user.routes';
 import { alternativaRoutes } from '@/domain/cursos/@routes/alternativa.routes';
 import { atividadeRoutes } from '@/domain/cursos/@routes/atividade.routes';
@@ -17,6 +18,13 @@ import { topicoProfessorRoutes } from '@/domain/cursos/@routes/topicoProfessor.r
 export const app = fastify()
 
 app.register(fastifyCookie)
+
+app.register(fastifyCors, {
+    origin: '*', // Permitir todas as origens, você pode especificar as permitidas se quiser mais segurança
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos HTTP permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos
+});
+
 
 app.register(userRoutes, { prefix: 'user' })
 

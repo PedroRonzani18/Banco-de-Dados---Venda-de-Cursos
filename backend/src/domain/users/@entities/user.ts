@@ -23,11 +23,11 @@ export class User extends Entity<UserProps> {
         super(props, id)
     }
 
-    get nome() { return this.nome }
-    get telefone() { return this.telefone }
-    get email() { return this.email }
-    get senha() { return this.senha }
-    get login() { return this.login }
+    get nome() { return this.props.nome }
+    get telefone() { return this.props.telefone }
+    get email() { return this.props.email }
+    get senha() { return this.props.senha }
+    get login() { return this.props.login }
 
     toJSON() {
         return {

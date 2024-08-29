@@ -11,23 +11,26 @@ const connectionConfig = {
   walletLocation: WALLET_LOCATION
 };
 
+export let oracleConnection: oracledb.Connection;
+
 async function connectToDatabase() {
+  if (oracleConnection) {
+    // Se já existir uma conexão aberta, retorna a mesma
+    return oracleConnection;
+  }
+
   try {
 
-    console.log('Iniciando conexão com Oracle Database...');
-
     oracledb.initOracleClient({ configDir: WALLET_LOCATION });
+    oracleConnection = await oracledb.getConnection(connectionConfig);
 
-    console.log('Oracle Client inicializado com sucesso!');
+    console.log('Conexão com Oracle Database estabelecida');
 
-    const connection = await oracledb.getConnection(connectionConfig);
-
-    console.log('Conexão estabelecida com sucesso!');
-
-    await connection.close();
+    return oracleConnection;
   } catch (err) {
     console.error('Erro ao conectar ao Oracle Database:', err);
+    throw err; // Lança o erro para tratamento em outro lugar
   }
 }
 
-connectToDatabase();
+export { connectToDatabase };

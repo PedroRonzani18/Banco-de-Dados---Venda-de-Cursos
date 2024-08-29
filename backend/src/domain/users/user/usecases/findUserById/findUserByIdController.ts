@@ -14,7 +14,7 @@ export async function findUserByIdController(request: FastifyRequest, reply: Fas
 	const usersRepository = new UsersOracleRepository()
     const findUserByIdUseCase = new FindUserByIdUseCase(usersRepository)
 
-	const user = await findUserByIdUseCase.execute({ id });
+	const user = await findUserByIdUseCase.execute({ id: Number(id) });
 
 	if (user.isLeft())
 		return reply
