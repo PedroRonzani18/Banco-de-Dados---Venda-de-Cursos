@@ -1,16 +1,26 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
     let courses = [];
 
+    const response = await fetch('http://localhost:3000/curso/', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json'}
+    });
+
+    const data = await response.json();
+    console.dir({ data }, { depth: null });
+
+    renderCourses(data);
+
     // Carregar cursos do backend
-    fetch('http://localhost:3000/courses')  // <--- URL do backend para buscar os cursos
-        .then(response => response.json())
-        .then(data => {
-            courses = data;
-            renderCourses(courses);
-        })
-        .catch(error => {
-            console.error('Erro ao carregar cursos:', error);
-        });
+    // fetch('http://localhost:3000/curso/list')  // <--- URL do backend para buscar os cursos
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         courses = data;
+    //         renderCourses(courses);
+    //     })
+    //     .catch(error => {
+    //         console.error('Erro ao carregar cursos:', error);
+    //     });
 
     function renderCourses(courses) {
         const grid = document.getElementById('coursesGrid');
@@ -19,9 +29,9 @@ document.addEventListener("DOMContentLoaded", function() {
             const courseCard = document.createElement('div');
             courseCard.className = 'course-card';
             courseCard.innerHTML = `
-                <img src="${course.image}" alt="${course.name}">
-                <h3>${course.name}</h3>
-                <p><strong>Carga Horária:</strong> ${course.hours}</p>
+                <img src="${course.image}" alt="${course.nome}">
+                <h3>${course.nome}</h3>
+                <p><strong>Carga Horária:</strong> ${course.cargaHora}</p>
                 <p><strong>Tema:</strong> ${course.theme}</p>
                 <p><strong>Professores:</strong> ${course.teachers}</p>
             `;

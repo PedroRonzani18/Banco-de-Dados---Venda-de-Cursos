@@ -1,9 +1,9 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById('courseForm');
     const topicsContainer = document.getElementById('topicsContainer');
     let topicCount = 0;
 
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', async function (event) {
         event.preventDefault();
 
         const coursePrice = document.getElementById('coursePrice').value;
@@ -15,53 +15,75 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         const courseData = {
-            name: document.getElementById('courseName').value,
-            description: document.getElementById('courseDescription').value,
-            image: document.getElementById('courseImage').value,
-            price: coursePrice,
-            hours: document.getElementById('courseHours').value,
-            teachers: document.getElementById('courseTeachers').value,
-            topics: []
+            nome: document.getElementById('courseName').value,
+            descricao: document.getElementById('courseDescription').value,
+            // image: document.getElementById('courseImage').value,
+            preco: parseInt(coursePrice),
+            cargaHora: parseInt(document.getElementById('courseHours').value),
+            usuarioId: 28
+            // teachers: document.getElementById('courseTeachers').value,
+            // topics: []
         };
 
-        for (let i = 0; i < topicCount; i++) {
-            const topicName = document.getElementById(`topicName_${i}`);
-            const topicDescription = document.getElementById(`topicDescription_${i}`);
-            const topicLessons = document.getElementById(`topicLessons_${i}`);
+        // for (let i = 0; i < topicCount; i++) {
+        //     const topicName = document.getElementById(`topicName_${i}`);
+        //     const topicDescription = document.getElementById(`topicDescription_${i}`);
+        //     const topicLessons = document.getElementById(`topicLessons_${i}`);
 
-            if (topicName && topicDescription && topicLessons) {
-                courseData.topics.push({
-                    name: topicName.value,
-                    description: topicDescription.value,
-                    lessons: topicLessons.value.split("\n").filter(link => link.trim() !== '')
-                });
-            }
+        //     if (topicName && topicDescription && topicLessons) {
+        //         courseData.topics.push({
+        //             name: topicName.value,
+        //             description: topicDescription.value,
+        //             lessons: topicLessons.value.split("\n").filter(link => link.trim() !== '')
+        //         });
+        //     }
+        // }
+
+        console.dir({ courseData: JSON.stringify(courseData) }, { depth: null });
+
+        const response = await fetch('http://localhost:3000/curso/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(courseData)
+        });
+        const data = await response.json();
+
+        console.dir({ response }, { depth: null });
+        console.dir({ data }, { depth: null });
+
+        if (response.ok) {
+            alert('Curso lançado com sucesso!');
+            window.location.href = 'minhaPagina.html';
+        } else {
+            alert('Erro ao lançar curso.');
         }
 
+
+
         // Enviar os dados do curso ao backend
-        fetch('http://localhost:3000/courses', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(courseData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Curso lançado com sucesso!');
-                window.location.href = 'minhaPagina.html';
-            } else {
-                alert('Erro ao lançar curso.');
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao lançar curso:', error);
-            alert('Erro ao se conectar com o servidor.');
-        });
+        // fetch('http://localhost:3000/courses', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(courseData)
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     if (data.success) {
+        //         alert('Curso lançado com sucesso!');
+        //         window.location.href = 'minhaPagina.html';
+        //     } else {
+        //         alert('Erro ao lançar curso.');
+        //     }
+        // })
+        // .catch(error => {
+        //     console.error('Erro ao lançar curso:', error);
+        //     alert('Erro ao se conectar com o servidor.');
+        // });
     });
 
-    window.addTopic = function() {
+    window.addTopic = function () {
         const topicDiv = document.createElement('div');
         topicDiv.className = 'topic';
         topicDiv.id = `topic_${topicCount}`;
@@ -78,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function() {
         topicCount++;
     };
 
-    window.removeTopic = function(topicIndex) {
+    window.removeTopic = function (topicIndex) {
         const topicDiv = document.getElementById(`topic_${topicIndex}`);
         topicsContainer.removeChild(topicDiv);
         reindexTopics();

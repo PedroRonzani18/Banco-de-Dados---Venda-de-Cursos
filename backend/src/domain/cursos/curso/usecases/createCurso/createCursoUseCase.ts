@@ -27,15 +27,15 @@ export class CreateCursoUseCase {
 
         const findCursoByNomeUseCase = new FindCursoByNomeUseCase(this.cursosRepository)
 
-        const possibleCurso = await findCursoByNomeUseCase.execute({ nome })
-        if (possibleCurso.isRight())
-            return left({ error: new ResourceAlreadyExistsError(`Curso ${nome}`) })
+        // const possibleCurso = await findCursoByNomeUseCase.execute({ nome })
+        // if (possibleCurso.isRight())
+        //     return left({ error: new ResourceAlreadyExistsError(`Curso ${nome}`) })
 
-        const dono = await (new FindUserByIdUseCase(this.usersRepository)).execute({ id: usuarioId })
-        if (dono.isLeft())
-            return left({ error: new ResourceAlreadyExistsError(`User ${usuarioId}`) })
+        // const dono = await (new FindUserByIdUseCase(this.usersRepository)).execute({ id: usuarioId })
+        // if (dono.isLeft())
+        //     return left({ error: new ResourceAlreadyExistsError(`User ${usuarioId}`) })
 
-        const curso = await this.cursosRepository.create({ cargaHora, dataCadastro: null, descricao, nome, preco, topicos: [], usuarioId })
+        const curso = await this.cursosRepository.create({ cargaHora, dataCadastro: new Date(), descricao, nome, preco, usuarioId })
 
         return right({ curso })
     }
