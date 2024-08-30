@@ -5,7 +5,7 @@ import { CursosRepository } from "./cursoInterfaceRepository";
 export class CursosOracleRepository implements CursosRepository {
     async create(data: CursoProps): Promise<Curso> {
 
-        await oracleConnection.execute(`INSERT INTO ECLBDIT215.CURSO(NOME, DESCRICAO, CARGAHORARIA, PRECO, DATACADASTRO, IDUSUARIO) VALUES ('${data.nome}', '${data.descricao}', ${data.cargaHora}, ${data.preco}, TO_DATE('${data.dataCadastro.toISOString().slice(0, 10)}', 'YYYY-MM-DD'), ${data.usuarioId})`)
+        await oracleConnection.execute(`INSERT INTO ECLBDIT215.CURSO(NOME, DESCRICAO, CARGAHORARIA, PRECO, DATACADASTRO, IDUSUARIO, IMAGEM) VALUES ('${data.nome}', '${data.descricao}', ${data.cargaHora}, ${data.preco}, TO_DATE('${data.dataCadastro.toISOString().slice(0, 10)}', 'YYYY-MM-DD'), ${data.usuarioId}, '${data.imagem}')`)
 
         await oracleConnection.commit()
 

@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async function() {
             const courseCard = document.createElement('div');
             courseCard.className = 'course-card';
             courseCard.innerHTML = `
-                <img src="${course.image}" alt="${course.nome}">
+                <img src="${course.imagem}" alt="${course.nome}">
                 <h3>${course.nome}</h3>
                 <p><strong>Carga Horária:</strong> ${course.cargaHora}</p>
                 <p><strong>Tema:</strong> ${course.theme}</p>

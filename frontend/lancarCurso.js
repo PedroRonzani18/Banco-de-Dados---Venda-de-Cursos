@@ -17,13 +17,15 @@ document.addEventListener("DOMContentLoaded", function () {
         const courseData = {
             nome: document.getElementById('courseName').value,
             descricao: document.getElementById('courseDescription').value,
-            // image: document.getElementById('courseImage').value,
+            imagem: document.getElementById('courseImage').value,
             preco: parseInt(coursePrice),
             cargaHora: parseInt(document.getElementById('courseHours').value),
             usuarioId: 28
             // teachers: document.getElementById('courseTeachers').value,
             // topics: []
         };
+
+        console.dir({ courseData }, { depth: null });
 
         // for (let i = 0; i < topicCount; i++) {
         //     const topicName = document.getElementById(`topicName_${i}`);
@@ -39,17 +41,12 @@ document.addEventListener("DOMContentLoaded", function () {
         //     }
         // }
 
-        console.dir({ courseData: JSON.stringify(courseData) }, { depth: null });
-
         const response = await fetch('http://localhost:3000/curso/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(courseData)
         });
         const data = await response.json();
-
-        console.dir({ response }, { depth: null });
-        console.dir({ data }, { depth: null });
 
         if (response.ok) {
             alert('Curso lançado com sucesso!');

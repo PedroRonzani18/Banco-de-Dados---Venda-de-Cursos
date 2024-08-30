@@ -32,19 +32,20 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Depois")
 
         if (!(response.status >= 200 && response.status < 300)) {
-            co        const response = await fetch('http://localhost:3000/user/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 
-                nome: nome, 
-                login: nome,  // Ajuste aqui: use a variável correta para login
-                email: email, 
-                telefone: telefone, 
-                senha: senha 
-            })
-        });nst { code, message, status } = await response.json();
+            const response = await fetch('http://localhost:3000/user/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    nome: nome, 
+                    login: nome,  // Ajuste aqui: use a variável correta para login
+                    email: email, 
+                    telefone: telefone, 
+                    senha: senha 
+                })
+            });
+            const { code, message, status } = await response.json();
             alert('Login ou senha incorretos.');
             console.error(`Erro ${status} (${code}): ${message}`);
         } else {

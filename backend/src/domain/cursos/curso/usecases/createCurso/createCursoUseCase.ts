@@ -8,6 +8,7 @@ import { FindUserByIdUseCase } from "@/domain/users/user/usecases/findUserById/f
 
 interface CreateCursoUseCaseRequest {
     usuarioId: number
+    imagem: string
     nome: string
     descricao: string
     cargaHora: number
@@ -23,7 +24,7 @@ export class CreateCursoUseCase {
 
     constructor(private cursosRepository: CursosRepository, private usersRepository: UsersRepository) { }
 
-    async execute({ usuarioId, cargaHora, descricao, nome, preco }: CreateCursoUseCaseRequest): Promise<CreateCursoUseCaseResponse> {
+    async execute({ usuarioId, cargaHora, descricao, nome, preco, imagem }: CreateCursoUseCaseRequest): Promise<CreateCursoUseCaseResponse> {
 
         const findCursoByNomeUseCase = new FindCursoByNomeUseCase(this.cursosRepository)
 
@@ -35,7 +36,7 @@ export class CreateCursoUseCase {
         // if (dono.isLeft())
         //     return left({ error: new ResourceAlreadyExistsError(`User ${usuarioId}`) })
 
-        const curso = await this.cursosRepository.create({ cargaHora, dataCadastro: new Date(), descricao, nome, preco, usuarioId })
+        const curso = await this.cursosRepository.create({ cargaHora, dataCadastro: new Date(), descricao, nome, preco, usuarioId, imagem })
 
         return right({ curso })
     }
