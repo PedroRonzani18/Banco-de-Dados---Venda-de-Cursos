@@ -9,6 +9,7 @@ export type UpdateCursoProps = {
     dataCadastro?: Date
     preco?: number
     usuarioId?: string
+    imagem?: string
 };
 
 export type CursoProps = {
@@ -18,6 +19,7 @@ export type CursoProps = {
     dataCadastro: Date
     preco: number
     usuarioId: number
+    imagem: string
 };
 
 export class Curso extends Entity<CursoProps> {
@@ -32,6 +34,7 @@ export class Curso extends Entity<CursoProps> {
     get dataCadastro() { return this.props.dataCadastro }
     get preco() { return this.props.preco }
     get usuarioId() { return this.props.usuarioId }
+    get imagem() { return this.props.imagem }
 
     toJSON() {
         return {

@@ -5,6 +5,7 @@ export interface CursosRepository {
     findByNome(titulo: string): Promise<Curso | null>
     findById(id: number): Promise<Curso | null>
     list(): Promise<Curso[]>
+    listById(id: number): Promise<Curso[]>
     delete(id: number): Promise<Curso | null>
     update(id: number, data: UpdateCursoProps): Promise<Curso | null>
 }
