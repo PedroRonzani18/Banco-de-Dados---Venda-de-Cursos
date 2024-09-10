@@ -25,36 +25,65 @@ document.addEventListener("DOMContentLoaded", function () {
             // topics: []
         };
 
-        console.dir({ courseData }, { depth: null });
+        const topics = []
 
-        // for (let i = 0; i < topicCount; i++) {
-        //     const topicName = document.getElementById(`topicName_${i}`);
-        //     const topicDescription = document.getElementById(`topicDescription_${i}`);
-        //     const topicLessons = document.getElementById(`topicLessons_${i}`);
+        for (let i = 0; i < topicCount; i++) {
+            const topicName = document.getElementById(`topicName_${i}`);
+            const topicDescription = document.getElementById(`topicDescription_${i}`);
+            const topicLessons = document.getElementById(`topicLessons_${i}`);
 
-        //     if (topicName && topicDescription && topicLessons) {
-        //         courseData.topics.push({
-        //             name: topicName.value,
-        //             description: topicDescription.value,
-        //             lessons: topicLessons.value.split("\n").filter(link => link.trim() !== '')
-        //         });
-        //     }
-        // }
+            if (topicName && topicDescription && topicLessons) {
+                topics.push({
+                    name: topicName.value,
+                    description: topicDescription.value,
+                    lessons: topicLessons.value.split("\n").filter(link => link.trim() !== '')
+                });
+            }
+        }
 
         const response = await fetch('http://localhost:3000/curso/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(courseData)
         });
+
         const data = await response.json();
 
         if (response.ok) {
             alert('Curso lançado com sucesso!');
-            window.location.href = 'minhaPagina.html';
+            // window.location.href = 'minhaPagina.html';
         } else {
             alert('Erro ao lançar curso.');
+            return;
         }
 
+        console.dir({data}, {depth: null});
+
+
+        let counter = 0;
+        for(const topic of topics) {
+            const topicData = {
+                titulo: topic.name,
+                descricao: topic.description,
+                // aulas: topic.lessons,
+                cursoId: data.id,
+                index: counter++
+            };
+
+            console.dir({topicData}, {depth: null});
+
+            const response = await fetch('http://localhost:3000/topico/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(topicData)
+            });
+
+            if (!response.ok) {
+                alert('Erro ao lançar tópico');
+                console.error('Erro ao lançar tópico:', response);
+                return;
+            }
+        }
 
 
         // Enviar os dados do curso ao backend

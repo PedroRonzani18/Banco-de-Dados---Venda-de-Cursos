@@ -12,12 +12,18 @@ export const createTopicoBodySchema = z.object({
 
 export async function createTopicoController(request: FastifyRequest, reply: FastifyReply) {
 
+	console.log("AAAAAA")
+
 	const { cursoId, descricao, index, titulo } = createTopicoBodySchema.parse(request.body);
+
+	console.log({ cursoId, descricao, index, titulo })
 
 	const topicosRepository = new TopicosOracleRepository()
 	const createTopicoUseCase = new CreateTopicoUseCase(topicosRepository)
 
 	const topico = await createTopicoUseCase.execute({ descricao, cursoId, index, titulo });
+
+	console.dir({ topico }, { depth: null })
 
 	if (topico.isLeft())
 		return reply

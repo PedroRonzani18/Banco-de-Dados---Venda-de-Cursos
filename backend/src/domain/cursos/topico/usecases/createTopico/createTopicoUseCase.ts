@@ -22,14 +22,14 @@ export class CreateTopicoUseCase {
 
     async execute({ descricao, cursoId, index, titulo }: CreateTopicoUseCaseRequest): Promise<CreateTopicoUseCaseResponse> {
 
-        const findTopicoByTituloUseCase = new FindTopicoByTituloUseCase(this.topicosRepository)
+        // const findTopicoByTituloUseCase = new FindTopicoByTituloUseCase(this.topicosRepository)
 
-        const possibleTopico = await findTopicoByTituloUseCase.execute({ titulo, cursoId })
+        // const possibleTopico = await findTopicoByTituloUseCase.execute({ titulo, cursoId })
 
-        if (possibleTopico.isRight())
-            return left({ error: new ResourceAlreadyExistsError(`Topico ${titulo} no Cursp ${cursoId}`) })
+        // if (possibleTopico.isRight())
+        //     return left({ error: new ResourceAlreadyExistsError(`Topico ${titulo} no Cursp ${cursoId}`) })
 
-        const topico = await this.topicosRepository.create(cursoId, { descricao, index, professores: [], temas: [], titulo, aulas: [], cursoId })
+        const topico = await this.topicosRepository.create(cursoId, { descricao, index, titulo, cursoId })
 
         return right({ topico })
     }

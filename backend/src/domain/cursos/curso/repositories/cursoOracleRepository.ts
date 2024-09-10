@@ -9,7 +9,13 @@ export class CursosOracleRepository implements CursosRepository {
 
         await oracleConnection.commit()
 
-        return new Curso(data)
+        const result = await oracleConnection.execute(`SELECT IDCURSO from ECLBDIT215.CURSO WHERE NOME = '${data.nome}' AND DESCRICAO = '${data.descricao}' AND CARGAHORARIA = ${data.cargaHora} AND PRECO = ${data.preco} AND DATACADASTRO = TO_DATE('${data.dataCadastro.toISOString().slice(0, 10)}', 'YYYY-MM-DD') AND IDUSUARIO = ${data.usuarioId} AND IMAGEM = '${data.imagem}'`)
+
+        const id = (result.rows as any[][])?.[0]?.[0];
+
+        console.dir({id})
+
+        return new Curso(data, id)
     }
     findByNome(titulo: string): Promise<Curso | null> {
         throw new Error("Method not implemented.");
