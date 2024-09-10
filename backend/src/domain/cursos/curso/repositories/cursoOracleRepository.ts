@@ -13,15 +13,35 @@ export class CursosOracleRepository implements CursosRepository {
 
         const id = (result.rows as any[][])?.[0]?.[0];
 
-        console.dir({id})
-
         return new Curso(data, id)
     }
     findByNome(titulo: string): Promise<Curso | null> {
         throw new Error("Method not implemented.");
     }
-    findById(id: number): Promise<Curso | null> {
-        throw new Error("Method not implemented.");
+
+    async findById(id: number): Promise<Curso | null> {
+
+        const response = await oracleConnection.execute(`SELECT * FROM ECLBDIT215.CURSO WHERE IDCURSO = ${id}`)
+        if (response.rows?.length === 0)
+            return null
+
+        const row = response.rows?.[0]
+
+        const map : Map<string, any> = new Map()
+
+        for (let j = 0; j < (response.metaData?.length ?? 0); j++)
+            map.set(response.metaData?.[j].name ?? '', (row as any)[j]);
+
+        return new Curso({
+            cargaHora: map.get('CARGAHORARIA'),
+            dataCadastro: map.get('DATACADASTRO'),
+            descricao: map.get('DESCRICAO'),
+            nome: map.get('NOME'),
+            preco: map.get('PRECO'),
+            usuarioId: map.get('IDUSUARIO'),
+            imagem: map.get('IMAGEM')
+        }, map.get('IDCURSO'))
+
     }
 
     async listById(id: number): Promise<Curso[]> {

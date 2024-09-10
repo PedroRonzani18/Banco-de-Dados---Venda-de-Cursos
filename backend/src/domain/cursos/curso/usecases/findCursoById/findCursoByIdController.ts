@@ -4,7 +4,7 @@ import { FindCursoByIdUseCase } from './findCursoByIdUseCase';
 import { z } from 'zod';
 
 export const createCursoBodySchema = z.object({
-	id: z.number(),
+	id: z.string(),
 });
 
 export async function findCursoByIdController(request: FastifyRequest, reply: FastifyReply) {
@@ -14,7 +14,7 @@ export async function findCursoByIdController(request: FastifyRequest, reply: Fa
 	const cursosRepository = new CursosOracleRepository()
     const findCursoByIdUseCase = new FindCursoByIdUseCase(cursosRepository)
 
-	const curso = await findCursoByIdUseCase.execute({ id });
+	const curso = await findCursoByIdUseCase.execute({ id: Number(id) });
 
 	if (curso.isLeft())
 		return reply

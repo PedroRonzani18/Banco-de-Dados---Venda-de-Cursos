@@ -25,6 +25,8 @@ document.addEventListener("DOMContentLoaded", function () {
             // topics: []
         };
 
+        console.dir({teachers: document.getElementById('courseTeachers').value}, {depth: null});
+
         const topics = []
 
         for (let i = 0; i < topicCount; i++) {
@@ -83,6 +85,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error('Erro ao lançar tópico:', response);
                 return;
             }
+
+            alert('Topicos Lançados com sucesso!');
+            window.location.href = 'minhaPagina.html';
+
         }
 
 

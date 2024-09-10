@@ -90,6 +90,30 @@ export class TopicosOracleRepository implements TopicosRepository {
         return topicos
     }
 
+    async listById(id: number): Promise<Topico[]> {
+        
+        const result = await oracleConnection.execute(`SELECT * FROM ECLBDIT215.TOPICO WHERE IDCURSO = ${id}`)
+
+        const topicos: Topico[] = []
+
+        for (const row of result.rows ?? []) {
+
+            const map : Map<string, any> = new Map()
+
+            for (let j = 0; j < (result.metaData?.length ?? 0); j++)
+                map.set(result.metaData?.[j].name ?? '', (row as any)[j]);
+
+            topicos.push(new Topico({
+                cursoId: map.get('IDCURSO'),
+                descricao: map.get('DESCRICAO'),
+                index: map.get('INDEX'),
+                titulo: map.get('TITULO')
+            }, map.get('IDTOPICO')))
+        }
+
+        return topicos
+    }
+
     async delete(id: number): Promise<Topico | null> {
 
         const topico = await this.findById(id)
