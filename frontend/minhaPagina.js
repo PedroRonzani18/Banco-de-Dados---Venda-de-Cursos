@@ -30,22 +30,9 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     const userCourses = await courses.json();
     
-    console.dir({userCourses})
+    console.dir({userCourses});
     
     renderUserCourses(userCourses);
-
-    // fetch('http://localhost:3000/user')  // Endereço do backend para obter os dados do usuário
-    //     .then(response => response.json())
-    //     .then(userData => {
-    //         // Exibir o nome do usuário
-    //         document.getElementById('userName').textContent = userData.name;
-
-    //         // Carregar e renderizar os cursos do usuário
-    //         renderUserCourses(userData.courses);
-    //     })
-    //     .catch(error => {
-    //         console.error('Erro ao carregar dados do usuário:', error);
-    //     });
 
     function renderUserCourses(courses) {
         const grid = document.getElementById('userCoursesGrid');
@@ -57,22 +44,27 @@ document.addEventListener("DOMContentLoaded", async function() {
                 <img src="${course.imagem}" alt="${course.nome}">
                 <h3>${course.nome}</h3>
                 <p><strong>Carga Horária:</strong> ${course.cargaHora}</p>
+                <button onclick="editarCurso(${course.id})">Editar Curso</button>
             `;
-            courseCard.addEventListener('click', () => {
+            courseCard.querySelector('img').addEventListener('click', () => {
                 window.location.href = `curso.html?id=${course.id}`;
             });
             grid.appendChild(courseCard);
         });
     }
 
+    // Função para redirecionar ao editar um curso
+    window.editarCurso = function(courseId) {
+        window.location.href = `editarCurso.html?courseId=${courseId}`;
+    };
 
-});
     // Função para redirecionar ao lançar um curso
-    function lancarCurso() {
-        window.location.href = 'lancarCurso.html'; // Página a ser implementada
-    }
+    window.lancarCurso = function() {
+        window.location.href = 'lancarCurso.html';
+    };
 
     // Função para redirecionar aos certificados do usuário
-    function verCertificados() {
-        window.location.href = 'certificados.html'; // Página a ser implementada
-    }
+    window.verCertificados = function() {
+        window.location.href = 'certificados.html';
+    };
+});

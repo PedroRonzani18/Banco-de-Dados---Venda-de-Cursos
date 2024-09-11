@@ -39,11 +39,6 @@
             <input type="text" id="courseHours" required>
         </div>
 
-        <div class="form-group">
-            <label for="courseTeachers">Professor(es):</label>
-            <input type="text" id="courseTeachers" required>
-        </div>
-
         <h3>Tópicos do Curso</h3>
         <div id="topicsContainer">
             <!-- Tópicos e aulas serão adicionados dinamicamente aqui -->
@@ -53,6 +48,53 @@
         <button type="submit">Lançar Curso</button>
     </form>
 </div>
+
+<!-- Template de tópico (oculto até ser clonado) -->
+<template id="topicTemplate">
+    <div class="topic">
+        <h4>Tópico</h4>
+        <input type="text" class="topic-name" placeholder="Nome do Tópico" required>
+        <input type="text" class="topic-theme" placeholder="Tema do Tópico" required>
+        <input type="text" class="topic-professor" placeholder="Professor do Tópico" required>
+        <div class="lessons-container">
+            <!-- Aulas serão adicionadas dinamicamente aqui -->
+        </div>
+        <button type="button" class="add-lesson" onclick="addLesson(this)">Adicionar Aula</button>
+        <button type="button" class="remove-topic" onclick="removeTopic(this)">&times;</button>
+    </div>
+</template>
+
+<!-- Template de aula (oculto até ser clonado) -->
+<template id="lessonTemplate">
+    <div class="lesson">
+        <h5>Nova Aula</h5>
+        <input type="text" class="lesson-name" placeholder="Nome da Aula" required>
+        <select class="lesson-type" onchange="updateLessonType(this)">
+            <option value="text">Textual</option>
+            <option value="video">Vídeo</option>
+            <option value="activity">Atividade</option>
+        </select>
+        <div class="lesson-content-container">
+            <textarea class="lesson-content" rows="3" placeholder="Conteúdo da Aula Textual"></textarea>
+            <input type="text" class="lesson-url" placeholder="URL do Vídeo" style="display: none;">
+            <div class="activity-container" style="display: none;">
+                <textarea class="lesson-question" rows="2" placeholder="Enunciado da Atividade"></textarea>
+                <div class="options-container">
+                    <div class="lesson-option-container">
+                        <input type="checkbox" class="lesson-option-correct"> <input type="text" class="lesson-option" placeholder="Opção 1">
+                        <button type="button" onclick="removeOption(this)">Remover</button>
+                    </div>
+                    <div class="lesson-option-container">
+                        <input type="checkbox" class="lesson-option-correct"> <input type="text" class="lesson-option" placeholder="Opção 2">
+                        <button type="button" onclick="removeOption(this)">Remover</button>
+                    </div>
+                    <button type="button" onclick="addOption(this)">Adicionar Opção</button>
+                </div>
+            </div>
+        </div>
+        <button type="button" onclick="removeLesson(this)">Remover Aula</button>
+    </div>
+</template>
 
 <script src="lancarCurso.js"></script>
 

@@ -95,6 +95,94 @@ export class CursosOracleRepository implements CursosRepository {
 
         return users
     }
+
+    async listCoursesEnrolledToUser(id: number): Promise<Curso[]> {
+
+        console.log(123)
+
+        console.log(`select * from ECLBDIT215.curso c join ECLBDIT215.matriculado m on c.idcurso = m.idcurso where m.idusuario = ${id}`)
+
+        const result = await oracleConnection.execute(`select * from ECLBDIT215.curso c join ECLBDIT215.matriculado m on c.idcurso = m.idcurso where m.idusuario = ${id}`)
+
+        console.log(123)
+
+        const users: Curso[] = []
+
+        for (const row of result.rows ?? []) {
+
+            const map : Map<string, any> = new Map()
+
+            for (let j = 0; j < (result.metaData?.length ?? 0); j++)
+                map.set(result.metaData?.[j].name ?? '', (row as any)[j]);
+
+            users.push(new Curso({
+                cargaHora: map.get('CARGAHORARIA'),
+                dataCadastro: map.get('DATACADASTRO'),
+                descricao: map.get('DESCRICAO'),
+                nome: map.get('NOME'),
+                preco: map.get('PRECO'),
+                usuarioId: map.get('IDUSUARIO'),
+                imagem: map.get('IMAGEM')
+            }, map.get('IDCURSO')))
+        }
+
+        console.log(123)
+
+        return users
+    }
+
+    async listProfessoresFromCurso(id: number): Promise<string[]> {
+        
+        const result = await oracleConnection.execute(`
+            select prof.nome as NOME
+            from ECLBDIT215.professor prof
+            join ECLBDIT215.topicoprofessor tp on prof.idprofessor = tp.idprofessor
+            join ECLBDIT215.topico topic on topic.idtopico = tp.idtopico
+            join ECLBDIT215.curso cu on topic.idcurso = cu.idcurso
+            where cu.idcurso = 50
+        `, [], { autoCommit: true })
+
+        const professores: string[] = []
+
+        for (const row of result.rows ?? []) {
+
+            const map : Map<string, any> = new Map()
+
+            for (let j = 0; j < (result.metaData?.length ?? 0); j++)
+                map.set(result.metaData?.[j].name ?? '', (row as any)[j]);
+
+            professores.push(map.get('NOME'))
+        }
+
+        return professores
+    }
+
+    async listTemasFromCurso(id: number): Promise<string[]> {
+        
+        const result = await oracleConnection.execute(`
+            select t.nome
+            from ECLBDIT215.tema t
+            join ECLBDIT215.topicotema tt on t.idtema = tt.idtema
+            join ECLBDIT215.topico top on top.idtopico = tt.idtopico
+            join ECLBDIT215.curso c on top.idcurso = c.idcurso
+            where c.idcurso = ${id}
+        `, [], { autoCommit: true })
+
+        const temas: string[] = []
+
+        for (const row of result.rows ?? []) {
+
+            const map : Map<string, any> = new Map()
+
+            for (let j = 0; j < (result.metaData?.length ?? 0); j++)
+                map.set(result.metaData?.[j].name ?? '', (row as any)[j]);
+
+            temas.push(map.get('NOME'))
+        }
+
+        return temas
+    }
+
     delete(id: number): Promise<Curso | null> {
         throw new Error("Method not implemented.");
     }

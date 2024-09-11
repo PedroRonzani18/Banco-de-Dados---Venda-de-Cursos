@@ -1,0 +1,124 @@
+/* Estilos Gerais */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #4A90E2, #9013FE);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+    flex-direction: column; /* Adicionado para garantir que os elementos sejam empilhados verticalmente */
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #fff;
+    font-size: 32px;
+    margin: 20px 0;
+}
+
+/* Estilos do Formulário de Edição */
+.course-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    margin-top: 20px; /* Espaçamento para separar do título */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    box-sizing: border-box;
+}
+
+h3 {
+    margin-top: 20px;
+    color: #4A90E2;
+    text-align: center;
+}
+
+/* Estilos dos Tópicos e Aulas */
+.topic {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.lesson {
+    background-color: #e6e6e6;
+    border: 1px dashed #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+button {
+    background-color: #9013FE;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #7a0fcf;
+}
+
+/* Ajustes para Botões Específicos */
+button[type="submit"] {
+    width: 100%;
+    margin-top: 20px;
+}
+
+button[type="button"] {
+    margin-right: 5px;
+}
+
+button.remove-topic,
+button.remove-lesson {
+    background-color: #FF5A5A;
+    color: white;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+button.remove-topic:hover,
+button.remove-lesson:hover {
+    background-color: #e04a4a;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .course-form {
+        width: 90%;
+    }
+}

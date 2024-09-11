@@ -39,7 +39,7 @@ export class Curso extends Entity<CursoProps> {
     toJSON() {
         return {
             ...super.toJSON(),
-            ...this.data
+            ...this.props
         };
     }
 }

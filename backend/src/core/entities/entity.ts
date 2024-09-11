@@ -15,7 +15,7 @@ export abstract class Entity<Props> {
   toJSON() {
     return {
       id: this.id,
-      data: this.data,
+      // data: this.data,
     };
   }
 }
