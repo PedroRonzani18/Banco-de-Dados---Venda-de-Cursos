@@ -1,23 +1,88 @@
+import { oracleConnection } from "@/core/db/oracle";
 import { ProfessorProps, Professor, UpdateProfessorProps } from "../../@entities/professor";
 import { ProfessorsRepository } from "./professorInterfaceRepository";
 
 export class ProfessorsOracleRepository implements ProfessorsRepository {
-    create(data: ProfessorProps): Promise<Professor> {
-        throw new Error("Method not implemented.");
+    async create(data: ProfessorProps): Promise<Professor> {
+
+        await oracleConnection.execute(`INSERT INTO ECLBDIT215.PROFESSOR(NOME) VALUES ('${data.nome}')`)
+        await oracleConnection.commit()
+
+        const idProfessor = await oracleConnection.execute(`SELECT IDPROFESSOR FROM ECLBDIT215.PROFESSOR WHERE NOME = '${data.nome}'`)
+        const id = (idProfessor.rows as any[][])?.[0]?.[0];
+
+        return new Professor(data, id)
     }
-    findByNome(nome: string): Promise<Professor | null> {
-        throw new Error("Method not implemented.");
+
+    async findByNome(nome: string): Promise<Professor | null> {
+
+        const result = await oracleConnection.execute(`SELECT * FROM ECLBDIT215.PROFESSOR WHERE NOME = '${nome}'`)
+
+        if (result.rows?.length === 0)
+            return null
+
+        const row = result.rows?.[0]
+
+        const map : Map<string, any> = new Map()
+
+        for (let j = 0; j < (result.metaData?.length ?? 0); j++)
+            map.set(result.metaData?.[j].name ?? '', (row as any)[j]);
+
+        return new Professor({
+            nome: map.get('NOME')
+        }, map.get('IDPROFESSOR')) 
     }
-    findById(id: string): Promise<Professor | null> {
-        throw new Error("Method not implemented.");
+
+    async findById(id: number): Promise<Professor | null> {
+
+        const result = await oracleConnection.execute(`SELECT * FROM ECLBDIT215.PROFESSOR WHERE IDPROFESSOR = ${id}`)
+
+        if (result.rows?.length === 0)
+            return null
+
+        const row = result.rows?.[0]
+
+        const map : Map<string, any> = new Map()
+
+        for (let j = 0; j < (result.metaData?.length ?? 0); j++)
+            map.set(result.metaData?.[j].name ?? '', (row as any)[j]);
+
+        return new Professor({
+            nome: map.get('NOME')
+        }, map.get('IDPROFESSOR'))
     }
-    list(): Promise<Professor[]> {
-        throw new Error("Method not implemented.");
+
+    async list(): Promise<Professor[]> {
+
+        const result = await oracleConnection.execute(`SELECT * FROM ECLBDIT215.PROFESSOR`)
+
+        const professors: Professor[] = []
+
+        for (const row of result.rows ?? []) {
+
+            const map : Map<string, any> = new Map()
+
+            for (let j = 0; j < (result.metaData?.length ?? 0); j++)
+                map.set(result.metaData?.[j].name ?? '', (row as any)[j]);
+
+            professors.push(new Professor({
+                nome: map.get('NOME')
+            }))
+        }
+
+        return professors
     }
-    delete(id: string): Promise<Professor | null> {
-        throw new Error("Method not implemented.");
+    async delete(id: number): Promise<void> {
+
+        await oracleConnection.execute(`SELECT * FROM ECLBDIT215.PROFESSOR WHERE IDPROFESSOR = ${id}`)
     }
-    update(id: string, data: UpdateProfessorProps): Promise<Professor | null> {
-        throw new Error("Method not implemented.");
+
+    async update(id: number, data: UpdateProfessorProps): Promise<Professor | null> {
+
+        await oracleConnection.execute(`UPDATE ECLBDIT215.PROFESSOR SET NOME = '${data.nome}' WHERE IDPROFESSOR = ${id}`)
+
+        await oracleConnection.commit()
+
+        return this.findById(id)
     }
 }

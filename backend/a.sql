@@ -6,7 +6,7 @@ insert into ECLBDIT215.professor (nome) values ('Augusto');
 select * from ECLBDIT215.professor;
 insert into ECLBDIT215.topicoprofessor (idprofessor, idtopico) values (6, 11);
 
-select * from ECLBDIT215.topico;
+select * from ECLBDIT215.curso;
 
 -- list all of temas from a specific topico with their names
 

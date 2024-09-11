@@ -166,7 +166,7 @@ export class CursosOracleRepository implements CursosRepository {
             join ECLBDIT215.topico top on top.idtopico = tt.idtopico
             join ECLBDIT215.curso c on top.idcurso = c.idcurso
             where c.idcurso = ${id}
-        `, [], { autoCommit: true })
+        `)
 
         const temas: string[] = []
 
@@ -183,10 +183,29 @@ export class CursosOracleRepository implements CursosRepository {
         return temas
     }
 
-    delete(id: number): Promise<Curso | null> {
-        throw new Error("Method not implemented.");
+    async delete(id: number): Promise<void> {
+
+        await oracleConnection.execute(`DELETE FROM ECLBDIT215.CURSO WHERE IDCURSO = ${id}`)
     }
-    update(id: number, data: UpdateCursoProps): Promise<Curso | null> {
-        throw new Error("Method not implemented.");
+
+    async update(id: number, data: UpdateCursoProps): Promise<Curso | null> {
+
+        let updateQuery = `UPDATE ECLBDIT215.CURSO SET`;
+
+        if (data.nome) updateQuery += ` NOME = '${data.nome}',`;
+        if (data.descricao) updateQuery += ` DESCRICAO = '${data.descricao}',`;
+        if (data.cargaHora) updateQuery += ` CARGAHORARIA = ${data.cargaHora},`;
+        if (data.preco) updateQuery += ` PRECO = ${data.preco},`;
+        if (data.dataCadastro) updateQuery += ` DATACADASTRO = TO_DATE('${data.dataCadastro.toISOString().slice(0, 10)}', 'YYYY-MM-DD'),`;
+        if (data.usuarioId) updateQuery += ` IDUSUARIO = ${data.usuarioId},`;
+        if (data.imagem) updateQuery += ` IMAGEM = '${data.imagem}',`;
+
+        updateQuery = updateQuery.slice(0, -1);
+        updateQuery += ` WHERE IDCURSO = ${id}`;
+
+        await oracleConnection.execute(updateQuery);
+        await oracleConnection.commit()
+
+        return this.findById(id)
     }
 }
