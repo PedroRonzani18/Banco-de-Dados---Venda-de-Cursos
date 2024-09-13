@@ -21,12 +21,12 @@ export class CreateAulaAssistidaUseCase {
 
     async execute({ dataAssistir, idAula, idUsuario }: CreateAulaAssistidaUseCaseRequest): Promise<CreateAulaAssistidaUseCaseResponse> {
 
-        const findAulaAssistidaByNomeUseCase = new FindAulaAssistidaByTituloUseCase(this.aulaAssistidasRepository)
+        // const findAulaAssistidaByNomeUseCase = new FindAulaAssistidaByTituloUseCase(this.aulaAssistidasRepository)
 
-        const possibleAulaAssistida = await findAulaAssistidaByNomeUseCase.execute({ idAula, idUsuario })
+        // const possibleAulaAssistida = await findAulaAssistidaByNomeUseCase.execute({ idAula, idUsuario })
 
-        if (possibleAulaAssistida.isRight())
-            return left({ error: new ResourceAlreadyExistsError(`AulaAssistida ${idAula} ${idUsuario}`) })
+        // if (possibleAulaAssistida.isRight())
+        //     return left({ error: new ResourceAlreadyExistsError(`AulaAssistida ${idAula} ${idUsuario}`) })
 
         const aulaAssistida = await this.aulaAssistidasRepository.create({ idAula, idUsuario, dataAssistir })
 

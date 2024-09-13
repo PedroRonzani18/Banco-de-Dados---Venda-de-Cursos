@@ -9,7 +9,9 @@ const idSchema = z.object({
 
 export async function listTemasFromCursoController(request: FastifyRequest, reply: FastifyReply) {
 
+	console.log("oaishdjisad")
 	const { id } = idSchema.parse(request.params);
+
 
 	const cursosRepository = new CursosOracleRepository()
     const listCursosUseCase = new ListTemasFromCursoUseCase(cursosRepository)

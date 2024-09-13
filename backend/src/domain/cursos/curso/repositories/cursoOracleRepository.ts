@@ -195,8 +195,8 @@ export class CursosOracleRepository implements CursosRepository {
             join ECLBDIT215.topicoprofessor tp on prof.idprofessor = tp.idprofessor
             join ECLBDIT215.topico topic on topic.idtopico = tp.idtopico
             join ECLBDIT215.curso cu on topic.idcurso = cu.idcurso
-            where cu.idcurso = 50
-        `, [], { autoCommit: true })
+            where cu.idcurso = ${id}
+        `)
 
         const professores: string[] = []
 
@@ -223,6 +223,8 @@ export class CursosOracleRepository implements CursosRepository {
             join ECLBDIT215.curso c on top.idcurso = c.idcurso
             where c.idcurso = ${id}
         `)
+
+        console.dir({result: result.rows}, {depth: null})
 
         const temas: string[] = []
 

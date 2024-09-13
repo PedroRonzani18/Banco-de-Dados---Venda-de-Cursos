@@ -3,36 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduMaster - Uso do Curso</title>
+    <title>Curso Usuário</title>
     <link rel="stylesheet" href="cursoUsuario.css">
 </head>
 <body>
-
-<header>
-    <h1>Uso do Curso</h1>
-</header>
-
-<div class="course-content">
-    <div class="current-lesson">
-        <h2>Tópico Atual: <span id="lessonTopic">Nome do Tópico</span></h2>
-        <h3>Próxima Aula: <span id="lessonTitle">Título da Aula</span></h3>
-        <p><strong>Descrição:</strong> <span id="lessonDescription">Descrição da próxima aula...</span></p>
-        <div class="video-container">
-            <iframe id="lessonVideo" width="100%" height="315" src="https://www.youtube.com/embed/example" frameborder="0" allowfullscreen></iframe>
+    <div class="container">
+        <h1>Curso:</h1>
+        <h2 id="lessonTopic"></h2>
+        <h3 id="lessonTitle"></h3>
+        <div id="lessonContent">
+            <p id="lessonDescription"></p>
+            <div class="video-container" style="display: none;">
+                <video id="lessonVideo" controls></video>
+            </div>
         </div>
-        <button onclick="goToActivity()">Ir para Atividade</button>
-        <button onclick="goToNextLesson()">Ir para Próxima Aula</button>
+        <button id="nextLessonBtn" onclick="goToNextLesson()">Próxima Aula</button>
+        <div id="progressContainer">
+            <h3>Progresso do Curso</h3>
+            <ul id="lessonList"></ul>
+        </div>
     </div>
-    
-    <div class="lesson-progress">
-        <h3>Progresso das Aulas</h3>
-        <ul id="lessonList">
-            <!-- Lista de aulas será gerada dinamicamente aqui -->
-        </ul>
-    </div>
-</div>
-
-<script src="cursoUsuario.js"></script>
-
+    <script src="cursoUsuario.js"></script>
 </body>
 </html>

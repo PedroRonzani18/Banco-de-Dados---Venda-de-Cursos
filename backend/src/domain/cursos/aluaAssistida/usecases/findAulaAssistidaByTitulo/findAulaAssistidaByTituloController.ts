@@ -10,19 +10,24 @@ export const createAulaAssistidaBodySchema = z.object({
 
 export async function findAulaAssistidaByNomeController(request: FastifyRequest, reply: FastifyReply) {
 
-	const { idAula, idUsuario } = createAulaAssistidaBodySchema.parse(request.body);
+	try {
+		const { idAula, idUsuario } = createAulaAssistidaBodySchema.parse(request.body);
 
-	const aulaAssistidasRepository = new AulaAssistidasOracleRepository()
-	const findAulaAssistidaByIdUseCase = new FindAulaAssistidaByTituloUseCase(aulaAssistidasRepository)
+		const aulaAssistidasRepository = new AulaAssistidasOracleRepository()
+		const findAulaAssistidaByIdUseCase = new FindAulaAssistidaByTituloUseCase(aulaAssistidasRepository)
 
-	const aulaAssistida = await findAulaAssistidaByIdUseCase.execute({ idAula, idUsuario });
+		const aulaAssistida = await findAulaAssistidaByIdUseCase.execute({ idAula, idUsuario });
 
-	if (aulaAssistida.isLeft())
+		if (aulaAssistida.isLeft())
+			return reply
+				.status(400)
+				.send(aulaAssistida.value.error)
+
 		return reply
-			.status(400)
-			.send(aulaAssistida.value.error)
-
-	return reply
-		.status(201)
-		.send(aulaAssistida.value.aulaAssistida);
+			.status(201)
+			.send(aulaAssistida.value.aulaAssistida);
+	} catch (err) {
+		console.error(err)
+		throw err
+	}
 }

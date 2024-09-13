@@ -17,6 +17,8 @@ export class ListTemasFromCursoUseCase {
 
     async execute({ id } : ListTemasFromCursoUseCaseRequest): Promise<ListTemasFromCursoUseCaseResponse> {
 
+        console.log("Aq")
+
         const temas = await this.cursosRepository.listTemasFromCurso(id)
 
         if(temas.length === 0)

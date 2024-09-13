@@ -49,8 +49,34 @@ export class AulasOracleRepository implements AulasRepository {
         }, map.get('IDAULA'));
     }
 
-    list(): Promise<Aula[]> {
-        throw new Error("Method not implemented.");
+    async list(): Promise<Aula[]> {
+
+        const response = await oracleConnection.execute(`
+            SELECT * FROM ECLBDIT215.AULA
+        `);
+
+        const aulas: Aula[] = [];
+
+        for (let i = 0; i < (response.rows?.length ?? 0); i++) {
+
+            const row = response.rows?.[i];
+
+            const map : Map<string, any> = new Map();
+
+            for (let j = 0; j < (response.metaData?.length ?? 0); j++)
+                map.set(response.metaData?.[j].name ?? '', (row as any)[j]);
+
+            aulas.push(new Aula({
+                descricao: map.get('DESCRICAO'),
+                duracaoEstimada: map.get('DURACAOESTIMADA'),
+                idTopico: map.get('IDTOPICO'),
+                index: map.get('INDEX'),
+                titulo: map.get('TITULO'),
+                urlVideo: map.get('URLVIDEO') ?? ''
+            }, map.get('IDAULA')));
+        }
+
+        return aulas;
     }
     delete(id: number): Promise<Aula | null> {
         throw new Error("Method not implemented.");

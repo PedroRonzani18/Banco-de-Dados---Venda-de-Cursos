@@ -11,7 +11,7 @@ export async function aulaAssistidaRoutes(app: FastifyInstance) {
     app.post('/', createAulaAssistidaController)
     app.get('/', listAulaAssistidasController)
     app.get('/id/:id', findAulaAssistidaByIdController)
-    app.get('/titulo', findAulaAssistidaByNomeController)
+    app.put('/titulo/', findAulaAssistidaByNomeController)
     app.delete('/:id', deleteAulaAssistidaController)
     app.put('/:id', updateAulaAssistidaController)
 }

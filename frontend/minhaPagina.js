@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                 <button onclick="editarCurso(${course.id})">Editar Curso</button>
             `;
             courseCard.querySelector('img').addEventListener('click', () => {
-                window.location.href = `curso.html?id=${course.id}`;
+                window.location.href = `editarCurso.html?id=${course.id}`;
             });
             grid.appendChild(courseCard);
         });
