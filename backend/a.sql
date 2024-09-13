@@ -10,12 +10,14 @@ COMMIT;
 select * from ECLBDIT215.aulaassistida;
 select * from ECLBDIT215.curso where idcurso = 149;
 
-select * from ECLBDIT215.curso;
+delete from ECLBDIT215.curso;
+commit;
 
 select * from ECLBDIT215.topico where idcurso = 150;
 
 select * from ECLBDIT215.topico where idcurso = 148;
 
+select * from ECLBDIT215.atividade;
 
 select *
 from ECLBDIT215.professor prof
