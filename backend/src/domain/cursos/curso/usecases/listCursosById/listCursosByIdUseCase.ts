@@ -20,8 +20,6 @@ export class ListCursosByIdUseCase {
 
         const cursos = await this.cursosRepository.listById(id)
 
-        console.dir({cursos}, {depth: null})
-
         if(cursos.length === 0)
             return left({ error: new ResourceNotFoundError('Cursos') })
 

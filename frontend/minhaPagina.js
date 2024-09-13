@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function() {
     // Supondo que o nome do usuário e os cursos sejam obtidos via API
 
-    const response = await fetch('http://localhost:3000/user/id/28', {
+    const response = await fetch(`http://localhost:3000/user/id/${localStorage.getItem('userId')}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     });
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     const userData = await response.json();
     document.getElementById('userName').textContent = userData.nome;
 
-    const courses = await fetch('http://localhost:3000/curso/list/28', {
+    const courses = await fetch(`http://localhost:3000/curso/list/${localStorage.getItem('userId')}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     });

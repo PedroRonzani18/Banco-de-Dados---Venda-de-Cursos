@@ -18,12 +18,7 @@ export class ListCoursesEnrolledToUserUseCase {
 
     async execute({ userid } : ListCoursesEnrolledToUserUseCaseRequest): Promise<ListCoursesEnrolledToUserUseCaseResponse> {
 
-        console.log(1)
-
         const cursos = await this.cursosRepository.listCoursesEnrolledToUser(userid)
-
-        console.dir({cursos}, {depth: null})
-
         if(cursos.length === 0)
             return left({ error: new ResourceNotFoundError(`Cursos com ${userid} matriculado`) })
 

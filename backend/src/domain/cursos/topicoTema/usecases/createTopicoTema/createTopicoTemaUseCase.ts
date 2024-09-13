@@ -20,12 +20,12 @@ export class CreateTopicoTemaUseCase {
 
     async execute({ idTema, idTopico }: CreateTopicoTemaUseCaseRequest): Promise<CreateTopicoTemaUseCaseResponse> {
 
-        const findTopicoTemaByNomeUseCase = new FindTopicoTemaByTituloUseCase(this.topicoTemasRepository)
+        // const findTopicoTemaByNomeUseCase = new FindTopicoTemaByTituloUseCase(this.topicoTemasRepository)
 
-        const possibleTopicoTema = await findTopicoTemaByNomeUseCase.execute({ idTema, idTopico })
+        // const possibleTopicoTema = await findTopicoTemaByNomeUseCase.execute({ idTema, idTopico })
 
-        if (possibleTopicoTema.isRight())
-            return left({ error: new ResourceAlreadyExistsError(`TopicoTema ${idTema} ${idTopico}`) })
+        // if (possibleTopicoTema.isRight())
+        //     return left({ error: new ResourceAlreadyExistsError(`TopicoTema ${idTema} ${idTopico}`) })
 
         const topicoTema = await this.topicoTemasRepository.create({ idTema, idTopico })
 

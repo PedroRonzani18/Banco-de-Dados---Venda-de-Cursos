@@ -130,3 +130,27 @@ h3 {
 .topic button.remove-topic:hover {
     background-color: #ff1c1c;
 }
+
+.professors-container input,
+.professors-container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #9013FE;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #7a0fcf;
+}

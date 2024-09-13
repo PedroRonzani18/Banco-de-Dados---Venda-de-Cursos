@@ -20,12 +20,12 @@ export class CreateTopicoProfessorUseCase {
 
     async execute({ idProfessor, idTopico }: CreateTopicoProfessorUseCaseRequest): Promise<CreateTopicoProfessorUseCaseResponse> {
 
-        const findTopicoProfessorByNomeUseCase = new FindTopicoProfessorByNomeUseCase(this.topicoProfessorsRepository)
+        // const findTopicoProfessorByNomeUseCase = new FindTopicoProfessorByNomeUseCase(this.topicoProfessorsRepository)
 
-        const possibleTopicoProfessor = await findTopicoProfessorByNomeUseCase.execute({ idProfessor, idTopico })
+        // const possibleTopicoProfessor = await findTopicoProfessorByNomeUseCase.execute({ idProfessor, idTopico })
 
-        if (possibleTopicoProfessor.isRight())
-            return left({ error: new ResourceAlreadyExistsError(`Professor ${idProfessor} no Tópico ${idTopico}` ) })
+        // if (possibleTopicoProfessor.isRight())
+        //     return left({ error: new ResourceAlreadyExistsError(`Professor ${idProfessor} no Tópico ${idTopico}` ) })
 
         const topicoProfessor = await this.topicoProfessorsRepository.create({ idProfessor, idTopico })
 

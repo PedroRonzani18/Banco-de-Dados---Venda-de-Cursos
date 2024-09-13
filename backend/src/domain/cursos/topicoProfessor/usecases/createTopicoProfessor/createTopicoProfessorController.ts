@@ -10,19 +10,24 @@ export const createTopicoProfessorBodySchema = z.object({
 
 export async function createTopicoProfessorController(request: FastifyRequest, reply: FastifyReply) {
 
-	const { idProfessor, idTopico } = createTopicoProfessorBodySchema.parse(request.body);
+	try {
+		const { idProfessor, idTopico } = createTopicoProfessorBodySchema.parse(request.body);
 
-	const topicoProfessorsRepository = new TopicoProfessorsOracleRepository()
-	const createTopicoProfessorUseCase = new CreateTopicoProfessorUseCase(topicoProfessorsRepository)
+		const topicoProfessorsRepository = new TopicoProfessorsOracleRepository()
+		const createTopicoProfessorUseCase = new CreateTopicoProfessorUseCase(topicoProfessorsRepository)
 
-	const topicoProfessor = await createTopicoProfessorUseCase.execute({ idProfessor, idTopico });
+		const topicoProfessor = await createTopicoProfessorUseCase.execute({ idProfessor, idTopico });
 
-	if (topicoProfessor.isLeft())
+		if (topicoProfessor.isLeft())
+			return reply
+				.status(400)
+				.send(topicoProfessor.value.error)
+
 		return reply
-			.status(400)
-			.send(topicoProfessor.value.error)
-
-	return reply
-		.status(201)
-		.send(topicoProfessor.value.topicoProfessor);
+			.status(201)
+			.send(topicoProfessor.value.topicoProfessor);
+	} catch (error) {
+		console.dir(error, { depth: null });
+		throw error;
+	}
 }

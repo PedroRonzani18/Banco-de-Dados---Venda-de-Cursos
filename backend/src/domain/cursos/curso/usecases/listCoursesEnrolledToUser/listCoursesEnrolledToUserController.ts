@@ -11,16 +11,10 @@ export async function listCoursesEnrolledToUserController(request: FastifyReques
 
 	const { userid } = idSchema.parse(request.params);
 
-	console.log("a")
-
 	const cursosRepository = new CursosOracleRepository()
     const listCursosUseCase = new ListCoursesEnrolledToUserUseCase(cursosRepository)
 
-	console.log("b")
-
 	const curso = await listCursosUseCase.execute({ userid: Number(userid) });
-
-	console.log("c")
 
 	if (curso.isLeft())
 		return reply

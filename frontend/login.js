@@ -32,6 +32,9 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Depois")
 
         if (!(response.status >= 200 && response.status < 300)) {
+
+
+
             const response = await fetch('http://localhost:3000/user/', {
                 method: 'POST',
                 headers: {
@@ -49,6 +52,9 @@ document.addEventListener("DOMContentLoaded", function() {
             alert('Login ou senha incorretos.');
             console.error(`Erro ${status} (${code}): ${message}`);
         } else {
+
+            const loginResponseData = await response.json();
+            localStorage.setItem('userId', loginResponseData.id);
             window.location.href = 'mainS.html';
         }
 

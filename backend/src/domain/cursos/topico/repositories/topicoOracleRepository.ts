@@ -9,7 +9,11 @@ export class TopicosOracleRepository implements TopicosRepository {
 
         await oracleConnection.commit()
 
-        return new Topico(data)
+        const result = await oracleConnection.execute(`SELECT IDTOPICO FROM ECLBDIT215.TOPICO WHERE TITULO = '${data.titulo}' AND IDCURSO = ${cursoId}`)
+
+        const id = (result.rows as any[][])?.[0]?.[0];
+
+        return new Topico(data, id)
     }
 
     async findByTituloIdCurso(titulo: string, idAula: number): Promise<Topico | null> {

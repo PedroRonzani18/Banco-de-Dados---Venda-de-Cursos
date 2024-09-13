@@ -10,19 +10,25 @@ export const createTopicoTemaBodySchema = z.object({
 
 export async function createTopicoTemaController(request: FastifyRequest, reply: FastifyReply) {
 
-	const { idTema, idTopico } = createTopicoTemaBodySchema.parse(request.body);
+	try {
 
-	const topicoTemasRepository = new TopicoTemasOracleRepository()
-	const createTopicoTemaUseCase = new CreateTopicoTemaUseCase(topicoTemasRepository)
+		const { idTema, idTopico } = createTopicoTemaBodySchema.parse(request.body);
 
-	const topicoTema = await createTopicoTemaUseCase.execute({ idTema, idTopico });
+		const topicoTemasRepository = new TopicoTemasOracleRepository()
+		const createTopicoTemaUseCase = new CreateTopicoTemaUseCase(topicoTemasRepository)
 
-	if (topicoTema.isLeft())
+		const topicoTema = await createTopicoTemaUseCase.execute({ idTema, idTopico });
+
+		if (topicoTema.isLeft())
+			return reply
+				.status(400)
+				.send(topicoTema.value.error)
+
 		return reply
-			.status(400)
-			.send(topicoTema.value.error)
-
-	return reply
-		.status(201)
-		.send(topicoTema.value.topicoTema);
+			.status(201)
+			.send(topicoTema.value.topicoTema);
+	} catch (error) {
+		console.dir(error, { depth: null });
+		throw error;
+	}
 }

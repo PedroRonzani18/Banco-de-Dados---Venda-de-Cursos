@@ -1,100 +1,66 @@
-document.addEventListener("DOMContentLoaded", async function() {
-    let courses = [];
+document.addEventListener("DOMContentLoaded", async function () {
+    const userId = localStorage.getItem('userId'); 
+    const userCoursesGrid = document.getElementById('userCoursesGrid');
+    const coursesGrid = document.getElementById('coursesGrid');
 
-    const response = await fetch('http://localhost:3000/curso/', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json'}
-    });
-
-    const data = await response.json();
-    console.dir({ data }, { depth: null });
-
-    renderCourses(data);
-
-    // Carregar cursos do backend
-    // fetch('http://localhost:3000/curso/list')  // <--- URL do backend para buscar os cursos
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         courses = data;
-    //         renderCourses(courses);
-    //     })
-    //     .catch(error => {
-    //         console.error('Erro ao carregar cursos:', error);
-    //     });
-
-    function renderCourses(courses) {
-        const grid = document.getElementById('coursesGrid');
-        grid.innerHTML = ''; // Limpar o grid antes de renderizar
-        courses.forEach(course => {
-            const courseCard = document.createElement('div');
-            courseCard.className = 'course-card';
-            courseCard.innerHTML = `
-                <img src="${course.imagem}" alt="${course.nome}">
-                <h3>${course.nome}</h3>
-                <p><strong>Carga Horária:</strong> ${course.cargaHora}</p>
-                <p><strong>Tema:</strong> ${course.theme}</p>
-                <p><strong>Professores:</strong> ${course.teachers}</p>
-            `;
-            courseCard.addEventListener('click', () => {
-                checkUserCourse(course.id);
-            });
-            grid.appendChild(courseCard);
+    try {
+        // Buscar cursos que o usuário está fazendo
+        const userCoursesResponse = await fetch(`http://localhost:3000/curso/list/user/${userId}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
         });
-    }
 
-    function checkUserCourse(courseId) {
-        fetch(`http://localhost:3000/user/hasCourse/${courseId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.hasCourse) {
-                    window.location.href = `cursoUsuario.html?id=${courseId}`; // Página para cursos que o usuário possui (implementação futura)
-                } else {
-                    window.location.href = `cursoDescricao.html?id=${courseId}`; // Página de descrição do curso
-                }
-            })
-            .catch(error => {
-                console.error('Erro ao verificar curso do usuário:', error);
-            });
-    }
+        let userCourses = [];
 
-    document.getElementById('search').addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        const filteredCourses = courses.filter(course =>
-            course.name.toLowerCase().includes(searchTerm)
-        );
-        renderCourses(filteredCourses);
-    });
+        if (userCoursesResponse.ok) {
+            userCourses = await userCoursesResponse.json();
 
-    document.getElementById('filterInput').addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        const dropdown = document.getElementById('themeDropdown');
-        dropdown.innerHTML = ''; // Limpar as opções
-        dropdown.classList.remove('show');
-        const filteredThemes = [...new Set(courses.map(course => course.theme))]
-            .filter(theme => theme.toLowerCase().includes(searchTerm));
-        
-        if (filteredThemes.length > 0) {
-            filteredThemes.forEach(theme => {
-                const option = document.createElement('option');
-                option.value = theme;
-                option.textContent = theme;
-                option.addEventListener('click', () => {
-                    this.value = theme;
-                    dropdown.classList.remove('show');
-                    const filteredCourses = courses.filter(course => course.theme.toLowerCase() === theme.toLowerCase());
-                    renderCourses(filteredCourses);
-                });
-                dropdown.appendChild(option);
-            });
-            dropdown.classList.add('show');
+            renderCourses(userCourses, userCoursesGrid);
         } else {
-            dropdown.classList.remove('show');
+            console.error('Erro ao buscar cursos do usuário:', userCoursesResponse.statusText);
         }
-    });
 
+        // Buscar todos os cursos disponíveis
+        const allCoursesResponse = await fetch('http://localhost:3000/curso/', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
 
+        if (allCoursesResponse.ok) {
+            const allCourses = await allCoursesResponse.json();
+
+            const allCoursesMinusUserCourses = allCourses.filter(course => !userCourses.some(userCourse => userCourse.id === course.id));
+
+            console.dir(allCoursesMinusUserCourses, { depth: null });
+            renderCourses(allCoursesMinusUserCourses, coursesGrid);
+        } else {
+            console.error('Erro ao buscar todos os cursos:', allCoursesResponse.statusText);
+        }
+    } catch (error) {
+        console.error('Erro na conexão com o servidor:', error);
+    }
 });
 
+// Função para renderizar os cursos em um grid
+function renderCourses(courses, gridElement) {
+    gridElement.innerHTML = ''; // Limpar o grid antes de renderizar
+    courses.forEach(course => {
+        const courseCard = document.createElement('div');
+        courseCard.className = 'course-card';
+        courseCard.innerHTML = `
+            <img src="${course.imagem}" alt="${course.nome}">
+            <h3>${course.nome}</h3>
+            <p><strong>Carga Horária:</strong> ${course.cargaHora}</p>
+            <p><strong>Tema:</strong> ${course.tema}</p>
+        `;
+        courseCard.addEventListener('click', () => {
+            window.location.href = `curso.html?id=${course.id}`;
+        });
+        gridElement.appendChild(courseCard);
+    });
+}
+
+// Função para redirecionar ao perfil do usuário
 function goToProfile() {
     window.location.href = 'minhaPagina.html';
 }

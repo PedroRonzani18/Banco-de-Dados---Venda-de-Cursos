@@ -1,10 +1,16 @@
+import { oracleConnection } from "@/core/db/oracle";
 import { TopicoTemaProps, TopicoTema, UpdateTopicoTemaProps } from "../../@entities/topicoTema";
 import { TopicoTemasRepository } from "./topicoTemaInterfaceRepository";
 
 export class TopicoTemasOracleRepository implements TopicoTemasRepository {
-    create(data: TopicoTemaProps): Promise<TopicoTema> {
-        throw new Error("Method not implemented.");
+    async create(data: TopicoTemaProps): Promise<TopicoTema> {
+
+        await oracleConnection.execute(`INSERT INTO ECLBDIT215.TOPICOTEMA(IDTOPICO, IDTEMA) VALUES (${data.idTopico}, ${data.idTema})`)
+        await oracleConnection.commit()
+
+        return new TopicoTema(data)
     }
+    
     findByIdTopicoTema(idTopico: number, idTema: number): Promise<TopicoTema | null> {
         throw new Error("Method not implemented.");
     }

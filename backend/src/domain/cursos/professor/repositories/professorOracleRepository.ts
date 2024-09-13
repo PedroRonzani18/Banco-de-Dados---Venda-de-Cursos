@@ -67,7 +67,7 @@ export class ProfessorsOracleRepository implements ProfessorsRepository {
 
             professors.push(new Professor({
                 nome: map.get('NOME')
-            }))
+            }, map.get('IDPROFESSOR')))
         }
 
         return professors

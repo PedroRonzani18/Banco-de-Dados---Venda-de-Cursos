@@ -1,6 +1,13 @@
 insert into ECLBDIT215.tema (nome) values ('Programacao');
 insert into ECLBDIT215.topicotema(idtema, idtopico) values (6, 11); 
 
+select * from ECLBDIT215.topicoProfessor;
+
+insert into ECLBDIT215.topico (numero, titulo, descricao, idcurso) values (1, 'Introducao', 'Introducao a programacao', 50);
+delete from ECLBDIT215.topico;
+
+delete from ECLBDIT215.curso where idcurso != 50 and idcurso != 52;
+COMMIT;
 
 insert into ECLBDIT215.professor (nome) values ('Augusto');
 select * from ECLBDIT215.professor;
