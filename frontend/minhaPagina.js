@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function() {
-    // Supondo que o nome do usuário e os cursos sejam obtidos via API
-
+    // Obtenção dos dados do usuário
     const response = await fetch(`http://localhost:3000/user/id/${localStorage.getItem('userId')}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
@@ -16,6 +15,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     const userData = await response.json();
     document.getElementById('userName').textContent = userData.nome;
 
+    // Obtenção dos cursos do usuário
     const courses = await fetch(`http://localhost:3000/curso/list/${localStorage.getItem('userId')}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     
     renderUserCourses(userCourses);
 
+    // Função para renderizar os cursos do usuário
     function renderUserCourses(courses) {
         const grid = document.getElementById('userCoursesGrid');
         grid.innerHTML = ''; // Limpar o grid antes de renderizar
@@ -67,4 +68,14 @@ document.addEventListener("DOMContentLoaded", async function() {
     window.verCertificados = function() {
         window.location.href = 'certificados.html';
     };
+
+    // Função para redirecionar para a página de cadastro de tema ou professor
+    window.cadastrarTemaProfessor = function() {
+        window.location.href = 'cadastrarTemaProfessor.html'; // Página de cadastro de tema ou professor
+    };
+
+    // Atribuir eventos de clique aos botões da página
+    document.getElementById('btnLancarCurso').addEventListener('click', lancarCurso);
+    document.getElementById('btnVerCertificados').addEventListener('click', verCertificados);
+    document.getElementById('btnCadastrarTemaProfessor').addEventListener('click', cadastrarTemaProfessor);
 });

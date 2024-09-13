@@ -26,7 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             if (responseProfessors.ok) {
                 professors = await responseProfessors.json();
-                console.dir({professors}, { depth: null });
             } else {
                 console.error('Erro ao buscar professores:', responseProfessors.statusText);
             }
@@ -37,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             if (responseThemes.ok) {
                 themes = await responseThemes.json();
-                console.dir({themes}, { depth: null });
             } else {
                 console.error('Erro ao buscar temas:', responseThemes.statusText);
             }
@@ -141,26 +139,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const createdCursoId = createCursoData.id; 
 
-        console.log("Curso criado com sucesso. ID: ", createdCursoId);
-
         let indexTopico = 0;
         for(const topico of courseData.topics) {
         
-            console.dir("Professores");
-            console.dir(topico.professors, { depth: null });
-            console.dir("Themas", themes, { depth: null });
-            console.dir(topico.themes, { depth: null });
-            console.dir("Aulas", topico.lessons, { depth: null });
-            console.dir(topico.lessons, { depth: null });
-
-            console.dir("Data: ")
-            console.dir({
-                titulo: topico.name,
-                cursoId: Number(createdCursoId),
-                descricao: '-',
-                index: Number(indexTopico++)
-            })
-
             const createTopicoResponse = await fetch('http://localhost:3000/topico/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -184,18 +165,6 @@ document.addEventListener("DOMContentLoaded", function () {
             for(const professor of topico.professors) {
 
                 const professorAlvo = professors.find(prof => prof.nome === professor);
-
-                console.log("Professor Alvo");
-                console.dir({professorAlvo})
-
-                console.log("Professores");
-                console.dir(professors, { depth: null });
-
-                console.log("Professor");
-                console.dir(professor, { depth: null });
-                
-                console.log("createdTopicoId")
-                console.dir(createdTopicoId, { depth: null });
 
                 const createProfessorTopicoResponse = await fetch('http://localhost:3000/topico-professor/', {
                     method: 'POST',
@@ -232,7 +201,118 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
             }
+
+            let indexAula = 0;
+            for(const aula of topico.lessons) {
+
+                if(aula.type === 'text') {
+
+                    const result = await fetch('http://localhost:3000/aula/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            idTopico: Number(createdTopicoId),
+                            titulo: aula.name,
+                            descricao: aula.content,
+                            urlVideo: "-",
+                            duracaoEstimada: 0,
+                            index: Number(indexAula++)
+                        })
+                    });
+
+                    if (!result.ok) {
+                        alert('Erro ao criar aula.');
+                        console.error('Erro ao criar aula:', result.statusText);
+                        return;
+                    }
+                } else if(aula.type === 'video') {
+
+                    const result = await fetch('http://localhost:3000/aula/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            idTopico: Number(createdTopicoId),
+                            titulo: aula.name,
+                            descricao: "-",
+                            urlVideo: aula.url,
+                            duracaoEstimada: 0,
+                            index: Number(indexAula++)
+                        })
+                    });
+
+                    if (!result.ok) {
+                        alert('Erro ao criar aula.');
+                        console.error('Erro ao criar aula:', result.statusText);
+                        return;
+                    }
+                } else if(aula.type === 'activity') {
+
+                    const result = await fetch('http://localhost:3000/aula/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            idTopico: Number(createdTopicoId),
+                            titulo: aula.name,
+                            descricao: "-",
+                            urlVideo: "-",
+                            duracaoEstimada: 0,
+                            index: Number(indexAula++)
+                        })
+                    });
+
+                    if (!result.ok) {
+                        alert('Erro ao criar aula.');
+                        console.error('Erro ao criar aula:', result.statusText);
+                        return;
+                    }
+
+                    const resultData = await result.json();
+                    const createdAulaId = resultData.id;
+
+                    const createAtividadeResponse = await fetch('http://localhost:3000/atividade/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            idAula: Number(createdAulaId),
+                            enunciado: aula.question,
+                            titulo: aula.name,
+                        })
+                    });
+
+                    if (!createAtividadeResponse.ok) {
+                        alert('Erro ao criar atividade.');
+                        console.error('Erro ao criar atividade:', createAtividadeResponse.statusText);
+                        return;
+                    }
+
+                    const createAtividadeData = await createAtividadeResponse.json();
+                    const createdAtividadeId = createAtividadeData.id;
+
+                    let indexAlternativa = 0;
+                    for(const option of aula.options) {
+
+                        const createOpcaoResponse = await fetch('http://localhost:3000/alternativa/', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                idAtividade: Number(createdAtividadeId),
+                                numAtividade: Number(indexAlternativa++), 
+                                certa: option.correct,
+                                descricao: option.option
+                            })
+                        });
+
+                        if (!createOpcaoResponse.ok) {
+                            alert('Erro ao criar opção.');
+                            console.error('Erro ao criar opção:', createOpcaoResponse.statusText);
+                            return;
+                        }
+                    }
+                }
+            }
         }
+
+        alert('Curso criado com sucesso!');
 
     });
 

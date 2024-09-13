@@ -3,8 +3,16 @@ import { TopicoProps, Topico, UpdateTopicoProps } from "../../@entities/topico";
 import { TopicosRepository } from "./topicoInterfaceRepository";
 
 export class TopicosOracleRepository implements TopicosRepository {
+
+    async countTopicosFromCurso(cursoId: number): Promise<number> {
+
+        const result = await oracleConnection.execute(`SELECT COUNT(*) FROM ECLBDIT215.TOPICO WHERE IDCURSO = ${cursoId}`)
+
+        return (result.rows as any[][])?.[0]?.[0] ?? 0
+    }
+
     async create(cursoId: number, data: TopicoProps): Promise<Topico> {
-        
+
         await oracleConnection.execute(`INSERT INTO ECLBDIT215.TOPICO(NUMERO, TITULO, DESCRICAO, IDCURSO) VALUES (${data.index}, '${data.titulo}', '${data.descricao}', '${cursoId}')`)
 
         await oracleConnection.commit()
@@ -27,7 +35,7 @@ export class TopicosOracleRepository implements TopicosRepository {
 
         for (const row of result.rows ?? []) {
 
-            const map : Map<string, any> = new Map()
+            const map: Map<string, any> = new Map()
 
             for (let j = 0; j < (result.metaData?.length ?? 0); j++)
                 map.set(result.metaData?.[j].name ?? '', (row as any)[j]);
@@ -54,7 +62,7 @@ export class TopicosOracleRepository implements TopicosRepository {
 
         for (const row of result.rows ?? []) {
 
-            const map : Map<string, any> = new Map()
+            const map: Map<string, any> = new Map()
 
             for (let j = 0; j < (result.metaData?.length ?? 0); j++)
                 map.set(result.metaData?.[j].name ?? '', (row as any)[j]);
@@ -78,7 +86,7 @@ export class TopicosOracleRepository implements TopicosRepository {
 
         for (const row of result.rows ?? []) {
 
-            const map : Map<string, any> = new Map()
+            const map: Map<string, any> = new Map()
 
             for (let j = 0; j < (result.metaData?.length ?? 0); j++)
                 map.set(result.metaData?.[j].name ?? '', (row as any)[j]);
@@ -95,14 +103,14 @@ export class TopicosOracleRepository implements TopicosRepository {
     }
 
     async listById(id: number): Promise<Topico[]> {
-        
+
         const result = await oracleConnection.execute(`SELECT * FROM ECLBDIT215.TOPICO WHERE IDCURSO = ${id}`)
 
         const topicos: Topico[] = []
 
         for (const row of result.rows ?? []) {
 
-            const map : Map<string, any> = new Map()
+            const map: Map<string, any> = new Map()
 
             for (let j = 0; j < (result.metaData?.length ?? 0); j++)
                 map.set(result.metaData?.[j].name ?? '', (row as any)[j]);

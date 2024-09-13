@@ -11,19 +11,24 @@ export const createAtividadeBodySchema = z.object({
 
 export async function createAtividadeController(request: FastifyRequest, reply: FastifyReply) {
 
-	const { idAula, enunciado, titulo } = createAtividadeBodySchema.parse(request.body);
+	try {
+		const { idAula, enunciado, titulo } = createAtividadeBodySchema.parse(request.body);
 
-	const atividadesRepository = new AtividadesOracleRepository()
-	const createAtividadeUseCase = new CreateAtividadeUseCase(atividadesRepository)
+		const atividadesRepository = new AtividadesOracleRepository()
+		const createAtividadeUseCase = new CreateAtividadeUseCase(atividadesRepository)
 
-	const atividade = await createAtividadeUseCase.execute({ enunciado, idAula, titulo });
+		const atividade = await createAtividadeUseCase.execute({ enunciado, idAula, titulo });
 
-	if (atividade.isLeft())
+		if (atividade.isLeft())
+			return reply
+				.status(400)
+				.send(atividade.value.error)
+
 		return reply
-			.status(400)
-			.send(atividade.value.error)
-
-	return reply
-		.status(201)
-		.send(atividade.value.atividade);
+			.status(201)
+			.send(atividade.value.atividade);
+	} catch (error) {
+		console.error(error)
+		throw error
+	}
 }

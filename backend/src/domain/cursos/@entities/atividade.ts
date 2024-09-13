@@ -1,6 +1,5 @@
 import { Entity } from "@/core/entities/entity";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
-import { Alternativa } from "./alternativa";
 
 export type UpdateAtividadeProps = {
     idAula?: number
@@ -12,7 +11,6 @@ export type AtividadeProps = {
     idAula: number
     enunciado: string
     titulo: string
-    alternativas: Alternativa[]
 };
 
 export class Atividade extends Entity<AtividadeProps> {
@@ -24,7 +22,6 @@ export class Atividade extends Entity<AtividadeProps> {
     get idAula() { return this.props.idAula }
     get enunciado() { return this.props.enunciado }
     get titulo() { return this.props.titulo }
-    get alternativas() { return this.props.alternativas }
 
     toJSON() {
         return {

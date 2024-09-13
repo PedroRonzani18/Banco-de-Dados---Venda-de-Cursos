@@ -1,16 +1,28 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
     const courseId = new URLSearchParams(window.location.search).get('courseId');
     const editCourseForm = document.getElementById('editCourseForm');
     const topicsContainer = document.getElementById('topicsContainer');
 
+    const getCursoResponse = await fetch(`http://localhost:3000/curso/id/${courseId}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    });
+
+    const curso = await getCursoResponse.json();
+
+    document.getElementById('courseName').value = curso.nome;
+    document.getElementById('coursePrice').value = curso.preco;
+
+    console.dir(curso, { depth: null });
+
     // Carregar dados do curso a partir do backend usando o ID do curso
-    fetch(`http://localhost:3000/courses/${courseId}`)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('courseName').value = data.nome;
-            document.getElementById('coursePrice').value = data.preco;
-            renderTopics(data.topicos);
-        });
+    // fetch(`http://localhost:3000/courses/${courseId}`)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         document.getElementById('courseName').value = data.nome;
+    //         document.getElementById('coursePrice').value = data.preco;
+    //         renderTopics(data.topicos);
+    //     });
 
     function renderTopics(topics) {
         topics.forEach((topic, index) => {
@@ -118,45 +130,97 @@ document.addEventListener("DOMContentLoaded", function() {
         button.parentElement.remove();
     };
 
-    editCourseForm.addEventListener('submit', function(event) {
+    editCourseForm.addEventListener('submit', async function(event) {
         event.preventDefault();
 
         const updatedCourse = {
             nome: document.getElementById('courseName').value,
-            preco: document.getElementById('coursePrice').value,
-            topicos: Array.from(document.querySelectorAll('.topic')).map(topicDiv => {
-                return {
-                    nome: topicDiv.querySelector('.topic-name').value,
-                    aulas: Array.from(topicDiv.querySelectorAll('.lesson')).map(lessonDiv => {
-                        return {
-                            nome: lessonDiv.querySelector('.lesson-name').value,
-                            tipo: lessonDiv.querySelector('.lesson-type').value
-                            // Outros campos da aula
-                        };
-                    })
-                };
-            })
+            preco: Number(document.getElementById('coursePrice').value),
+            // topicos: Array.from(document.querySelectorAll('.topic')).map(topicDiv => {
+            //     return {
+            //         nome: topicDiv.querySelector('.topic-name').value,
+            //         aulas: Array.from(topicDiv.querySelectorAll('.lesson')).map(lessonDiv => {
+            //             return {
+            //                 nome: lessonDiv.querySelector('.lesson-name').value,
+            //                 tipo: lessonDiv.querySelector('.lesson-type').value
+            //                 // Outros campos da aula
+            //             };
+            //         })
+            //     };
+            // })
         };
 
-        fetch(`http://localhost:3000/courses/${courseId}`, {
+        const extraTopicos = Array.from(document.querySelectorAll('.topic')).map(topicDiv => {
+            return {
+                nome: topicDiv.querySelector('.topic-name').value,
+                aulas: Array.from(topicDiv.querySelectorAll('.lesson')).map(lessonDiv => {
+                    return {
+                        nome: lessonDiv.querySelector('.lesson-name').value,
+                        tipo: lessonDiv.querySelector('.lesson-type').value
+                    };
+                })
+            };
+        });
+
+        for(const topic of extraTopicos) {
+
+            const countTopicsFromCurso = await fetch(`http://localhost:3000/curso/count/topico/${courseId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const countTopics = await countTopicsFromCurso.json();
+
+            const topicId = await fetch('http://localhost:3000/topico/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    cursoId: courseId,
+                    index: countTopics + 1,
+                    titulo: topic.nome,
+                    descricao: '-'
+                })
+            });
+
+            if(!topicId.ok) alert('Erro ao adicionar tópico.');
+        }
+        
+        const updateCursoResponse = await fetch(`http://localhost:3000/curso/${courseId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(updatedCourse)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Curso atualizado com sucesso!');
-                window.location.href = 'minhaPagina.html';
-            } else {
-                alert('Erro ao atualizar o curso.');
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao atualizar curso:', error);
-            alert('Erro ao se conectar com o servidor.');
         });
+
+        if(updateCursoResponse.ok) {
+            alert('Curso atualizado com sucesso!');
+            // window.location.href = 'minhaPagina.html';
+        } else {
+            alert('Erro ao atualizar o curso.');
+        }
+
+        // fetch(`http://localhost:3000/curso/${courseId}`, {
+        //     method: 'PUT',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(updatedCourse)
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     if (data.success) {
+        //         alert('Curso atualizado com sucesso!');
+        //         window.location.href = 'minhaPagina.html';
+        //     } else {
+        //         alert('Erro ao atualizar o curso.');
+        //     }
+        // })
+        // .catch(error => {
+        //     console.error('Erro ao atualizar curso:', error);
+        //     alert('Erro ao se conectar com o servidor.');
+        // });
     });
 });

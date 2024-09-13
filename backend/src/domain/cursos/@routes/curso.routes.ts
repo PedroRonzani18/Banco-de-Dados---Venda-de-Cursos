@@ -9,11 +9,13 @@ import { listCursosByIdController } from '../curso/usecases/listCursosById/listC
 import { listCoursesEnrolledToUserController } from '../curso/usecases/listCoursesEnrolledToUser/listCoursesEnrolledToUserController';
 import { listProfessoresFromCursoController } from '../curso/usecases/listProfessoresFromCurso/listProfessoresFromCursoController';
 import { listTemasFromCursoController } from '../curso/usecases/listTemasFromCurso/listTemasFromCursoController';
+import { countTopicoController } from '../topico/usecases/countTopicsFromCurso/createTopicoController';
 
 export async function cursoRoutes(app: FastifyInstance) {
 
     app.post('/', createCursoController)
     app.get('/', listCursosController)
+    app.get('/count/topico/:id', countTopicoController)
     app.get('/list/:id', listCursosByIdController)
     app.get('/list/user/:userid', listCoursesEnrolledToUserController)
     app.get('/list/professores/:id', listProfessoresFromCursoController)

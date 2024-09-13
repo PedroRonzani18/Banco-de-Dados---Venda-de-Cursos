@@ -12,19 +12,24 @@ export const createAlternativaBodySchema = z.object({
 
 export async function createAlternativaController(request: FastifyRequest, reply: FastifyReply) {
 
-	const { certa, descricao, numAtividade, idAtividade } = createAlternativaBodySchema.parse(request.body);
+	try {
+		const { certa, descricao, numAtividade, idAtividade } = createAlternativaBodySchema.parse(request.body);
 
-	const alternativasRepository = new AlternativasOracleRepository()
-	const createAlternativaUseCase = new CreateAlternativaUseCase(alternativasRepository)
+		const alternativasRepository = new AlternativasOracleRepository()
+		const createAlternativaUseCase = new CreateAlternativaUseCase(alternativasRepository)
 
-	const alternativa = await createAlternativaUseCase.execute({ idAtividade, certa, descricao, numAtividade, });
+		const alternativa = await createAlternativaUseCase.execute({ idAtividade, certa, descricao, numAtividade, });
 
-	if (alternativa.isLeft())
+		if (alternativa.isLeft())
+			return reply
+				.status(400)
+				.send(alternativa.value.error)
+
 		return reply
-			.status(400)
-			.send(alternativa.value.error)
-
-	return reply
-		.status(201)
-		.send(alternativa.value.alternativa);
+			.status(201)
+			.send(alternativa.value.alternativa);
+	} catch (error) {
+		console.error(error)
+		throw error
+	}
 }

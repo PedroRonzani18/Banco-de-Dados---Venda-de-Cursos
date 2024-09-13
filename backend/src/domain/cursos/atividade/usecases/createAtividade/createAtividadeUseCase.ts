@@ -21,14 +21,14 @@ export class CreateAtividadeUseCase {
 
     async execute({ idAula, enunciado, titulo }: CreateAtividadeUseCaseRequest): Promise<CreateAtividadeUseCaseResponse> {
 
-        const findAtividadeByTituloUseCase = new FindAtividadeByTituloUseCase(this.atividadesRepository)
+        // const findAtividadeByTituloUseCase = new FindAtividadeByTituloUseCase(this.atividadesRepository)
 
-        const possibleAtividade = await findAtividadeByTituloUseCase.execute({ titulo, idAula })
+        // const possibleAtividade = await findAtividadeByTituloUseCase.execute({ titulo, idAula })
 
-        if (possibleAtividade.isRight())
-            return left({ error: new ResourceAlreadyExistsError(`Atividade ${enunciado} na Aula ${idAula}`) })
+        // if (possibleAtividade.isRight())
+        //     return left({ error: new ResourceAlreadyExistsError(`Atividade ${enunciado} na Aula ${idAula}`) })
 
-        const atividade = await this.atividadesRepository.create(idAula, { enunciado, titulo, alternativas: [], idAula })
+        const atividade = await this.atividadesRepository.create(idAula, { enunciado, titulo, idAula })
 
         return right({ atividade })
     }

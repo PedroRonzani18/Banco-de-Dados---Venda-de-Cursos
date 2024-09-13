@@ -8,4 +8,5 @@ export interface TopicosRepository {
     listById(id: number): Promise<Topico[]>
     delete(id: number): Promise<Topico | null>
     update(id: number, data: UpdateTopicoProps): Promise<Topico | null>
+    countTopicosFromCurso(cursoId: number): Promise<number> 
 }

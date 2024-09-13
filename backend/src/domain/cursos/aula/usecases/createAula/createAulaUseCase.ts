@@ -2,7 +2,6 @@ import { Either, left, right } from "@/core/types/either"
 import { ResourceAlreadyExistsError } from "@/core/errors/resource-already-exists-error"
 import { Aula } from "../../../@entities/aula"
 import { AulasRepository } from "../../repositories/aulaInterfaceRepository"
-import { FindAulaByTituloUseCase } from "../findAulaByTitulo/findAulaByTituloUseCase"
 
 interface CreateAulaUseCaseRequest {
     idTopico: number
@@ -10,6 +9,7 @@ interface CreateAulaUseCaseRequest {
     descricao: string
     urlVideo?: string
     duracaoEstimada: number
+    index: number
 }
 
 type CreateAulaUseCaseResponse = Either<
@@ -21,16 +21,16 @@ export class CreateAulaUseCase {
 
     constructor(private aulasRepository: AulasRepository) { }
 
-    async execute({ descricao, duracaoEstimada, idTopico, titulo, urlVideo }: CreateAulaUseCaseRequest): Promise<CreateAulaUseCaseResponse> {
+    async execute({ descricao, duracaoEstimada, idTopico, titulo, urlVideo, index }: CreateAulaUseCaseRequest): Promise<CreateAulaUseCaseResponse> {
 
-        const findAulaByTituloUseCase = new FindAulaByTituloUseCase(this.aulasRepository)
+        // const findAulaByTituloUseCase = new FindAulaByTituloUseCase(this.aulasRepository)
 
-        const possibleAula = await findAulaByTituloUseCase.execute({ titulo, idTopico })
+        // const possibleAula = await findAulaByTituloUseCase.execute({ titulo, idTopico })
 
-        if (possibleAula.isRight())
-            return left({ error: new ResourceAlreadyExistsError(`Aula ${titulo} no Topico ${idTopico}`) })
+        // if (possibleAula.isRight())
+        //     return left({ error: new ResourceAlreadyExistsError(`Aula ${titulo} no Topico ${idTopico}`) })
 
-        const aula = await this.aulasRepository.create(idTopico, { atividades: [], descricao, duracaoEstimada, idTopico, titulo, urlVideo, index: 0 })
+        const aula = await this.aulasRepository.create(idTopico, { descricao, duracaoEstimada, idTopico, titulo, urlVideo, index })
 
         return right({ aula })
     }

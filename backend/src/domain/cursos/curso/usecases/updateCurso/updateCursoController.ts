@@ -4,7 +4,7 @@ import { CursosOracleRepository } from '../../repositories/cursoOracleRepository
 import { UpdateCursoUseCase } from './updateCursoUseCase';
 
 export const updateCursoParamsSchema = z.object({
-	id: z.number(),
+	id: z.string(),
 });
 
 export const updateCursoBodySchema = z.object({
@@ -18,13 +18,14 @@ export const updateCursoBodySchema = z.object({
 
 export async function updateCursoController(request: FastifyRequest, reply: FastifyReply) {
 
+	try {
 	const data = updateCursoBodySchema.parse(request.body);
 	const { id } = updateCursoParamsSchema.parse(request.params);
 
 	const cursosRepository = new CursosOracleRepository()
 	const updateCursoUseCase = new UpdateCursoUseCase(cursosRepository)
 
-	const curso = await updateCursoUseCase.execute({ id, data });
+	const curso = await updateCursoUseCase.execute({ id: Number(id), data });
 
 	if (curso.isLeft())
 		return reply
@@ -34,4 +35,8 @@ export async function updateCursoController(request: FastifyRequest, reply: Fast
 	return reply
 		.status(201)
 		.send(curso.value.curso);
+} catch (error) {
+	console.dir(error, { depth: null });
+	throw error;
+}
 }

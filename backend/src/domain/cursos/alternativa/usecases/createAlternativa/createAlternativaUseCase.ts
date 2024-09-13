@@ -22,13 +22,13 @@ export class CreateAlternativaUseCase {
 
     async execute({ idAtividade, certa, descricao, numAtividade }: CreateAlternativaUseCaseRequest): Promise<CreateAlternativaUseCaseResponse> {
 
-        const findAlternativaByNumeroAtividadeIdUseCase = new FindAlternativaByNumeroAtividadeIdUseCaseUseCase(this.alternativasRepository)
+        // const findAlternativaByNumeroAtividadeIdUseCase = new FindAlternativaByNumeroAtividadeIdUseCaseUseCase(this.alternativasRepository)
 
-        const possibleAlternativa = await findAlternativaByNumeroAtividadeIdUseCase.execute({ idAtividade, numAtividade })
+        // const possibleAlternativa = await findAlternativaByNumeroAtividadeIdUseCase.execute({ idAtividade, numAtividade })
 
-        if (possibleAlternativa.isRight()) {
-            return left({ error: new ResourceAlreadyExistsError(`Alternativa's ${name} alternativa`) })
-        }
+        // if (possibleAlternativa.isRight()) {
+        //     return left({ error: new ResourceAlreadyExistsError(`Alternativa's ${name} alternativa`) })
+        // }
 
         const alternativa = await this.alternativasRepository.create(idAtividade, { certa, descricao, numAtividade, idAtividade })
 

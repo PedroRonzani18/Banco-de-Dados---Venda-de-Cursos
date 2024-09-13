@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduMaster - Cadastrar Tema ou Professor</title>
+    <link rel="stylesheet" href="cadastrarTemaProfessor.css">
+</head>
+<body>
+
+<header>
+    <h1>Cadastrar Tema ou Professor</h1>
+</header>
+
+<div class="container">
+    <!-- Seção para cadastrar Tema -->
+    <div class="section">
+        <h2>Cadastrar Novo Tema</h2>
+        <form id="formTema">
+            <label for="nomeTema">Nome do Tema:</label>
+            <input type="text" id="nomeTema" required>
+            <button type="button" onclick="cadastrarTema()">Confirmar Cadastro</button>
+        </form>
+    </div>
+
+    <!-- Seção para cadastrar Professor -->
+    <div class="section">
+        <h2>Cadastrar Novo Professor</h2>
+        <form id="formProfessor">
+            <label for="nomeProfessor">Nome do Professor:</label>
+            <input type="text" id="nomeProfessor" required>
+            <button type="button" onclick="cadastrarProfessor()">Confirmar Cadastro</button>
+        </form>
+    </div>
+</div>
+
+<script src="cadastrarTemaProfessor.js"></script>
+
+</body>
+</html>

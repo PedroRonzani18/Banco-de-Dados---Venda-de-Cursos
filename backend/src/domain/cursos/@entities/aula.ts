@@ -18,8 +18,6 @@ export type AulaProps = {
     descricao: string
     urlVideo?: string
     duracaoEstimada: number
-
-    atividades: Atividade[]
 };
 
 export class Aula extends Entity<AulaProps> {
@@ -34,7 +32,6 @@ export class Aula extends Entity<AulaProps> {
     get descricao() { return this.props.descricao }
     get urlVideo() { return this.props.urlVideo }
     get duracaoEstimada() { return this.props.duracaoEstimada }
-    get atividades() { return this.props.atividades }
 
     toJSON() {
         return {
