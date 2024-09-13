@@ -1,10 +1,13 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const userId = 28; // Substitua pelo ID do usuário atual
+    const userId = localStorage.getItem('userId'); // Substitua pelo ID do usuário atual
     const courseId = new URLSearchParams(window.location.search).get('id'); // Obtém o ID do curso da URL
 
     try {
+
+        console.log('courseId:', courseId);
+
         // Buscar os detalhes do curso
-        const courseResponse = await fetch(`http://localhost:3000/curso/${courseId}`, {
+        const courseResponse = await fetch(`http://localhost:3000/curso/id/${courseId}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         });
@@ -37,16 +40,19 @@ function renderTopics(topics) {
 
 // Função para comprar o curso
 window.comprarCurso = async function () {
-    const userId = 28; // Substitua pelo ID do usuário atual
+    const userId = localStorage.getItem('userId'); // Substitua pelo ID do usuário atual
     const courseId = new URLSearchParams(window.location.search).get('id');
 
     const confirmacao = confirm("Deseja realmente comprar este curso?");
     if (confirmacao) {
         try {
-            const response = await fetch(`http://localhost:3000/list/user/${userId}`, {
+            const response = await fetch(`http://localhost:3000/matriculado/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ cursoId: courseId })
+                body: JSON.stringify({ 
+                    usuarioId: Number(userId),
+                    cursoId: Number(courseId)
+                 })
             });
 
             if (response.ok) {

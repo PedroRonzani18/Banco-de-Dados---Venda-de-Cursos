@@ -13,17 +13,6 @@ document.addEventListener("DOMContentLoaded", async function() {
     document.getElementById('courseName').value = curso.nome;
     document.getElementById('coursePrice').value = curso.preco;
 
-    console.dir(curso, { depth: null });
-
-    // Carregar dados do curso a partir do backend usando o ID do curso
-    // fetch(`http://localhost:3000/courses/${courseId}`)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         document.getElementById('courseName').value = data.nome;
-    //         document.getElementById('coursePrice').value = data.preco;
-    //         renderTopics(data.topicos);
-    //     });
-
     function renderTopics(topics) {
         topics.forEach((topic, index) => {
             const topicDiv = document.createElement('div');
@@ -136,28 +125,41 @@ document.addEventListener("DOMContentLoaded", async function() {
         const updatedCourse = {
             nome: document.getElementById('courseName').value,
             preco: Number(document.getElementById('coursePrice').value),
-            // topicos: Array.from(document.querySelectorAll('.topic')).map(topicDiv => {
-            //     return {
-            //         nome: topicDiv.querySelector('.topic-name').value,
-            //         aulas: Array.from(topicDiv.querySelectorAll('.lesson')).map(lessonDiv => {
-            //             return {
-            //                 nome: lessonDiv.querySelector('.lesson-name').value,
-            //                 tipo: lessonDiv.querySelector('.lesson-type').value
-            //                 // Outros campos da aula
-            //             };
-            //         })
-            //     };
-            // })
+
         };
 
         const extraTopicos = Array.from(document.querySelectorAll('.topic')).map(topicDiv => {
             return {
                 nome: topicDiv.querySelector('.topic-name').value,
                 aulas: Array.from(topicDiv.querySelectorAll('.lesson')).map(lessonDiv => {
-                    return {
-                        nome: lessonDiv.querySelector('.lesson-name').value,
-                        tipo: lessonDiv.querySelector('.lesson-type').value
-                    };
+
+                    const type = lessonDiv.querySelector('.lesson-type').value;
+
+                    if(type === 'text') {
+                        return {
+                            nome: lessonDiv.querySelector('.lesson-name').value,
+                            tipo: type,
+                            content: lessonDiv.querySelector('.lesson-content').value,
+                        };
+                    } else if(type === 'video') {
+                        return {
+                            nome: lessonDiv.querySelector('.lesson-name').value,
+                            tipo: type,
+                            url: lessonDiv.querySelector('.lesson-url').value,
+                        };
+                    } else if(type === 'activity') {
+                        return {
+                            nome: lessonDiv.querySelector('.lesson-name').value,
+                            tipo: type,
+                            question: lessonDiv.querySelector('.lesson-question').value,
+                            options: Array.from(lessonDiv.querySelectorAll('.lesson-option-container')).map(optionDiv => {
+                                return {
+                                    option: optionDiv.querySelector('.lesson-option').value,
+                                    correct: optionDiv.querySelector('.lesson-option-correct').checked,
+                                };
+                            })
+                        };
+                    }
                 })
             };
         });
@@ -177,14 +179,133 @@ document.addEventListener("DOMContentLoaded", async function() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    cursoId: courseId,
+                    cursoId: Number(courseId),
                     index: countTopics + 1,
                     titulo: topic.nome,
                     descricao: '-'
                 })
             });
 
+            const createTopicoData = await topicId.json();
+            const createdTopicoId = createTopicoData.id;
+
             if(!topicId.ok) alert('Erro ao adicionar tópico.');
+
+            console.log("Aulas") 
+            console.dir(topic.aulas, {depth: null});
+
+            let indexAula = 0;
+            for(const aula of topic.aulas) {
+
+                if(aula.tipo === 'text') {
+
+                    const result = await fetch('http://localhost:3000/aula/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            idTopico: Number(createdTopicoId),
+                            titulo: aula.nome,
+                            descricao: aula.content,
+                            urlVideo: "-",
+                            duracaoEstimada: 0,
+                            index: Number(indexAula++)
+                        })
+                    });
+
+                    if (!result.ok) {
+                        alert('Erro ao criar aula.');
+                        console.error('Erro ao criar aula:', result.statusText);
+                        return;
+                    }
+
+                    console.log("Texto upado")
+                } else if(aula.tipo === 'video') {
+
+                    const result = await fetch('http://localhost:3000/aula/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            idTopico: Number(createdTopicoId),
+                            titulo: aula.nome,
+                            descricao: "-",
+                            urlVideo: aula.url,
+                            duracaoEstimada: 0,
+                            index: Number(indexAula++)
+                        })
+                    });
+
+                    if (!result.ok) {
+                        alert('Erro ao criar aula.');
+                        console.error('Erro ao criar aula:', result.statusText);
+                        return;
+                    }
+
+                    console.log("Video upado")
+                } else if(aula.tipo === 'activity') {
+
+                    const result = await fetch('http://localhost:3000/aula/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            idTopico: Number(createdTopicoId),
+                            titulo: aula.nome,
+                            descricao: "-",
+                            urlVideo: "-",
+                            duracaoEstimada: 0,
+                            index: Number(indexAula++)
+                        })
+                    });
+
+                    if (!result.ok) {
+                        alert('Erro ao criar aula.');
+                        console.error('Erro ao criar aula:', result.statusText);
+                        return;
+                    }
+
+                    const resultData = await result.json();
+                    const createdAulaId = resultData.id;
+
+                    const createAtividadeResponse = await fetch('http://localhost:3000/atividade/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            idAula: Number(createdAulaId),
+                            enunciado: aula.question,
+                            titulo: aula.nome,
+                        })
+                    });
+
+                    if (!createAtividadeResponse.ok) {
+                        alert('Erro ao criar atividade.');
+                        console.error('Erro ao criar atividade:', createAtividadeResponse.statusText);
+                        return;
+                    }
+
+                    const createAtividadeData = await createAtividadeResponse.json();
+                    const createdAtividadeId = createAtividadeData.id;
+
+                    let indexAlternativa = 0;
+                    for(const option of aula.options) {
+
+                        const createOpcaoResponse = await fetch('http://localhost:3000/alternativa/', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                idAtividade: Number(createdAtividadeId),
+                                numAtividade: Number(indexAlternativa++), 
+                                certa: option.correct,
+                                descricao: option.option
+                            })
+                        });
+
+                        if (!createOpcaoResponse.ok) {
+                            alert('Erro ao criar opção.');
+                            console.error('Erro ao criar opção:', createOpcaoResponse.statusText);
+                            return;
+                        }
+                    }
+                }
+            }
         }
         
         const updateCursoResponse = await fetch(`http://localhost:3000/curso/${courseId}`, {

@@ -10,14 +10,16 @@ import { listCoursesEnrolledToUserController } from '../curso/usecases/listCours
 import { listProfessoresFromCursoController } from '../curso/usecases/listProfessoresFromCurso/listProfessoresFromCursoController';
 import { listTemasFromCursoController } from '../curso/usecases/listTemasFromCurso/listTemasFromCursoController';
 import { countTopicoController } from '../topico/usecases/countTopicsFromCurso/createTopicoController';
+import { listCoursesNotEnrolledToUserController } from '../curso/usecases/listCoursesNotEnrolledToUser copy/listCoursesNotEnrolledToUserController';
 
 export async function cursoRoutes(app: FastifyInstance) {
 
     app.post('/', createCursoController)
     app.get('/', listCursosController)
     app.get('/count/topico/:id', countTopicoController)
-    app.get('/list/:id', listCursosByIdController)
-    app.get('/list/user/:userid', listCoursesEnrolledToUserController)
+    app.get('/list/:id', listCursosByIdController) // cursos q sou dono
+    app.get('/list/user/:userid', listCoursesEnrolledToUserController) // cursos q sou matriculado e n sou dono
+    app.get('/list/notuser/:userid', listCoursesNotEnrolledToUserController) // cursos q nao sou matriculado e n sou dono
     app.get('/list/professores/:id', listProfessoresFromCursoController)
     app.get('/list/temas/:id', listTemasFromCursoController)
     app.get('/id/:id', findCursoByIdController)

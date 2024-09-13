@@ -65,6 +65,39 @@ export class CursosOracleRepository implements CursosRepository {
 
     }
 
+    async listCoursesNotEnrolledToUser(id: number): Promise<Curso[]> {
+
+        // nao estou matriculado e nao sou dono
+        const result = await oracleConnection.execute(`
+            select * from ECLBDIT215.curso c
+            where c.idcurso not in (
+            select m.idcurso from ECLBDIT215.matriculado m where m.idusuario = ${id}
+            ) and c.idusuario <> ${id}
+        `)
+
+        const cursos: Curso[] = []
+
+        for (const row of result.rows ?? []) {
+
+            const map : Map<string, any> = new Map()
+
+            for (let j = 0; j < (result.metaData?.length ?? 0); j++)
+                map.set(result.metaData?.[j].name ?? '', (row as any)[j]);
+
+            cursos.push(new Curso({
+                cargaHora: map.get('CARGAHORARIA'),
+                dataCadastro: map.get('DATACADASTRO'),
+                descricao: map.get('DESCRICAO'),
+                nome: map.get('NOME'),
+                preco: map.get('PRECO'),
+                usuarioId: map.get('IDUSUARIO'),
+                imagem: map.get('IMAGEM')
+            }, map.get('IDCURSO')))
+        }
+
+        return cursos
+    }
+
     async listById(id: number): Promise<Curso[]> {
         const result = await oracleConnection.execute(`SELECT * FROM ECLBDIT215.CURSO WHERE IDUSUARIO = ${id}`)
 
@@ -119,11 +152,13 @@ export class CursosOracleRepository implements CursosRepository {
 
     async listCoursesEnrolledToUser(id: number): Promise<Curso[]> {
 
-        console.log(123)
-
-        console.log(`select * from ECLBDIT215.curso c join ECLBDIT215.matriculado m on c.idcurso = m.idcurso where m.idusuario = ${id}`)
-
-        const result = await oracleConnection.execute(`select * from ECLBDIT215.curso c join ECLBDIT215.matriculado m on c.idcurso = m.idcurso where m.idusuario = ${id}`)
+        const result = await oracleConnection.execute(`
+            select * 
+            from ECLBDIT215.curso c 
+            join ECLBDIT215.matriculado m 
+            on c.idcurso = m.idcurso 
+            where m.idusuario = ${id} and c.idcurso <> ${id}`
+        )
 
         console.log(123)
 

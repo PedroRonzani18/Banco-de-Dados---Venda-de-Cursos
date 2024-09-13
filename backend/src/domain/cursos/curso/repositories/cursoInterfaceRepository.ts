@@ -7,6 +7,7 @@ export interface CursosRepository {
     list(): Promise<Curso[]>
     listById(id: number): Promise<Curso[]>
     listCoursesEnrolledToUser(id: number): Promise<Curso[]>
+    listCoursesNotEnrolledToUser(id: number): Promise<Curso[]>
     listTemasFromCurso(id: number): Promise<string[]>
     listProfessoresFromCurso(id: number): Promise<string[]>
     delete(id: number): Promise<void>

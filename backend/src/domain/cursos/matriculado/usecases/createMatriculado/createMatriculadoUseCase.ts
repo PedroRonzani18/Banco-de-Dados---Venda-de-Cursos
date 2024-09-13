@@ -21,12 +21,12 @@ export class CreateMatriculadoUseCase {
 
     async execute({ cursoId, usuarioId, dataMatricula }: CreateMatriculadoUseCaseRequest): Promise<CreateMatriculadoUseCaseResponse> {
 
-        const findMatriculadoByUsuarioCursoUseCase = new FindMatriculadoByUsuarioCursoUseCase(this.matriculadosRepository)
+        // const findMatriculadoByUsuarioCursoUseCase = new FindMatriculadoByUsuarioCursoUseCase(this.matriculadosRepository)
 
-        const possibleMatriculado = await findMatriculadoByUsuarioCursoUseCase.execute({ cursoId, usuarioId })
+        // const possibleMatriculado = await findMatriculadoByUsuarioCursoUseCase.execute({ cursoId, usuarioId })
 
-        if (possibleMatriculado.isRight())
-            return left({ error: new ResourceAlreadyExistsError(`Usuario ${usuarioId} matriculado no curso ${cursoId}`) })
+        // if (possibleMatriculado.isRight())
+        //     return left({ error: new ResourceAlreadyExistsError(`Usuario ${usuarioId} matriculado no curso ${cursoId}`) })
 
         const matriculado = await this.matriculadosRepository.create({cursoId, dataMatricula ,usuarioId})
 

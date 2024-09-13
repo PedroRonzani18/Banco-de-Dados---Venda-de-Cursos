@@ -1,19 +1,10 @@
-insert into ECLBDIT215.tema (nome) values ('Programacao');
-insert into ECLBDIT215.topicotema(idtema, idtopico) values (6, 11); 
+select * from ECLBDIT215.topico where idcurso = 150;
+select * from ECLBDIT215.aula where idtopico = 117;
+select * from ECLBDIT215.atividade where idaula = 37;
+select * from ECLBDIT215.alternativa where idatividade = 13;
+SELECT * FROM ECLBDIT215.aula;
 
-select * from ECLBDIT215.atividade;
-
-insert into ECLBDIT215.matriculado (datamatricula, idusuario, idcurso) values (TO_DATE('2021-01-01', 'YYYY-MM-DD'), 28, 118);
-delete from ECLBDIT215.matriculado;
-
-insert into ECLBDIT215.topico (numero, titulo, descricao, idcurso) values (1, 'Introducao', 'Introducao a programacao', 50);
-delete from ECLBDIT215.topico;
-delete from ECLBDIT215.curso;
+delete from ECLBDIT215.topico where idcurso = 150;
 COMMIT;
 
-insert into ECLBDIT215.professor (nome) values ('Augusto');
-select * from ECLBDIT215.aula;
-insert into ECLBDIT215.topicoprofessor (idprofessor, idtopico) values (6, 11);
-
-select * from ECLBDIT215.atividade;
 

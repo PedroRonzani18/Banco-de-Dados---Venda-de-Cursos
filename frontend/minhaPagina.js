@@ -15,24 +15,16 @@ document.addEventListener("DOMContentLoaded", async function() {
     const userData = await response.json();
     document.getElementById('userName').textContent = userData.nome;
 
-    // Obtenção dos cursos do usuário
+    // Obtenção dos cursos q usuario é dono
     const courses = await fetch(`http://localhost:3000/curso/list/${localStorage.getItem('userId')}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     });
 
-    if (!(courses.status >= 200 && courses.status < 300)) {
-        const { code, message, status } = await courses.json();
-        alert('Erro na obtenção dos cursos do usuário.');
-        console.error(`Erro ${status} (${code}): ${message}`);
-        return;
+    if ((courses.status >= 200 && courses.status < 300)) {
+        const userCourses = await courses.json();
+        renderUserCourses(userCourses);
     }
-
-    const userCourses = await courses.json();
-    
-    console.dir({userCourses});
-    
-    renderUserCourses(userCourses);
 
     // Função para renderizar os cursos do usuário
     function renderUserCourses(courses) {

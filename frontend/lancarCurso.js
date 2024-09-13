@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let indexAula = 0;
             for(const aula of topico.lessons) {
-
+                
                 if(aula.type === 'text') {
 
                     const result = await fetch('http://localhost:3000/aula/', {
