@@ -7,22 +7,29 @@
     <link rel="stylesheet" href="cursoUsuario.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Curso:</h1>
-        <h2 id="lessonTopic"></h2>
-        <h3 id="lessonTitle"></h3>
-        <div id="lessonContent">
-            <p id="lessonDescription"></p>
-            <div class="video-container" style="display: none;">
-                <video id="lessonVideo" controls></video>
-            </div>
+
+<header>
+    <h1></h1>
+    <div id="lessonTopic"></div>
+</header>
+
+<main>
+    <section id="lessonContent">
+        <h2 id="lessonTitle"></h2>
+        <p id="lessonDescription"></p>
+        <div id="activityOptions"></div> <!-- Container para as opções da atividade -->
+        <div class="video-container" style="display: none;">
+            <iframe id="lessonVideoIframe" width="560" height="315" frameborder="0" allowfullscreen></iframe>
         </div>
-        <button id="nextLessonBtn" onclick="goToNextLesson()">Próxima Aula</button>
-        <div id="progressContainer">
-            <h3>Progresso do Curso</h3>
-            <ul id="lessonList"></ul>
-        </div>
-    </div>
-    <script src="cursoUsuario.js"></script>
+        <button id="nextLessonButton" onclick="goToNextLesson()">Próxima Aula</button>
+    </section>
+
+    <section id="courseProgress">
+        <h3>Progresso do Curso</h3>
+        <ul id="lessonList"></ul>
+    </section>
+</main>
+
+<script src="cursoUsuario.js"></script>
 </body>
 </html>

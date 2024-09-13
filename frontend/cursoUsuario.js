@@ -51,19 +51,33 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     // Função para renderizar o progresso das aulas
-    function renderCourseProgress(topics) {
+    async function renderCourseProgress(topics) {
         const lessonList = document.getElementById('lessonList');
         lessonList.innerHTML = '';
+
+        const jaFinalizouAula = await fetch(`http://localhost:3000/aula-assistida/left/`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                idUsuario: Number(userId),
+                idCurso: Number(courseId)
+            })
+        });
+
+        const aulasAssistidas = await jaFinalizouAula.json();
 
         topics.forEach((topic, topicIndex) => {
             const topicElement = document.createElement('h4');
             topicElement.textContent = topic.titulo;
             lessonList.appendChild(topicElement);
 
-            topic.aulas.forEach((lesson, lessonIndex) => {
+            topic.aulas.forEach(async (lesson, lessonIndex) => {
+
+                const ok = aulasAssistidas.some(aulaAssistida => aulaAssistida.nome === lesson.titulo && aulaAssistida.assistido === true);
+
                 const lessonItem = document.createElement('li');
                 lessonItem.textContent = `${lesson.titulo}`;
-                lessonItem.className = lesson.assistida ? 'completed' : '';
+                lessonItem.className = ok ? 'completed' : '';
 
                 lessonItem.addEventListener('click', () => {
                     currentTopicIndex = topicIndex;
@@ -77,39 +91,43 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     // Função para carregar a aula atual
-    async function loadLesson(topicIndex, lessonIndex) {
-        const topic = topicsGlobal[topicIndex];
-        const lesson = topic.aulas[lessonIndex];
+// Função para carregar a aula atual
+async function loadLesson(topicIndex, lessonIndex) {
+    const topic = topicsGlobal[topicIndex];
+    const lesson = topic.aulas[lessonIndex];
 
-        console.log("Lesson")
-        console.dir({lesson});
+    console.dir(topic, { depth: null });
+    console.dir(lesson, { depth: null });
 
-        document.getElementById('lessonTopic').textContent = topic.titulo;
-        document.getElementById('lessonTitle').textContent = lesson.titulo;
+    document.getElementById('lessonTopic').textContent = topic.titulo ?? 'Tópico não disponível';
+    document.getElementById('lessonTitle').textContent = lesson.titulo;
 
-        if (lesson.descricao !== '-') {
-            document.getElementById('lessonDescription').textContent = lesson.descricao || 'Conteúdo não disponível';
-            document.querySelector('.video-container').style.display = 'none';
-        } else if (lesson.urlVideo !== '-') {
-            console.log("url: " + lesson.urlVideo);
-            document.getElementById('lessonVideo').src = lesson.urlVideo || '';
-            document.getElementById('lessonDescription').textContent = '';
-            document.querySelector('.video-container').style.display = 'block';
-        } else {
-            document.getElementById('lessonDescription').textContent = lesson.pergunta || 'Pergunta não disponível';
-            document.querySelector('.video-container').style.display = 'none';
+    if (lesson.descricao !== '-') {
+        document.getElementById('lessonDescription').textContent = lesson.descricao || 'Conteúdo não disponível';
+        document.querySelector('.video-container').style.display = 'none';
+        document.getElementById('activityOptions').style.display = 'none'; // Esconder container de atividade
+    } else if (lesson.urlVideo !== '-') {
+        const videoId = lesson.urlVideo.split('v=')[1] || lesson.urlVideo.split('/')[3].split('?')[0];
+        const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+        document.getElementById('lessonVideoIframe').src = embedUrl;
+        document.getElementById('lessonDescription').textContent = '';
+        document.querySelector('.video-container').style.display = 'block';
+        document.getElementById('activityOptions').style.display = 'none'; // Esconder container de atividade
+    } else {
+        document.getElementById('lessonDescription').textContent = 'Pergunta não disponível';
+        document.querySelector('.video-container').style.display = 'none';
 
-            const atividadesResponse = await fetch(`http://localhost:3000/atividade/`, {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' }
-            });
+        const atividadesResponse = await fetch(`http://localhost:3000/atividade/`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
 
-            const atividadesData = await atividadesResponse.json();
+        const atividadesData = await atividadesResponse.json();
+        const atividade = atividadesData.find(atividade => atividade.idAula === lesson.id);
 
-            const atividade = atividadesData.find(atividade => atividade.idAula === lesson.id);
-
-            console.log("Atividade")
-            console.dir({atividade});
+        if (atividade) {
+            document.getElementById('lessonDescription').textContent = atividade.enunciado || 'Enunciado não disponível';
+            document.getElementById('activityOptions').style.display = 'block';
 
             const opcoesResponse = await fetch(`http://localhost:3000/alternativa/`, {
                 method: 'GET',
@@ -117,30 +135,27 @@ document.addEventListener("DOMContentLoaded", async function () {
             });
 
             const opcoesData = await opcoesResponse.json();
-            console.log("OptionsData")
-            console.dir({options: opcoesData});
             lesson.options = opcoesData.filter(opcao => opcao.idAtividade === atividade.id);
-
-            console.log("Options")
-            console.dir({options: lesson.options});
 
             renderActivityOptions(lesson.options);
         }
     }
+}
 
-    function renderActivityOptions(options) {
-        const activityContainer = document.getElementById('lessonDescription');
-        activityContainer.innerHTML = '';
+function renderActivityOptions(options) {
+    const activityContainer = document.getElementById('activityOptions');
+    activityContainer.innerHTML = ''; // Limpar o container antes de renderizar as opções
 
-        options.forEach(option => {
-            const optionElement = document.createElement('button');
-            optionElement.textContent = option.descricao;
-            optionElement.onclick = function () {
-                checkActivityAnswer(option.certa);
-            };
-            activityContainer.appendChild(optionElement);
-        });
-    }
+    options.forEach(option => {
+        const optionElement = document.createElement('button');
+        optionElement.textContent = option.descricao;
+        optionElement.onclick = function () {
+            checkActivityAnswer(option.certa);
+        };
+        activityContainer.appendChild(optionElement);
+    });
+}
+
 
     function checkActivityAnswer(isCorrect) {
         if (isCorrect) {

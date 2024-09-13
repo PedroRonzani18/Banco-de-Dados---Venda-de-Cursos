@@ -45,7 +45,6 @@ function renderCourses(courses, gridElement, isUserCourse) {
             <img src="${course.imagem}" alt="${course.nome}">
             <h3>${course.nome}</h3>
             <p><strong>Carga Horária:</strong> ${course.cargaHora}</p>
-            <p><strong>Tema:</strong> ${course.tema}</p>
         `;
         
         // Definir a ação de clique dependendo se o curso pertence ao usuário ou não

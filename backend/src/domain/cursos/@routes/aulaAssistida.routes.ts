@@ -5,6 +5,7 @@ import { findAulaAssistidaByIdController } from '../aluaAssistida/usecases/findA
 import { findAulaAssistidaByNomeController } from '../aluaAssistida/usecases/findAulaAssistidaByTitulo/findAulaAssistidaByTituloController';
 import { deleteAulaAssistidaController } from '../aluaAssistida/usecases/deleteAulaAssistida/deleteAulaAssistidaController';
 import { updateAulaAssistidaController } from '../aluaAssistida/usecases/updateAulaAssistida/updateAulaAssistidaController';
+import { leftJoinController } from '../aluaAssistida/usecases/leftJoin/leftJoinController';
 
 export async function aulaAssistidaRoutes(app: FastifyInstance) {
 
@@ -14,4 +15,5 @@ export async function aulaAssistidaRoutes(app: FastifyInstance) {
     app.put('/titulo/', findAulaAssistidaByNomeController)
     app.delete('/:id', deleteAulaAssistidaController)
     app.put('/:id', updateAulaAssistidaController)
+    app.put('/left/', leftJoinController)
 }

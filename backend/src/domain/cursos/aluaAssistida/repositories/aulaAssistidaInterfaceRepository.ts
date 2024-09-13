@@ -7,4 +7,5 @@ export interface AulaAssistidasRepository {
     list(): Promise<AulaAssistida[]>
     delete(id: number): Promise<AulaAssistida | null>
     update(id: number, data: UpdateAulaAssistidaProps): Promise<AulaAssistida | null>
+    leftJoin(idUsuario: number, idCurso: number): Promise<{nome: string, assistido: boolean}[]>
 }
