@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
             alert('Conta criada com sucesso!');
             window.location.href = 'login.html';
         } else {
-            alert(data.message || 'Erro ao criar a conta. Tente novamente.');
+            alert('Erro ao criar conta. Por favor, tente novamente.');
         }
 
         

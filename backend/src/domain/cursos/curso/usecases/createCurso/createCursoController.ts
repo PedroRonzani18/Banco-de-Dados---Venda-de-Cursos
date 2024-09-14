@@ -14,7 +14,7 @@ export const createCursoBodySchema = z.object({
 });
 
 export async function createCursoController(request: FastifyRequest, reply: FastifyReply) {
-
+try {
 	const { usuarioId, cargaHora, descricao, nome, preco, imagem } = createCursoBodySchema.parse(request.body);
 
 	const cursosRepository = new CursosOracleRepository()
@@ -31,4 +31,10 @@ export async function createCursoController(request: FastifyRequest, reply: Fast
 	return reply
 		.status(201)
 		.send(curso.value.curso);
+} catch (error) {
+	console.error(error)
+	return reply
+		.status(500)
+		.send({ message: 'Internal server error' });
+}
 }

@@ -7,4 +7,5 @@ export interface TemasRepository {
     list(): Promise<Tema[]>
     delete(id: string): Promise<Tema | null>
     update(id: string, data: UpdateTemaProps): Promise<Tema | null>
+    frequenciaTema(): Promise<{nome: string, freq: number}[]>
 }

@@ -3,6 +3,38 @@ import { TemaProps, Tema, UpdateTemaProps } from "../../@entities/tema";
 import { TemasRepository } from "./temaInterfaceRepository";
 
 export class TemasOracleRepository implements TemasRepository {
+
+    async frequenciaTema(): Promise<{ nome: string, freq: number }[]> {
+
+        const result = await oracleConnection.execute(`
+            SELECT t.nome AS nome_tema, COUNT(DISTINCT cur.idcurso) AS total_cursos
+            FROM ECLBDIT215.tema t
+            JOIN ECLBDIT215.topicotema tt ON t.idtema = tt.idtema
+            JOIN ECLBDIT215.topico tp ON tt.idtopico = tp.idtopico
+            JOIN ECLBDIT215.curso cur ON tp.idcurso = cur.idcurso
+            GROUP BY t.nome
+            HAVING COUNT(DISTINCT cur.idcurso) > 1
+            ORDER BY t.nome DESC
+        `)
+
+        const temas: { nome: string, freq: number }[] = []
+
+        for (const row of result.rows ?? []) {
+
+            const map: Map<string, any> = new Map()
+
+            for (let j = 0; j < (result.metaData?.length ?? 0); j++)
+                map.set(result.metaData?.[j].name ?? '', (row as any)[j]);
+
+            temas.push({
+                nome: map.get('NOME_TEMA'),
+                freq: map.get('TOTAL_CURSOS')
+            })
+        }
+
+        return temas
+    }
+
     async create(data: TemaProps): Promise<Tema> {
 
         await oracleConnection.execute(`INSERT INTO ECLBDIT215.TEMA(NOME) VALUES ('${data.nome}')`)

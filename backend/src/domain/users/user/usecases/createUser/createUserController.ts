@@ -13,19 +13,26 @@ export const createUserBodySchema = z.object({
 
 export async function createController(request: FastifyRequest, reply: FastifyReply) {
 
-	const { email, login, nome, senha, telefone } = createUserBodySchema.parse(request.body);
+	try {
+		const { email, login, nome, senha, telefone } = createUserBodySchema.parse(request.body);
 
-	const usersRepository = new UsersOracleRepository()
-	const createUserUseCase = new CreateUserUseCase(usersRepository)
+		const usersRepository = new UsersOracleRepository()
+		const createUserUseCase = new CreateUserUseCase(usersRepository)
 
-	const user = await createUserUseCase.execute({ email, login, nome, senha, telefone });
+		const user = await createUserUseCase.execute({ email, login, nome, senha, telefone });
 
-	if (user.isLeft())
+		if (user.isLeft())
+			return reply
+				.status(400)
+				.send(user.value.error)
+
 		return reply
-			.status(400)
-			.send(user.value.error)
-
-	return reply
-		.status(201)
-		.send(user.value.user);
+			.status(201)
+			.send(user.value.user);
+	} catch (error) {
+		console.error(error)
+		return reply
+			.status(500)
+			.send({ message: 'Internal server error' });
+	}
 }

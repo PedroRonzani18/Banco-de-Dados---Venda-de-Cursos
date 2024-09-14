@@ -5,11 +5,13 @@ import { findTemaByIdController } from '../tema/usecases/findTemaById/findTemaBy
 import { deleteTemaController } from '../tema/usecases/deleteTema/deleteTemaController';
 import { updateTemaController } from '../tema/usecases/updateTema/updateTemaController';
 import { findTemaByNomeController } from '../tema/usecases/findTemaByNome/findTemaByNomeController';
+import { frequenciaTemaController } from '../tema/usecases/frequenciaTema/frequenciaTemaController';
 
 export async function temaRoutes(app: FastifyInstance) {
 
     app.post('/', createTemaController)
     app.get('/', listTemasController)
+    app.get('/frequencia', frequenciaTemaController)
     app.get('/id/:id', findTemaByIdController)
     app.get('/titulo', findTemaByNomeController)
     app.delete('/:id', deleteTemaController)
